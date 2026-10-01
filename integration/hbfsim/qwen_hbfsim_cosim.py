@@ -122,8 +122,8 @@ class ModelSpec:
             raise ValueError("this adapter requires tied input/output embeddings")
         if workload["batch_size"] != 1 or workload["tensor_parallelism"] != 1:
             raise ValueError("this adapter is restricted to batch size 1 and TP1")
-        if (spec.prefill_tokens, spec.decode_steps) != (32, 2):
-            raise ValueError("this adapter is restricted to P32D2")
+        if spec.prefill_tokens <= 0 or spec.decode_steps <= 0:
+            raise ValueError("prefill_tokens and decode_steps must be positive")
         return spec
 
 
@@ -323,19 +323,18 @@ def build_plan(model: ModelSpec, costs: LLMCompassCostModel, *, layer_limit: int
     layers = model.layers if layer_limit is None else layer_limit
     if not 1 <= layers <= model.layers:
         raise ValueError("layer_limit must be within the model layer count")
-    phases = [
-        ("prefill", model.prefill_tokens, model.prefill_tokens, 0, model.prefill_tokens),
-        ("decode_1", 1, model.prefill_tokens + 1, model.prefill_tokens, 1),
-        ("decode_2", 1, model.prefill_tokens + 2, model.prefill_tokens + 1, 1),
-    ]
+    phases = [("prefill", model.prefill_tokens, model.prefill_tokens, 0, model.prefill_tokens)]
+    phases.extend(
+        (f"decode_{step}", 1, model.prefill_tokens + step, model.prefill_tokens + step - 1, 1)
+        for step in range(1, model.decode_steps + 1)
+    )
     if phase_limit is not None:
         phases = phases[:phase_limit]
     bpe, h, kv = model.bytes_per_element, model.hidden_size, model.kv_hidden_size
     max_tokens = model.prefill_tokens + model.decode_steps
     scratch_width = max(model.hidden_size, model.intermediate_size)
     scratch_end = _slot(8, max_tokens, scratch_width, bpe)
-    if scratch_end >= KV_BASE:
-        raise CosimError("activation scratch overlaps the KV-cache arena")
+    kv_base = _align_up(max(KV_BASE, scratch_end + ALIGNMENT))
     kv_layer_stride = _align_up(2 * max_tokens * kv * bpe)
     ops: list[OperatorPlan] = []
 
@@ -353,7 +352,7 @@ def build_plan(model: ModelSpec, costs: LLMCompassCostModel, *, layer_limit: int
             score_addr, gate_addr, up_addr = _slot(5,max_tokens,scratch_width,bpe), _slot(6,max_tokens,scratch_width,bpe), _slot(7,max_tokens,scratch_width,bpe)
             q_bytes, kv_bytes = tokens*h*bpe, tokens*kv*bpe
             score_bytes = model.attention_heads*tokens*context*bpe
-            layer_kv = KV_BASE + layer*kv_layer_stride
+            layer_kv = kv_base + layer*kv_layer_stride
             key_cache, value_cache = layer_kv, layer_kv + max_tokens*kv*bpe
             add(phase, layer, "input_rmsnorm", costs.vector(tokens*h, 6, "rmsnorm", 2*active),
                 [_hbm("read",s0,active,"hidden"), _weight_read(weights,f"{p}.input_layernorm.weight")], [_hbm("write",s1,active,"norm_hidden")])
@@ -398,7 +397,7 @@ def build_plan(model: ModelSpec, costs: LLMCompassCostModel, *, layer_limit: int
         add(phase,None,"lm_head",costs.matmul(1,h,model.vocab_size,False,"tied_lm_head"),
             [_hbm("read",_slot(1,max_tokens,scratch_width,bpe)+(tokens-1)*h*bpe,h*bpe,"last_hidden"),_weight_read(weights,"model.embed_tokens")], [_hbm("write",_slot(2,max_tokens,scratch_width,bpe),model.vocab_size*bpe,"logits")])
 
-    hbm_limit = KV_BASE + model.layers*kv_layer_stride
+    hbm_limit = kv_base + model.layers*kv_layer_stride
     for op in ops:
         for access in op.reads + op.writes:
             if access.bytes <= 0:
@@ -458,7 +457,7 @@ def plan_summary(plan: InferencePlan, architecture_name: str) -> dict[str, Any]:
         by_phase[op.phase] = by_phase.get(op.phase, 0) + 1
         by_family[op.timing.family] = by_family.get(op.timing.family, 0) + 1
     return {
-        "schema": "llmcompass-hbfsim-qwen-p32d2-plan-v1", "model": dataclasses.asdict(plan.model),
+        "schema": "llmcompass-hbfsim-qwen-plan-v2", "model": dataclasses.asdict(plan.model),
         "llmcompass_architecture": architecture_name, "operator_count": len(plan.operators),
         "operator_count_by_phase": by_phase, "operator_count_by_family": by_family,
         "weight_bytes": plan.weights.footprint, "static_blocks_per_plane": plan.static_blocks_per_plane,
@@ -684,9 +683,9 @@ def build_traffic_report(
     memory_layout: str = MEMORY_LAYOUT_HBF_HBM,
 ) -> dict[str, Any]:
     """Create phase and total HBFSim traffic receipts without inventing GPU caches."""
-    all_phases = ("prefill", "decode_1", "decode_2")
-    if set(phase_counts) != set(all_phases) or not phase_finish_ns or not set(phase_finish_ns).issubset(all_phases):
-        raise CosimError("traffic report requires P32D2 phase counters and a non-empty ordered phase prefix")
+    all_phases = tuple(phase_counts)
+    if not all_phases or all_phases[0] != "prefill" or not set(phase_finish_ns).issubset(all_phases):
+        raise CosimError("traffic report requires an ordered prefill/decode phase set")
     phase_order = tuple(phase for phase in all_phases if phase in phase_finish_ns)
     previous = 0.0
     rows = []
@@ -705,7 +704,7 @@ def build_traffic_report(
         raise CosimError(f"unknown memory layout: {memory_layout}")
     gddr_abstract = memory_layout == MEMORY_LAYOUT_GDDR_ABSTRACT_ALL_HBM
     return {
-        "schema": "llmcompass-hbfsim-qwen-p32d2-traffic-v1",
+        "schema": "llmcompass-hbfsim-qwen-traffic-v2",
         "status": "PASS",
         "memory_layout": memory_layout,
         "phase_coverage": list(phase_order),
@@ -913,7 +912,7 @@ def _archived_ncu_rows(comparison: dict[str, Any]) -> dict[str, dict[str, Any]]:
 
 
 def _aggregate_simulated_target_traffic(traffic: dict[str, Any]) -> dict[str, Any]:
-    if traffic.get("schema") != "llmcompass-hbfsim-qwen-p32d2-traffic-v1" or traffic.get("status") != "PASS":
+    if traffic.get("schema") not in {"llmcompass-hbfsim-qwen-p32d2-traffic-v1", "llmcompass-hbfsim-qwen-traffic-v2"} or traffic.get("status") != "PASS":
         raise CosimError("simulation traffic must be a passing Qwen P32D2 traffic receipt")
     total = traffic.get("total")
     if not isinstance(total, dict) or not isinstance(total.get("elapsed_ns"), (int, float)) or total["elapsed_ns"] <= 0:
@@ -974,7 +973,7 @@ def compare_to_archived_ncu_traffic(
     )
     ncu_rows = _archived_ncu_rows(archived)
     simulated = _aggregate_simulated_target_traffic(traffic)
-    if manifest.get("schema") != "llmcompass-hbfsim-qwen-p32d2-run-v1" or manifest.get("status") != "PASS":
+    if manifest.get("schema") not in {"llmcompass-hbfsim-qwen-p32d2-run-v1", "llmcompass-hbfsim-qwen-run-v2"} or manifest.get("status") != "PASS":
         raise CosimError("simulation manifest must be a passing Qwen P32D2 co-simulation receipt")
     plan = manifest.get("plan")
     if not isinstance(plan, dict) or not isinstance(plan.get("model"), dict):
@@ -1116,7 +1115,7 @@ def run_cosimulation(
     output.mkdir(parents=True)
     manifest_path, operator_path = output/"manifest.json", output/"operators.jsonl"
     manifest: dict[str, Any] = {
-        "schema": "llmcompass-hbfsim-qwen-p32d2-run-v1", "status": "RUNNING", "started_utc": _utc_now(),
+        "schema": "llmcompass-hbfsim-qwen-run-v2", "status": "RUNNING", "started_utc": _utc_now(),
         "llmcompass_head": _git_sha(adapter.parents[1]), "hbfsim_source_head": _git_sha(hbfsim_source),
         "hbfsim_binary_sha256": _sha256(binary), "hbfsim_config": str(config.resolve()),
         "hbfsim_config_sha256": _sha256(config), "output": str(output.resolve()), "plan": plan_summary(plan, architecture_name),
@@ -1127,11 +1126,18 @@ def run_cosimulation(
             {"path": str(path.resolve()), "sha256": _sha256(path)} for path in config_overlays
         ],
         "memory_layout": plan.memory_layout,
+        "workload": {
+            "prefill_tokens": plan.model.prefill_tokens,
+            "decode_steps": plan.model.decode_steps,
+            "batch_size": 1,
+            "tensor_parallelism": 1,
+        },
     }
     _write_json_atomic(manifest_path, manifest)
     session = None
     phase_finish: dict[str, int] = {}
-    phase_traffic = {phase: _empty_traffic_counts() for phase in ("prefill", "decode_1", "decode_2")}
+    phase_order = tuple(dict.fromkeys(op.phase for op in plan.operators))
+    phase_traffic = {phase: _empty_traffic_counts() for phase in phase_order}
     completed_count = 0
     try:
         SimulationSession, Transaction, ResolvedSystemConfig = _load_hbfsim_api(hbfsim_source)
@@ -1193,12 +1199,18 @@ def run_cosimulation(
         _write_json_atomic(output/"traffic.json", traffic)
         traffic_artifact = {"path": str((output/"traffic.json").resolve()), "sha256": _sha256(output/"traffic.json")}
         summary = {
-            "schema": "llmcompass-hbfsim-qwen-p32d2-summary-v1", "status": "PASS", "completed_utc": _utc_now(),
+            "schema": "llmcompass-hbfsim-qwen-summary-v2", "status": "PASS", "completed_utc": _utc_now(),
             "simulated_finish_ns": finish_ns, "simulated_finish_ms": finish_ns/1e6, "phase_finish_ns": phase_finish,
             "operator_count": len(plan.operators), "completion_count": completed_count,
             "hbf_wear_artifacts": wear_artifacts,
             "traffic_artifact": traffic_artifact,
             "memory_layout": plan.memory_layout,
+            "workload": {
+                "prefill_tokens": plan.model.prefill_tokens,
+                "decode_steps": plan.model.decode_steps,
+                "batch_size": 1,
+                "tensor_parallelism": 1,
+            },
             "claim_boundary": (
                 "operator-boundary analytical closed loop through the generic HBFSim HBM device with a GDDR-inspired numeric overlay; not a native GDDR6, CTA/warp/cycle/cache, or hardware-calibrated model"
                 if plan.memory_layout == MEMORY_LAYOUT_GDDR_ABSTRACT_ALL_HBM else
@@ -1241,6 +1253,8 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--hbfsim-config", type=Path, default=defaults["config"])
     parser.add_argument("--hbfsim-overlay", action="append", type=Path, default=[], help="additional HBFSim key=value overlay; later overlays win")
     parser.add_argument("--memory-layout", choices=MEMORY_LAYOUTS, default=MEMORY_LAYOUT_HBF_HBM)
+    parser.add_argument("--prefill-tokens", type=int, help="override the model workload prefill length")
+    parser.add_argument("--decode-steps", type=int, help="override the model workload decode step count")
     parser.add_argument("--output", type=Path)
     parser.add_argument("--hardware-finish", type=Path, help="passing SGLang finish.json for fixed P32D2 timing comparison or an explicitly labeled cross-receipt bandwidth-rate proxy")
     parser.add_argument("--simulation-summary", type=Path, help="passing Qwen P32D2 co-simulation summary.json")
@@ -1269,6 +1283,14 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps(report, indent=2, sort_keys=True))
         return 0
     model = ModelSpec.from_json(args.model)
+    if args.prefill_tokens is not None or args.decode_steps is not None:
+        model = dataclasses.replace(
+            model,
+            prefill_tokens=model.prefill_tokens if args.prefill_tokens is None else args.prefill_tokens,
+            decode_steps=model.decode_steps if args.decode_steps is None else args.decode_steps,
+        )
+        if model.prefill_tokens <= 0 or model.decode_steps <= 0:
+            raise CosimError("--prefill-tokens and --decode-steps must be positive")
     costs = LLMCompassCostModel(adapter.parents[1], args.architecture)
     plan = build_plan(model, costs, layer_limit=1, phase_limit=1) if args.command == "smoke" else build_plan(model, costs)
     if args.memory_layout == MEMORY_LAYOUT_GDDR_ABSTRACT_ALL_HBM:

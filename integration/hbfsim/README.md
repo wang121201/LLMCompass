@@ -28,10 +28,28 @@ It writes `cache-accounting.json` with estimated L1 and L2 lookup traffic by pha
 
 The report is explicitly marked `MODEL_ESTIMATE`. It does not report cache hits, cache misses, evictions, write policy, MSHR or queue contention, DRAM propagation, bandwidth, or hardware accuracy. No fine-grained cache model is added to the HBFSim execution path.
 
+## Full-inference cosimulation matrix
+
+The matrix under `results/cosim-matrix-20261001-r4/` contains eight unique Qwen2.5-1.5B batch-size-1, tensor-parallel-size-1 full-inference instances. The P128D2 case is shared by the prompt-length and decode-step groups. All runs use the `gddr_abstract_all_hbm` numeric overlay and HBFSim; real hardware collection is `NOT_COLLECTED` for this matrix.
+
+| Instance | Prefill tokens | Decode steps | Simulated finish (ms) | Physical read (GB) | Physical write (MB) | Physical total (GB) |
+|---|---:|---:|---:|---:|---:|---:|
+| P32D2 | 32 | 2 | 3.673007 | 9.377455 | 99.585536 | 9.477041 |
+| P64D2 | 64 | 2 | 3.745718 | 9.488756 | 195.288576 | 9.684045 |
+| P128D2 | 128 | 2 | 4.096254 | 9.719615 | 394.952192 | 10.114567 |
+| P256D2 | 256 | 2 | 5.290118 | 10.214362 | 827.309568 | 11.041672 |
+| P512D2 | 512 | 2 | 7.770518 | 11.335978 | 1824.144896 | 13.160123 |
+| P128D4 | 128 | 4 | 6.518149 | 15.908894 | 401.632768 | 16.310527 |
+| P128D8 | 128 | 8 | 11.404386 | 28.287814 | 415.010048 | 28.702824 |
+| P128D16 | 128 | 16 | 21.106462 | 53.047094 | 441.829120 | 53.488923 |
+
+These are HBFSim completion-byte and operator-boundary timing results. They are not real hardware measurements, cache accuracy results, or calibrated GPU performance.
+
 ## Main files
 
 - `qwen_hbfsim_cosim.py`: plan generation, transaction DAG construction, HBFSim session control, and comparison receipts.
 - `cache-accounting.json`: Phase 1 analytical L1/L2 lookup estimate, marked `MODEL_ESTIMATE`.
+- `results/cosim-matrix-20261001-r4/matrix-summary.json`: full-inference cosimulation matrix summary.
 - `test_qwen_hbfsim_cosim.py`: model, address, operator-family, dependency, and claim-boundary tests.
 - `qwen25_1p5b.json`: self-contained Qwen model and P32D2 contract.
 - `RTX4000Ada_xmu_candidate_v0.json`: explicitly uncalibrated RTX 4000 Ada candidate configuration.

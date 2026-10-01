@@ -1,0 +1,33 @@
+{
+  "claim_boundary": "operator-boundary analytical closed loop through the generic HBFSim HBM device with a GDDR-inspired numeric overlay; not a native GDDR6, CTA/warp/cycle/cache, or hardware-calibrated model",
+  "completed_utc": "2026-10-01T11:00:48.149432+00:00",
+  "completion_count": 14436,
+  "hbf_wear_artifacts": {},
+  "memory_layout": "gddr_abstract_all_hbm",
+  "operator_count": 4563,
+  "phase_finish_ns": {
+    "decode_1": 2887890.5,
+    "decode_2": 4104690.5,
+    "decode_3": 5321490.5,
+    "decode_4": 6538290.5,
+    "decode_5": 7755090.5,
+    "decode_6": 8971890.5,
+    "decode_7": 10188690.5,
+    "decode_8": 11404386.5,
+    "prefill": 1673019.5
+  },
+  "schema": "llmcompass-hbfsim-qwen-summary-v2",
+  "simulated_finish_ms": 11.4043865,
+  "simulated_finish_ns": 11404386.5,
+  "status": "PASS",
+  "traffic_artifact": {
+    "path": "/home/xmu/nvidiagds/experiments/llm-solid-footprint-20260904/llmcompus/source/LLMCompass-curated-20261001/integration/hbfsim/results/cosim-matrix-20261001-r4/p128d08/traffic.json",
+    "sha256": "708fd4627f743ac986608437255afcb7a7bdc922f93ea35d05d316656ecbbed9"
+  },
+  "workload": {
+    "batch_size": 1,
+    "decode_steps": 8,
+    "prefill_tokens": 128,
+    "tensor_parallelism": 1
+  }
+}

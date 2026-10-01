@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import math
+import dataclasses
 import json
 import sys
 import tempfile
@@ -110,6 +111,13 @@ class QwenCosimTests(unittest.TestCase):
         self.assertEqual(report["assumptions"]["hit_miss_state"], "NOT_MODELED")
         self.assertEqual(report["assumptions"]["dram_traffic"], "NOT_REPORTED")
         self.assertEqual(report["assumptions"]["hardware_accuracy"], "NOT_CLAIMED")
+
+    def test_workload_overrides_generate_all_requested_decode_phases(self):
+        model = dataclasses.replace(self.model, prefill_tokens=128, decode_steps=4)
+        plan = build_plan(model, self.costs)
+        phases = tuple(dict.fromkeys(op.phase for op in plan.operators))
+        self.assertEqual(phases, ("prefill", "decode_1", "decode_2", "decode_3", "decode_4"))
+        self.assertEqual(len(plan.operators), 5 * (self.model.layers * 18 + 3))
 
     def test_candidate_comparison_uses_elapsed_simulated_phase_times(self):
         hardware = {

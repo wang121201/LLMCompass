@@ -1,0 +1,286 @@
+{
+  "hardware_collection": "NOT_COLLECTED",
+  "instances": [
+    {
+      "completion_count": 4812,
+      "decode_step_ms": [
+        1.204382,
+        1.2051
+      ],
+      "decode_steps": 2,
+      "decode_total_ms": 2.409482,
+      "instance": "p032d02",
+      "operator_count": 1521,
+      "prefill_ms": 1.2635245,
+      "prefill_tokens": 32,
+      "simulated_finish_ms": 3.6730065,
+      "status": "PASS",
+      "traffic": {
+        "read": {
+          "logical_bytes": 9377454016,
+          "physical_bytes": 9377455360,
+          "transactions": 3123
+        },
+        "total": {
+          "logical_bytes": 9477038208,
+          "physical_bytes": 9477040896,
+          "transactions": 4812
+        },
+        "write": {
+          "logical_bytes": 99584192,
+          "physical_bytes": 99585536,
+          "transactions": 1689
+        }
+      }
+    },
+    {
+      "completion_count": 4812,
+      "decode_step_ms": [
+        1.206026,
+        1.209
+      ],
+      "decode_steps": 2,
+      "decode_total_ms": 2.415026,
+      "instance": "p064d02",
+      "operator_count": 1521,
+      "prefill_ms": 1.3306915,
+      "prefill_tokens": 64,
+      "simulated_finish_ms": 3.7457175,
+      "status": "PASS",
+      "traffic": {
+        "read": {
+          "logical_bytes": 9488754624,
+          "physical_bytes": 9488755968,
+          "transactions": 3123
+        },
+        "total": {
+          "logical_bytes": 9684041856,
+          "physical_bytes": 9684044544,
+          "transactions": 4812
+        },
+        "write": {
+          "logical_bytes": 195287232,
+          "physical_bytes": 195288576,
+          "transactions": 1689
+        }
+      }
+    },
+    {
+      "completion_count": 4812,
+      "decode_step_ms": [
+        1.210593,
+        1.209
+      ],
+      "decode_steps": 2,
+      "decode_total_ms": 2.419593,
+      "instance": "p128d02",
+      "operator_count": 1521,
+      "prefill_ms": 1.6766615,
+      "prefill_tokens": 128,
+      "simulated_finish_ms": 4.0962545,
+      "status": "PASS",
+      "traffic": {
+        "read": {
+          "logical_bytes": 9719613376,
+          "physical_bytes": 9719614720,
+          "transactions": 3123
+        },
+        "total": {
+          "logical_bytes": 10114564224,
+          "physical_bytes": 10114566912,
+          "transactions": 4812
+        },
+        "write": {
+          "logical_bytes": 394950848,
+          "physical_bytes": 394952192,
+          "transactions": 1689
+        }
+      }
+    },
+    {
+      "completion_count": 8020,
+      "decode_step_ms": [
+        1.210593,
+        1.209,
+        1.209,
+        1.2129
+      ],
+      "decode_steps": 4,
+      "decode_total_ms": 4.841493,
+      "instance": "p128d04",
+      "operator_count": 2535,
+      "prefill_ms": 1.6766565,
+      "prefill_tokens": 128,
+      "simulated_finish_ms": 6.5181495,
+      "status": "PASS",
+      "traffic": {
+        "read": {
+          "logical_bytes": 15908891776,
+          "physical_bytes": 15908894464,
+          "transactions": 5205
+        },
+        "total": {
+          "logical_bytes": 16310521856,
+          "physical_bytes": 16310527232,
+          "transactions": 8020
+        },
+        "write": {
+          "logical_bytes": 401630080,
+          "physical_bytes": 401632768,
+          "transactions": 2815
+        }
+      }
+    },
+    {
+      "completion_count": 14436,
+      "decode_step_ms": [
+        1.214871,
+        1.2168,
+        1.2168,
+        1.2168,
+        1.2168,
+        1.2168,
+        1.2168,
+        1.215696
+      ],
+      "decode_steps": 8,
+      "decode_total_ms": 9.731367,
+      "instance": "p128d08",
+      "operator_count": 4563,
+      "prefill_ms": 1.6730195,
+      "prefill_tokens": 128,
+      "simulated_finish_ms": 11.4043865,
+      "status": "PASS",
+      "traffic": {
+        "read": {
+          "logical_bytes": 28287808768,
+          "physical_bytes": 28287814144,
+          "transactions": 9369
+        },
+        "total": {
+          "logical_bytes": 28702813440,
+          "physical_bytes": 28702824192,
+          "transactions": 14436
+        },
+        "write": {
+          "logical_bytes": 415004672,
+          "physical_bytes": 415010048,
+          "transactions": 5067
+        }
+      }
+    },
+    {
+      "completion_count": 27268,
+      "decode_step_ms": [
+        1.211667,
+        1.2129,
+        1.2129,
+        1.2129,
+        1.2129,
+        1.2129,
+        1.2129,
+        1.2129,
+        1.216337,
+        1.2168,
+        1.2168,
+        1.2168,
+        1.2168,
+        1.21567,
+        1.2129,
+        1.2129
+      ],
+      "decode_steps": 16,
+      "decode_total_ms": 19.426973999999998,
+      "instance": "p128d16",
+      "operator_count": 8619,
+      "prefill_ms": 1.6794875,
+      "prefill_tokens": 128,
+      "simulated_finish_ms": 21.1064615,
+      "status": "PASS",
+      "traffic": {
+        "read": {
+          "logical_bytes": 53047083520,
+          "physical_bytes": 53047094272,
+          "transactions": 17697
+        },
+        "total": {
+          "logical_bytes": 53488901888,
+          "physical_bytes": 53488923392,
+          "transactions": 27268
+        },
+        "write": {
+          "logical_bytes": 441818368,
+          "physical_bytes": 441829120,
+          "transactions": 9571
+        }
+      }
+    },
+    {
+      "completion_count": 4812,
+      "decode_step_ms": [
+        1.221163,
+        1.2207
+      ],
+      "decode_steps": 2,
+      "decode_total_ms": 2.4418629999999997,
+      "instance": "p256d02",
+      "operator_count": 1521,
+      "prefill_ms": 2.8482545,
+      "prefill_tokens": 256,
+      "simulated_finish_ms": 5.2901175,
+      "status": "PASS",
+      "traffic": {
+        "read": {
+          "logical_bytes": 10214361024,
+          "physical_bytes": 10214362368,
+          "transactions": 3123
+        },
+        "total": {
+          "logical_bytes": 11041669248,
+          "physical_bytes": 11041671936,
+          "transactions": 4812
+        },
+        "write": {
+          "logical_bytes": 827308224,
+          "physical_bytes": 827309568,
+          "transactions": 1689
+        }
+      }
+    },
+    {
+      "completion_count": 4812,
+      "decode_step_ms": [
+        1.222493,
+        1.2207
+      ],
+      "decode_steps": 2,
+      "decode_total_ms": 2.443193,
+      "instance": "p512d02",
+      "operator_count": 1521,
+      "prefill_ms": 5.3273245,
+      "prefill_tokens": 512,
+      "simulated_finish_ms": 7.7705175,
+      "status": "PASS",
+      "traffic": {
+        "read": {
+          "logical_bytes": 11335976896,
+          "physical_bytes": 11335978240,
+          "transactions": 3123
+        },
+        "total": {
+          "logical_bytes": 13160120448,
+          "physical_bytes": 13160123136,
+          "transactions": 4812
+        },
+        "write": {
+          "logical_bytes": 1824143552,
+          "physical_bytes": 1824144896,
+          "transactions": 1689
+        }
+      }
+    }
+  ],
+  "memory_layout": "gddr_abstract_all_hbm",
+  "schema": "llmcompass-hbfsim-qwen-cosim-matrix-v1",
+  "status": "PASS"
+}

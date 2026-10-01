@@ -1,0 +1,175 @@
+{
+  "cache_level_coverage": {
+    "DRAM": "HBFSim generic HBM-device traffic with a GDDR-inspired numeric overlay; it is not a native GDDR6 backend or RTX 4000 Ada GDDR6 traffic",
+    "L1": "NOT_MODELED: no CTA/warp/instruction cache accesses or L1 policy exist in this adapter",
+    "L2": "NOT_MODELED: the LLMCompass L2 bandwidth parameter is a roofline input only; it does not produce cache hit/miss or byte counters"
+  },
+  "claim_boundary": "exact for this adapter's generic-HBM completion receipts under a GDDR-inspired numeric overlay, not a native GDDR6, hardware L1/L2/DRAM, or bandwidth measurement",
+  "definitions": {
+    "effective_physical_GBps": "physical_bytes divided by this serial operator-boundary interval in ns; it is an interval average, not a measured Ada link peak",
+    "logical_bytes": "sum of the adapter-requested bytes returned in HBFSim completion receipts",
+    "phase_coverage": "the completed contiguous P32D2 phase prefix; a smoke receipt can contain prefill only and must not be interpreted as full P32D2",
+    "physical_bytes": "sum of HBFSim physical completion bytes after its target-specific transfer granularity"
+  },
+  "memory_layout": "gddr_abstract_all_hbm",
+  "phase_coverage": [
+    "prefill",
+    "decode_1",
+    "decode_2"
+  ],
+  "phase_rows": [
+    {
+      "elapsed_ns": 1676661.5,
+      "phase": "prefill",
+      "targets": {
+        "HBF_STATIC": {
+          "read": {
+            "effective_logical_GBps": 0.0,
+            "effective_physical_GBps": 0.0,
+            "logical_bytes": 0,
+            "physical_bytes": 0,
+            "transactions": 0
+          },
+          "write": {
+            "effective_logical_GBps": 0.0,
+            "effective_physical_GBps": 0.0,
+            "logical_bytes": 0,
+            "physical_bytes": 0,
+            "transactions": 0
+          }
+        },
+        "HBM": {
+          "read": {
+            "effective_logical_GBps": 2105.645677436978,
+            "effective_physical_GBps": 2105.645677436978,
+            "logical_bytes": 3530455040,
+            "physical_bytes": 3530455040,
+            "transactions": 1041
+          },
+          "write": {
+            "effective_logical_GBps": 231.5774483996919,
+            "effective_physical_GBps": 231.5774483996919,
+            "logical_bytes": 388276992,
+            "physical_bytes": 388276992,
+            "transactions": 563
+          }
+        }
+      }
+    },
+    {
+      "elapsed_ns": 1210593.0,
+      "phase": "decode_1",
+      "targets": {
+        "HBF_STATIC": {
+          "read": {
+            "effective_logical_GBps": 0.0,
+            "effective_physical_GBps": 0.0,
+            "logical_bytes": 0,
+            "physical_bytes": 0,
+            "transactions": 0
+          },
+          "write": {
+            "effective_logical_GBps": 0.0,
+            "effective_physical_GBps": 0.0,
+            "logical_bytes": 0,
+            "physical_bytes": 0,
+            "transactions": 0
+          }
+        },
+        "HBM": {
+          "read": {
+            "effective_logical_GBps": 2556.2382733090312,
+            "effective_physical_GBps": 2556.238643375602,
+            "logical_bytes": 3094564160,
+            "physical_bytes": 3094564608,
+            "transactions": 1041
+          },
+          "write": {
+            "effective_logical_GBps": 2.7558857518588,
+            "effective_physical_GBps": 2.7562558184294805,
+            "logical_bytes": 3336256,
+            "physical_bytes": 3336704,
+            "transactions": 563
+          }
+        }
+      }
+    },
+    {
+      "elapsed_ns": 1209000.0,
+      "phase": "decode_2",
+      "targets": {
+        "HBF_STATIC": {
+          "read": {
+            "effective_logical_GBps": 0.0,
+            "effective_physical_GBps": 0.0,
+            "logical_bytes": 0,
+            "physical_bytes": 0,
+            "transactions": 0
+          },
+          "write": {
+            "effective_logical_GBps": 0.0,
+            "effective_physical_GBps": 0.0,
+            "logical_bytes": 0,
+            "physical_bytes": 0,
+            "transactions": 0
+          }
+        },
+        "HBM": {
+          "read": {
+            "effective_logical_GBps": 2559.6312456575683,
+            "effective_physical_GBps": 2559.631986765922,
+            "logical_bytes": 3094594176,
+            "physical_bytes": 3094595072,
+            "transactions": 1041
+          },
+          "write": {
+            "effective_logical_GBps": 2.760628618693135,
+            "effective_physical_GBps": 2.7613697270471462,
+            "logical_bytes": 3337600,
+            "physical_bytes": 3338496,
+            "transactions": 563
+          }
+        }
+      }
+    }
+  ],
+  "schema": "llmcompass-hbfsim-qwen-traffic-v2",
+  "status": "PASS",
+  "total": {
+    "elapsed_ns": 4096254.5,
+    "targets": {
+      "HBF_STATIC": {
+        "read": {
+          "effective_logical_GBps": 0.0,
+          "effective_physical_GBps": 0.0,
+          "logical_bytes": 0,
+          "physical_bytes": 0,
+          "transactions": 0
+        },
+        "write": {
+          "effective_logical_GBps": 0.0,
+          "effective_physical_GBps": 0.0,
+          "logical_bytes": 0,
+          "physical_bytes": 0,
+          "transactions": 0
+        }
+      },
+      "HBM": {
+        "read": {
+          "effective_logical_GBps": 2372.80505300635,
+          "effective_physical_GBps": 2372.8053811109635,
+          "logical_bytes": 9719613376,
+          "physical_bytes": 9719614720,
+          "transactions": 3123
+        },
+        "write": {
+          "effective_logical_GBps": 96.41755608690818,
+          "effective_physical_GBps": 96.4178841915218,
+          "logical_bytes": 394950848,
+          "physical_bytes": 394952192,
+          "transactions": 1689
+        }
+      }
+    }
+  }
+}
