@@ -12,13 +12,26 @@ The adapter builds an operator-boundary analytical closed loop: LLMCompass suppl
 
 Weights, activations, and KV cache use deterministic simulated logical addresses. These are not CUDA virtual addresses or physical hardware addresses. The `gddr_abstract_all_hbm` mode applies an uncalibrated GDDR-inspired numeric overlay to the generic HBFSim HBM device. It is not a native RTX 4000 Ada GDDR6 backend.
 
-The current adapter does not model L1 cache, L2 cache, CTA access, warp access, instruction access, cache replacement, or cache hit/miss behavior. The configured L2 bandwidth is a roofline input only. Therefore L1 and L2 hardware counters must remain `NOT_MODELED` on the simulation side.
+The current adapter does not model L1 cache, L2 cache, CTA access, warp access, instruction access, cache replacement, or cache hit/miss behavior. The configured L2 bandwidth is a roofline input only. Therefore L1 and L2 hardware counters remain `NOT_MODELED` on the simulation side.
 
 `traffic.json` reports `logical_bytes`, `physical_bytes`, transactions, phase intervals, and interval-average GB/s. These are HBFSim completion values, not measured hardware link bandwidth. Hardware DRAM rows come from NVIDIA Nsight Compute (NCU) counters and are kept as a separate evidence class.
+
+## Phase 1 analytical cache accounting
+
+The `cache-accounting` command provides a deliberately separate Phase 1 estimate:
+
+```text
+python3 qwen_hbfsim_cosim.py cache-accounting --output results/analytical-cache-accounting
+```
+
+It writes `cache-accounting.json` with estimated L1 and L2 lookup traffic by phase, read/write operation, and abstract memory target. The estimate is derived only from existing LLMCompass operator-level `Access` records. Each access is rounded independently to 32-byte sectors for an accounting estimate; address-level line coalescing is not modeled. L2 lookup traffic is equal to the L1 lookup estimate because L1 filtering is not modeled.
+
+The report is explicitly marked `MODEL_ESTIMATE`. It does not report cache hits, cache misses, evictions, write policy, MSHR or queue contention, DRAM propagation, bandwidth, or hardware accuracy. No fine-grained cache model is added to the HBFSim execution path.
 
 ## Main files
 
 - `qwen_hbfsim_cosim.py`: plan generation, transaction DAG construction, HBFSim session control, and comparison receipts.
+- `cache-accounting.json`: Phase 1 analytical L1/L2 lookup estimate, marked `MODEL_ESTIMATE`.
 - `test_qwen_hbfsim_cosim.py`: model, address, operator-family, dependency, and claim-boundary tests.
 - `qwen25_1p5b.json`: self-contained Qwen model and P32D2 contract.
 - `RTX4000Ada_xmu_candidate_v0.json`: explicitly uncalibrated RTX 4000 Ada candidate configuration.
@@ -56,5 +69,5 @@ The original evidence remains copy-only on the XMU server. Historical failures a
 Validation performed for this snapshot:
 
 - All retained JSON files parse successfully.
-- The Qwen/HBFSim unit test suite passes 11 tests.
-- The curated integration tree contains no trace, capture, cache, build, or log artifacts.
+- The Qwen/HBFSim unit test suite passes 12 tests.
+- The curated integration tree contains no trace, capture, runtime-cache, build, or log artifacts; the retained `cache-accounting.json` is the requested Phase 1 analytical result.

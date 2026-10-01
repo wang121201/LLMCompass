@@ -1,0 +1,467 @@
+{
+  "assumptions": {
+    "cache_line_alignment": "NOT_MODELED; each Access is rounded independently for the estimate",
+    "cache_sector_bytes": "32-byte sector accounting convention",
+    "coalescing": "NOT_MODELED",
+    "dram_traffic": "NOT_REPORTED",
+    "hardware_accuracy": "NOT_CLAIMED",
+    "hit_miss_state": "NOT_MODELED",
+    "l1_filtering": "NOT_MODELED",
+    "l2_filtering": "NOT_MODELED",
+    "mshr_queue_contention": "NOT_MODELED",
+    "replacement": "NOT_MODELED",
+    "source": "LLMCompass operator-level Access records from the existing analytical plan",
+    "write_policy": "NOT_MODELED"
+  },
+  "cache_sector_bytes": 32,
+  "claim_boundary": "Phase 1 analytical cache accounting only. The values are MODEL_ESTIMATE outputs derived from logical operator accesses and must not be interpreted as hardware L1/L2 traffic, cache hit/miss behavior, DRAM traffic, bandwidth, or accuracy.",
+  "claim_class": "MODEL_ESTIMATE",
+  "definitions": {
+    "accesses": "LLMCompass operator-level logical Access records, not hardware transactions",
+    "estimated_sector_bytes": "estimated_sector_count multiplied by cache_sector_bytes",
+    "estimated_sector_count": "sum of ceil(access_bytes / cache_sector_bytes) for each Access record; address-level line coalescing is not modeled",
+    "l1_lookup": "estimated lookup traffic presented to an abstract L1 lookup stage",
+    "l2_lookup": "estimated lookup traffic presented to an abstract L2 lookup stage; equal to L1 because L1 filtering is not modeled",
+    "logical_bytes": "sum of the byte counts in the operator-level Access records"
+  },
+  "phase_coverage": [
+    "prefill",
+    "decode_1",
+    "decode_2"
+  ],
+  "phase_rows": [
+    {
+      "l1_lookup": {
+        "aggregate": {
+          "read": {
+            "accesses": 1041,
+            "estimated_sector_bytes": 3194058752,
+            "estimated_sector_count": 99814336,
+            "logical_bytes": 3194058752
+          },
+          "total": {
+            "accesses": 1604,
+            "estimated_sector_bytes": 3287227136,
+            "estimated_sector_count": 102725848,
+            "logical_bytes": 3287227136
+          },
+          "write": {
+            "accesses": 563,
+            "estimated_sector_bytes": 93168384,
+            "estimated_sector_count": 2911512,
+            "logical_bytes": 93168384
+          }
+        },
+        "targets": {
+          "HBF_STATIC": {
+            "read": {
+              "accesses": 339,
+              "estimated_sector_bytes": 3087526912,
+              "estimated_sector_count": 96485216,
+              "logical_bytes": 3087526912
+            },
+            "write": {
+              "accesses": 0,
+              "estimated_sector_bytes": 0,
+              "estimated_sector_count": 0,
+              "logical_bytes": 0
+            }
+          },
+          "HBM": {
+            "read": {
+              "accesses": 702,
+              "estimated_sector_bytes": 106531840,
+              "estimated_sector_count": 3329120,
+              "logical_bytes": 106531840
+            },
+            "write": {
+              "accesses": 563,
+              "estimated_sector_bytes": 93168384,
+              "estimated_sector_count": 2911512,
+              "logical_bytes": 93168384
+            }
+          }
+        }
+      },
+      "l2_lookup": {
+        "aggregate": {
+          "read": {
+            "accesses": 1041,
+            "estimated_sector_bytes": 3194058752,
+            "estimated_sector_count": 99814336,
+            "logical_bytes": 3194058752
+          },
+          "total": {
+            "accesses": 1604,
+            "estimated_sector_bytes": 3287227136,
+            "estimated_sector_count": 102725848,
+            "logical_bytes": 3287227136
+          },
+          "write": {
+            "accesses": 563,
+            "estimated_sector_bytes": 93168384,
+            "estimated_sector_count": 2911512,
+            "logical_bytes": 93168384
+          }
+        },
+        "targets": {
+          "HBF_STATIC": {
+            "read": {
+              "accesses": 339,
+              "estimated_sector_bytes": 3087526912,
+              "estimated_sector_count": 96485216,
+              "logical_bytes": 3087526912
+            },
+            "write": {
+              "accesses": 0,
+              "estimated_sector_bytes": 0,
+              "estimated_sector_count": 0,
+              "logical_bytes": 0
+            }
+          },
+          "HBM": {
+            "read": {
+              "accesses": 702,
+              "estimated_sector_bytes": 106531840,
+              "estimated_sector_count": 3329120,
+              "logical_bytes": 106531840
+            },
+            "write": {
+              "accesses": 563,
+              "estimated_sector_bytes": 93168384,
+              "estimated_sector_count": 2911512,
+              "logical_bytes": 93168384
+            }
+          }
+        }
+      },
+      "operator_count": 507,
+      "phase": "prefill"
+    },
+    {
+      "l1_lookup": {
+        "aggregate": {
+          "read": {
+            "accesses": 1041,
+            "estimated_sector_bytes": 3091683072,
+            "estimated_sector_count": 96615096,
+            "logical_bytes": 3091682624
+          },
+          "total": {
+            "accesses": 1604,
+            "estimated_sector_bytes": 3094890752,
+            "estimated_sector_count": 96715336,
+            "logical_bytes": 3094889856
+          },
+          "write": {
+            "accesses": 563,
+            "estimated_sector_bytes": 3207680,
+            "estimated_sector_count": 100240,
+            "logical_bytes": 3207232
+          }
+        },
+        "targets": {
+          "HBF_STATIC": {
+            "read": {
+              "accesses": 339,
+              "estimated_sector_bytes": 3087431680,
+              "estimated_sector_count": 96482240,
+              "logical_bytes": 3087431680
+            },
+            "write": {
+              "accesses": 0,
+              "estimated_sector_bytes": 0,
+              "estimated_sector_count": 0,
+              "logical_bytes": 0
+            }
+          },
+          "HBM": {
+            "read": {
+              "accesses": 702,
+              "estimated_sector_bytes": 4251392,
+              "estimated_sector_count": 132856,
+              "logical_bytes": 4250944
+            },
+            "write": {
+              "accesses": 563,
+              "estimated_sector_bytes": 3207680,
+              "estimated_sector_count": 100240,
+              "logical_bytes": 3207232
+            }
+          }
+        }
+      },
+      "l2_lookup": {
+        "aggregate": {
+          "read": {
+            "accesses": 1041,
+            "estimated_sector_bytes": 3091683072,
+            "estimated_sector_count": 96615096,
+            "logical_bytes": 3091682624
+          },
+          "total": {
+            "accesses": 1604,
+            "estimated_sector_bytes": 3094890752,
+            "estimated_sector_count": 96715336,
+            "logical_bytes": 3094889856
+          },
+          "write": {
+            "accesses": 563,
+            "estimated_sector_bytes": 3207680,
+            "estimated_sector_count": 100240,
+            "logical_bytes": 3207232
+          }
+        },
+        "targets": {
+          "HBF_STATIC": {
+            "read": {
+              "accesses": 339,
+              "estimated_sector_bytes": 3087431680,
+              "estimated_sector_count": 96482240,
+              "logical_bytes": 3087431680
+            },
+            "write": {
+              "accesses": 0,
+              "estimated_sector_bytes": 0,
+              "estimated_sector_count": 0,
+              "logical_bytes": 0
+            }
+          },
+          "HBM": {
+            "read": {
+              "accesses": 702,
+              "estimated_sector_bytes": 4251392,
+              "estimated_sector_count": 132856,
+              "logical_bytes": 4250944
+            },
+            "write": {
+              "accesses": 563,
+              "estimated_sector_bytes": 3207680,
+              "estimated_sector_count": 100240,
+              "logical_bytes": 3207232
+            }
+          }
+        }
+      },
+      "operator_count": 507,
+      "phase": "decode_1"
+    },
+    {
+      "l1_lookup": {
+        "aggregate": {
+          "read": {
+            "accesses": 1041,
+            "estimated_sector_bytes": 3091713536,
+            "estimated_sector_count": 96616048,
+            "logical_bytes": 3091712640
+          },
+          "total": {
+            "accesses": 1604,
+            "estimated_sector_bytes": 3094923008,
+            "estimated_sector_count": 96716344,
+            "logical_bytes": 3094921216
+          },
+          "write": {
+            "accesses": 563,
+            "estimated_sector_bytes": 3209472,
+            "estimated_sector_count": 100296,
+            "logical_bytes": 3208576
+          }
+        },
+        "targets": {
+          "HBF_STATIC": {
+            "read": {
+              "accesses": 339,
+              "estimated_sector_bytes": 3087431680,
+              "estimated_sector_count": 96482240,
+              "logical_bytes": 3087431680
+            },
+            "write": {
+              "accesses": 0,
+              "estimated_sector_bytes": 0,
+              "estimated_sector_count": 0,
+              "logical_bytes": 0
+            }
+          },
+          "HBM": {
+            "read": {
+              "accesses": 702,
+              "estimated_sector_bytes": 4281856,
+              "estimated_sector_count": 133808,
+              "logical_bytes": 4280960
+            },
+            "write": {
+              "accesses": 563,
+              "estimated_sector_bytes": 3209472,
+              "estimated_sector_count": 100296,
+              "logical_bytes": 3208576
+            }
+          }
+        }
+      },
+      "l2_lookup": {
+        "aggregate": {
+          "read": {
+            "accesses": 1041,
+            "estimated_sector_bytes": 3091713536,
+            "estimated_sector_count": 96616048,
+            "logical_bytes": 3091712640
+          },
+          "total": {
+            "accesses": 1604,
+            "estimated_sector_bytes": 3094923008,
+            "estimated_sector_count": 96716344,
+            "logical_bytes": 3094921216
+          },
+          "write": {
+            "accesses": 563,
+            "estimated_sector_bytes": 3209472,
+            "estimated_sector_count": 100296,
+            "logical_bytes": 3208576
+          }
+        },
+        "targets": {
+          "HBF_STATIC": {
+            "read": {
+              "accesses": 339,
+              "estimated_sector_bytes": 3087431680,
+              "estimated_sector_count": 96482240,
+              "logical_bytes": 3087431680
+            },
+            "write": {
+              "accesses": 0,
+              "estimated_sector_bytes": 0,
+              "estimated_sector_count": 0,
+              "logical_bytes": 0
+            }
+          },
+          "HBM": {
+            "read": {
+              "accesses": 702,
+              "estimated_sector_bytes": 4281856,
+              "estimated_sector_count": 133808,
+              "logical_bytes": 4280960
+            },
+            "write": {
+              "accesses": 563,
+              "estimated_sector_bytes": 3209472,
+              "estimated_sector_count": 100296,
+              "logical_bytes": 3208576
+            }
+          }
+        }
+      },
+      "operator_count": 507,
+      "phase": "decode_2"
+    }
+  ],
+  "schema": "llmcompass-hbfsim-qwen-p32d2-analytical-cache-accounting-v1",
+  "status": "MODEL_ESTIMATE",
+  "total": {
+    "l1_lookup": {
+      "aggregate": {
+        "read": {
+          "accesses": 3123,
+          "estimated_sector_bytes": 9377455360,
+          "estimated_sector_count": 293045480,
+          "logical_bytes": 9377454016
+        },
+        "total": {
+          "accesses": 4812,
+          "estimated_sector_bytes": 9477040896,
+          "estimated_sector_count": 296157528,
+          "logical_bytes": 9477038208
+        },
+        "write": {
+          "accesses": 1689,
+          "estimated_sector_bytes": 99585536,
+          "estimated_sector_count": 3112048,
+          "logical_bytes": 99584192
+        }
+      },
+      "targets": {
+        "HBF_STATIC": {
+          "read": {
+            "accesses": 1017,
+            "estimated_sector_bytes": 9262390272,
+            "estimated_sector_count": 289449696,
+            "logical_bytes": 9262390272
+          },
+          "write": {
+            "accesses": 0,
+            "estimated_sector_bytes": 0,
+            "estimated_sector_count": 0,
+            "logical_bytes": 0
+          }
+        },
+        "HBM": {
+          "read": {
+            "accesses": 2106,
+            "estimated_sector_bytes": 115065088,
+            "estimated_sector_count": 3595784,
+            "logical_bytes": 115063744
+          },
+          "write": {
+            "accesses": 1689,
+            "estimated_sector_bytes": 99585536,
+            "estimated_sector_count": 3112048,
+            "logical_bytes": 99584192
+          }
+        }
+      }
+    },
+    "l2_lookup": {
+      "aggregate": {
+        "read": {
+          "accesses": 3123,
+          "estimated_sector_bytes": 9377455360,
+          "estimated_sector_count": 293045480,
+          "logical_bytes": 9377454016
+        },
+        "total": {
+          "accesses": 4812,
+          "estimated_sector_bytes": 9477040896,
+          "estimated_sector_count": 296157528,
+          "logical_bytes": 9477038208
+        },
+        "write": {
+          "accesses": 1689,
+          "estimated_sector_bytes": 99585536,
+          "estimated_sector_count": 3112048,
+          "logical_bytes": 99584192
+        }
+      },
+      "targets": {
+        "HBF_STATIC": {
+          "read": {
+            "accesses": 1017,
+            "estimated_sector_bytes": 9262390272,
+            "estimated_sector_count": 289449696,
+            "logical_bytes": 9262390272
+          },
+          "write": {
+            "accesses": 0,
+            "estimated_sector_bytes": 0,
+            "estimated_sector_count": 0,
+            "logical_bytes": 0
+          }
+        },
+        "HBM": {
+          "read": {
+            "accesses": 2106,
+            "estimated_sector_bytes": 115065088,
+            "estimated_sector_count": 3595784,
+            "logical_bytes": 115063744
+          },
+          "write": {
+            "accesses": 1689,
+            "estimated_sector_bytes": 99585536,
+            "estimated_sector_count": 3112048,
+            "logical_bytes": 99584192
+          }
+        }
+      }
+    },
+    "operator_count": 1521
+  }
+}

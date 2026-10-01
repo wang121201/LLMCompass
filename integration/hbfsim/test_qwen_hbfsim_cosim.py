@@ -11,7 +11,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 
-from qwen_hbfsim_cosim import HBF_BASE, KV_BASE, LLMCompassCostModel, ModelSpec, _add_batch_traffic, _empty_traffic_counts, _transactions, allocate_weights, build_plan, build_traffic_report, compare_to_archived_ncu_traffic, compare_to_hardware, plan_summary, remap_plan_for_gddr_abstract
+from qwen_hbfsim_cosim import HBF_BASE, KV_BASE, LLMCompassCostModel, ModelSpec, _add_batch_traffic, _empty_traffic_counts, _transactions, allocate_weights, build_analytical_cache_accounting, build_plan, build_traffic_report, compare_to_archived_ncu_traffic, compare_to_hardware, plan_summary, remap_plan_for_gddr_abstract
 
 
 class FakeTransaction:
@@ -92,6 +92,24 @@ class QwenCosimTests(unittest.TestCase):
             for access in (*op.reads, *op.writes):
                 self.assertEqual(access.target, "HBM")
                 self.assertLess(access.address + access.bytes, plan.hbm_arena_bytes + 1)
+
+    def test_phase1_cache_accounting_is_an_explicit_model_estimate(self):
+        report = build_analytical_cache_accounting(self.plan)
+        self.assertEqual(report["status"], "MODEL_ESTIMATE")
+        self.assertEqual(report["claim_class"], "MODEL_ESTIMATE")
+        self.assertEqual(report["phase_coverage"], ["prefill", "decode_1", "decode_2"])
+        self.assertEqual(report["total"]["operator_count"], len(self.plan.operators))
+        for row in report["phase_rows"]:
+            self.assertEqual(row["l1_lookup"], row["l2_lookup"])
+            for level in (row["l1_lookup"], row["l2_lookup"]):
+                self.assertGreater(level["aggregate"]["total"]["logical_bytes"], 0)
+                self.assertGreaterEqual(
+                    level["aggregate"]["total"]["estimated_sector_bytes"],
+                    level["aggregate"]["total"]["logical_bytes"],
+                )
+        self.assertEqual(report["assumptions"]["hit_miss_state"], "NOT_MODELED")
+        self.assertEqual(report["assumptions"]["dram_traffic"], "NOT_REPORTED")
+        self.assertEqual(report["assumptions"]["hardware_accuracy"], "NOT_CLAIMED")
 
     def test_candidate_comparison_uses_elapsed_simulated_phase_times(self):
         hardware = {

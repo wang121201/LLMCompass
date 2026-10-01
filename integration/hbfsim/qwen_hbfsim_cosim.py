@@ -23,6 +23,7 @@ KV_BASE = 64 * MiB
 ALIGNMENT = 4096
 MEMORY_TARGETS = ("HBF_STATIC", "HBM")
 MEMORY_OPERATIONS = ("read", "write")
+CACHE_SECTOR_BYTES = 32
 MEMORY_LAYOUT_HBF_HBM = "hbf_hbm"
 MEMORY_LAYOUT_GDDR_ABSTRACT_ALL_HBM = "gddr_abstract_all_hbm"
 MEMORY_LAYOUTS = (MEMORY_LAYOUT_HBF_HBM, MEMORY_LAYOUT_GDDR_ABSTRACT_ALL_HBM)
@@ -733,6 +734,144 @@ def build_traffic_report(
     }
 
 
+def _empty_analytical_cache_counts() -> dict[str, dict[str, dict[str, int]]]:
+    return {
+        target: {
+            operation: {
+                "accesses": 0,
+                "logical_bytes": 0,
+                "estimated_sector_count": 0,
+                "estimated_sector_bytes": 0,
+            }
+            for operation in MEMORY_OPERATIONS
+        }
+        for target in MEMORY_TARGETS
+    }
+
+
+def _add_analytical_access(
+    counts: dict[str, dict[str, dict[str, int]]],
+    access: Access,
+    *,
+    sector_bytes: int = CACHE_SECTOR_BYTES,
+) -> None:
+    if access.target not in MEMORY_TARGETS:
+        raise CosimError(f"analytical cache accounting does not support target {access.target}")
+    if access.kind not in MEMORY_OPERATIONS:
+        raise CosimError(f"analytical cache accounting does not support operation {access.kind}")
+    if not isinstance(access.bytes, int) or access.bytes < 0:
+        raise CosimError(f"access {access.label} has invalid byte count")
+    sectors = math.ceil(access.bytes / sector_bytes) if access.bytes else 0
+    row = counts[access.target][access.kind]
+    row["accesses"] += 1
+    row["logical_bytes"] += access.bytes
+    row["estimated_sector_count"] += sectors
+    row["estimated_sector_bytes"] += sectors * sector_bytes
+
+
+def _analytical_cache_view(counts: dict[str, dict[str, dict[str, int]]]) -> dict[str, Any]:
+    aggregate = {
+        operation: {
+            field: sum(counts[target][operation][field] for target in MEMORY_TARGETS)
+            for field in ("accesses", "logical_bytes", "estimated_sector_count", "estimated_sector_bytes")
+        }
+        for operation in MEMORY_OPERATIONS
+    }
+    aggregate["total"] = {
+        field: sum(aggregate[operation][field] for operation in MEMORY_OPERATIONS)
+        for field in ("accesses", "logical_bytes", "estimated_sector_count", "estimated_sector_bytes")
+    }
+    return {"targets": counts, "aggregate": aggregate}
+
+
+def _summed_analytical_cache_counts(
+    counts: Iterable[dict[str, dict[str, dict[str, int]]]],
+) -> dict[str, dict[str, dict[str, int]]]:
+    total = _empty_analytical_cache_counts()
+    fields = ("accesses", "logical_bytes", "estimated_sector_count", "estimated_sector_bytes")
+    for item in counts:
+        for target in MEMORY_TARGETS:
+            for operation in MEMORY_OPERATIONS:
+                for field in fields:
+                    total[target][operation][field] += item[target][operation][field]
+    return total
+
+
+def build_analytical_cache_accounting(
+    plan: InferencePlan,
+    *,
+    sector_bytes: int = CACHE_SECTOR_BYTES,
+) -> dict[str, Any]:
+    """Estimate L1/L2 lookup traffic from operator-level logical accesses only.
+
+    This intentionally does not model cache lines, hit/miss state, replacement,
+    coalescing, write policy, queues, or DRAM propagation. L2 lookup traffic is
+    equal to the L1 lookup estimate because no L1 filtering is modeled.
+    """
+    if sector_bytes <= 0:
+        raise CosimError("analytical cache sector size must be positive")
+    if not plan.operators:
+        raise CosimError("analytical cache accounting requires at least one operator")
+    phases = tuple(dict.fromkeys(op.phase for op in plan.operators))
+    if any(phase not in ("prefill", "decode_1", "decode_2") for phase in phases):
+        raise CosimError("analytical cache accounting requires known P32D2 phases")
+
+    phase_rows = []
+    phase_counts = []
+    for phase in phases:
+        operators = tuple(op for op in plan.operators if op.phase == phase)
+        counts = _empty_analytical_cache_counts()
+        for op in operators:
+            for access in (*op.reads, *op.writes):
+                _add_analytical_access(counts, access, sector_bytes=sector_bytes)
+        level = _analytical_cache_view(counts)
+        phase_rows.append({
+            "phase": phase,
+            "operator_count": len(operators),
+            "l1_lookup": level,
+            "l2_lookup": level,
+        })
+        phase_counts.append(counts)
+
+    total_level = _analytical_cache_view(_summed_analytical_cache_counts(phase_counts))
+    return {
+        "schema": "llmcompass-hbfsim-qwen-p32d2-analytical-cache-accounting-v1",
+        "status": "MODEL_ESTIMATE",
+        "claim_class": "MODEL_ESTIMATE",
+        "cache_sector_bytes": sector_bytes,
+        "phase_coverage": list(phases),
+        "phase_rows": phase_rows,
+        "total": {
+            "operator_count": len(plan.operators),
+            "l1_lookup": total_level,
+            "l2_lookup": total_level,
+        },
+        "definitions": {
+            "accesses": "LLMCompass operator-level logical Access records, not hardware transactions",
+            "logical_bytes": "sum of the byte counts in the operator-level Access records",
+            "estimated_sector_count": "sum of ceil(access_bytes / cache_sector_bytes) for each Access record; address-level line coalescing is not modeled",
+            "estimated_sector_bytes": "estimated_sector_count multiplied by cache_sector_bytes",
+            "l1_lookup": "estimated lookup traffic presented to an abstract L1 lookup stage",
+            "l2_lookup": "estimated lookup traffic presented to an abstract L2 lookup stage; equal to L1 because L1 filtering is not modeled",
+        },
+        "assumptions": {
+            "source": "LLMCompass operator-level Access records from the existing analytical plan",
+            "cache_sector_bytes": "32-byte sector accounting convention",
+            "l1_filtering": "NOT_MODELED",
+            "l2_filtering": "NOT_MODELED",
+            "cache_line_alignment": "NOT_MODELED; each Access is rounded independently for the estimate",
+            "coalescing": "NOT_MODELED",
+            "hit_miss_state": "NOT_MODELED",
+            "replacement": "NOT_MODELED",
+            "write_policy": "NOT_MODELED",
+            "mshr_queue_contention": "NOT_MODELED",
+            "dram_traffic": "NOT_REPORTED",
+            "hardware_accuracy": "NOT_CLAIMED",
+        },
+        "claim_boundary": "Phase 1 analytical cache accounting only. The values are MODEL_ESTIMATE outputs derived from logical operator accesses and must not be interpreted as hardware L1/L2 traffic, cache hit/miss behavior, DRAM traffic, bandwidth, or accuracy.",
+    }
+
+
 def _archived_ncu_rows(comparison: dict[str, Any]) -> dict[str, dict[str, Any]]:
     """Select the one archived P32D2/r4/whole NCU window without mixing ROIs."""
     if comparison.get("status") not in {"PARTIAL_COMPARISON", "PASS"}:
@@ -1094,7 +1233,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     adapter = Path(__file__).resolve().parent
     defaults = _default_paths(adapter)
     parser = argparse.ArgumentParser(description="Qwen2.5-1.5B P32D2 LLMCompass + HBFSim operator-boundary co-simulation")
-    parser.add_argument("command", choices=("plan", "smoke", "run", "compare", "compare-ncu-traffic"))
+    parser.add_argument("command", choices=("plan", "smoke", "run", "cache-accounting", "compare", "compare-ncu-traffic"))
     parser.add_argument("--model", type=Path, default=defaults["model"])
     parser.add_argument("--architecture", type=Path, default=defaults["architecture"])
     parser.add_argument("--hbfsim-source", type=Path, default=defaults["hbfsim_source"])
@@ -1136,6 +1275,15 @@ def main(argv: list[str] | None = None) -> int:
         plan = remap_plan_for_gddr_abstract(plan)
     if args.command == "plan":
         print(json.dumps(plan_summary(plan, costs.architecture_name), indent=2, sort_keys=True))
+        return 0
+    if args.command == "cache-accounting":
+        if args.output is None:
+            raise CosimError("--output is required for cache-accounting")
+        _ensure_output_scope(adapter, args.output)
+        report = build_analytical_cache_accounting(plan)
+        args.output.mkdir(parents=True)
+        _write_json_atomic(args.output / "cache-accounting.json", report)
+        print(json.dumps(report, indent=2, sort_keys=True))
         return 0
     if args.output is None:
         raise CosimError("--output is required for smoke and run")
