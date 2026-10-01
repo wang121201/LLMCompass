@@ -243,7 +243,7 @@ class LLMCompassCostModel:
     def __init__(self, repo: Path, architecture: Path) -> None:
         sys.path.insert(0, str(repo))
         _install_analytical_import_shims()
-        from hardware_model.compute_module import ComputeModule, Core, SystolicArray, VectorUnit, overhead_dict
+        from hardware_model.compute_module import ComputeModule, Core, Overhead, SystolicArray, VectorUnit, overhead_dict
         from hardware_model.device import Device
         from hardware_model.io_module import IOModule
         from hardware_model.memory_module import MemoryModule
@@ -264,7 +264,11 @@ class LLMCompassCostModel:
         vector = VectorUnit(sublanes*vu["vector_width"]*vu["flop_per_cycle"], vu_word_size, 35, vu["vector_width"], sublanes)
         core = Core(vector, array, sublanes, core_cfg["SRAM_KB"]*KiB)
         io_cfg = device_cfg["io"]
-        compute = ComputeModule(core, chip["core_count"]*device_cfg["compute_chiplet_count"], device_cfg["frequency_Hz"], io_cfg["global_buffer_MB"]*MiB, io_cfg["global_buffer_bandwidth_per_cycle_byte"], overhead_dict["A100"])
+        overhead_cfg = device_cfg.get("operator_overhead_seconds")
+        overhead = overhead_dict["A100"] if overhead_cfg is None else Overhead(
+            overhead_cfg["matmul"], overhead_cfg["softmax"], overhead_cfg["layernorm"], overhead_cfg["gelu"]
+        )
+        compute = ComputeModule(core, chip["core_count"]*device_cfg["compute_chiplet_count"], device_cfg["frequency_Hz"], io_cfg["global_buffer_MB"]*MiB, io_cfg["global_buffer_bandwidth_per_cycle_byte"], overhead)
         io_bandwidth = io_cfg["memory_channel_active_count"]*io_cfg["pin_count_per_channel"]*io_cfg["bandwidth_per_pin_bit"]//8
         io = IOModule(io_bandwidth, 1e-6)
         memory = MemoryModule(device_cfg["memory"]["total_capacity_GB"] * GiB)
@@ -301,7 +305,7 @@ class LLMCompassCostModel:
         cm = self.device.compute_module
         flops = elements * ops_per_element
         compute_s = flops / max(cm.total_vector_flops_per_cycle * cm.clock_freq, 1.0)
-        bandwidth_s = bytes_moved / max(cm.l2_bandwidth_per_cycle * cm.clock_freq, 1.0)
+        bandwidth_s = bytes_moved / max(min(cm.l2_bandwidth_per_cycle * cm.clock_freq, self.device.io_module.bandwidth), 1.0)
         return Timing(family, flops, max(1, math.ceil(max(compute_s, bandwidth_s) * 1e9)))
 
 
@@ -1236,7 +1240,7 @@ def _default_paths(adapter: Path) -> dict[str, Path]:
     llmcompass = adapter.parents[1]
     hbfsim = llmcompass.parent/"HBFSim"
     return {
-        "model": adapter/"qwen25_1p5b.json", "architecture": llmcompass/"configs"/"GA100.json", "hbfsim_source": hbfsim,
+        "model": adapter/"qwen25_1p5b.json", "architecture": adapter/"RTX4000Ada_xmu_profile_v1.json", "hbfsim_source": hbfsim,
         "binary": adapter/"_build"/"hbfsim-current"/"hbfsim", "config": hbfsim/"configs"/"systems"/"server-hbm128-hbf512.cfg",
     }
 

@@ -30,6 +30,18 @@ class QwenCosimTests(unittest.TestCase):
         cls.costs = LLMCompassCostModel(root, root / "configs" / "GA100.json")
         cls.plan = build_plan(cls.model, cls.costs)
 
+    def test_rtx4000ada_component_profile_uses_observed_and_bounded_fields(self):
+        root = HERE.parents[1]
+        costs = LLMCompassCostModel(root, HERE / "RTX4000Ada_xmu_profile_v1.json")
+        cm = costs.device.compute_module
+        self.assertEqual(costs.architecture_name, "NVIDIA RTX 4000 Ada xmu component profile v1")
+        self.assertEqual(cm.core_count, 48)
+        self.assertEqual(cm.l2_size, 40 * 1024 * 1024)
+        self.assertAlmostEqual(costs.device.io_module.bandwidth, 360.04e9)
+        self.assertAlmostEqual(cm.total_systolic_array_flops, 213.8112e12)
+        self.assertAlmostEqual(cm.total_vector_flops, 26.7264e12)
+        self.assertEqual((cm.overhead.matmul, cm.overhead.softmax, cm.overhead.layernorm, cm.overhead.gelu), (0.0, 0.0, 0.0, 0.0))
+
     def test_model_identity_and_p32d2_contract(self):
         self.assertEqual((self.model.hidden_size, self.model.intermediate_size, self.model.layers), (1536, 8960, 28))
         self.assertEqual((self.model.attention_heads, self.model.kv_heads, self.model.head_dim), (12, 2, 128))
