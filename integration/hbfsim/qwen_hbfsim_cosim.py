@@ -1240,7 +1240,7 @@ def _default_paths(adapter: Path) -> dict[str, Path]:
     llmcompass = adapter.parents[1]
     hbfsim = llmcompass.parent/"HBFSim"
     return {
-        "model": adapter/"qwen25_1p5b.json", "architecture": adapter/"RTX4000Ada_xmu_profile_v1.json", "hbfsim_source": hbfsim,
+        "model": adapter/"qwen25_1p5b.json", "architecture": adapter/"RTX4000Ada_xmu_profile_v2.json", "hbfsim_source": hbfsim,
         "binary": adapter/"_build"/"hbfsim-current"/"hbfsim", "config": hbfsim/"configs"/"systems"/"server-hbm128-hbf512.cfg",
     }
 
