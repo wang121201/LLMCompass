@@ -1,0 +1,56 @@
+{
+  "aggregate": {
+    "absolute_error_ms": 5.513453819240354,
+    "absolute_error_percent": 16.087000837528265,
+    "hardware_host_wall_ms": 34.272726625204086,
+    "signed_error_ms": 5.513453819240354,
+    "signed_error_percent": 16.087000837528265,
+    "simulated_operator_boundary_ms": 39.78618044444444
+  },
+  "calibration_verdict": "NOT_CALIBRATED: the simulation uses the generic HBFSim HBM device with a GDDR-inspired numeric overlay and may use a non-matching LLMCompass architecture. It is not a native GDDR6 backend, cycle, kernel, cache, numerical, or statistical accuracy.",
+  "completed_utc": "2026-09-30T12:53:42.184013+00:00",
+  "definitions": {
+    "hardware_host_wall_ms": "one SGLang measurement per phase, measured by its driver around synchronized execution; it includes framework/runtime overhead",
+    "signed_error_percent": "(simulated_operator_boundary_ms - hardware_host_wall_ms) / hardware_host_wall_ms * 100",
+    "simulated_operator_boundary_ms": "elapsed time from the analytical LLMCompass operator plan and HBFSim completion frontier"
+  },
+  "hardware_receipt": {
+    "path": "/home/xmu/nvidiagds/simulators/LLMCompass/integration/hbfsim/results/qwen-p32d2-hardware-gpu0-baseline-r2/finish.json",
+    "sha256": "e7498691745da7a6fb4d1be11228b2a621542234ff9ccbeeb326ff09dcd0c289"
+  },
+  "phase_rows": [
+    {
+      "absolute_error_ms": 1.3656124305266264,
+      "absolute_error_percent": 11.054280698404478,
+      "hardware_host_wall_ms": 12.353697791695595,
+      "phase": "prefill",
+      "signed_error_ms": 1.3656124305266264,
+      "signed_error_percent": 11.054280698404478,
+      "simulated_operator_boundary_ms": 13.719310222222221
+    },
+    {
+      "absolute_error_ms": 2.1179250427056413,
+      "absolute_error_percent": 19.40309724062123,
+      "hardware_host_wall_ms": 10.915396735072136,
+      "phase": "decode_1",
+      "signed_error_ms": 2.1179250427056413,
+      "signed_error_percent": 19.40309724062123,
+      "simulated_operator_boundary_ms": 13.033321777777777
+    },
+    {
+      "absolute_error_ms": 2.0299163460080845,
+      "absolute_error_percent": 18.447693705576913,
+      "hardware_host_wall_ms": 11.003632098436356,
+      "phase": "decode_2",
+      "signed_error_ms": 2.0299163460080845,
+      "signed_error_percent": 18.447693705576913,
+      "simulated_operator_boundary_ms": 13.03354844444444
+    }
+  ],
+  "schema": "llmcompass-hbfsim-qwen-p32d2-rtx4000-ada-candidate-comparison-v1",
+  "simulation_receipt": {
+    "path": "/home/xmu/nvidiagds/simulators/LLMCompass/integration/hbfsim/results/qwen-p32d2-rtx4000ada-gddr-abstract-aligned-full-r1/summary.json",
+    "sha256": "382e0c78c7d5cc96b12c484449beced691f2405eaf567e86bd0eec6cb542dd24"
+  },
+  "status": "GDDR_ABSTRACT_CROSS_CONFIG_DIAGNOSTIC_ONLY"
+}

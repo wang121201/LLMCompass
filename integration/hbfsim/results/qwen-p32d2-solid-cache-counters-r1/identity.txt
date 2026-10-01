@@ -1,0 +1,9 @@
+schema=LLMCOMPASS_QWEN_P32D2_SOLID_CACHE_COUNTERS_V1
+contract=Qwen2.5-1.5B-Instruct; BF16; TP1; P32/D2; FlashInfer; eager; no CUDA graph; no torch.compile; no overlap; no radix cache
+semantics=L1 sectors/hits/misses are raw NCU counters; L2 total/hit/miss are retained raw and are not used to calculate a hit rate
+dram_throughput_semantics=NCU profiled pct_of_peak_sustained_elapsed only; not an absolute native workload GB/s
+package_manifest_sha256=2774c99cc051f48f8b6320e23f14ed802660cd6374976f3030f7acf447d09b41
+gpu_uuid=GPU-18ace299-5348-e6e4-d48c-1ee5a602859b
+ncu_version=Version 2025.1.0.0 (build 35237751) (public-release)
+repeats=5
+metrics=l1tex__t_sectors_pipe_lsu_mem_global_op_ld.sum,l1tex__t_sectors_pipe_lsu_mem_global_op_ld_lookup_hit.sum,l1tex__t_sectors_pipe_lsu_mem_global_op_ld_lookup_miss.sum,l1tex__t_sectors_pipe_lsu_mem_global_op_st.sum,l1tex__t_sectors_pipe_lsu_mem_global_op_st_lookup_hit.sum,l1tex__t_sectors_pipe_lsu_mem_global_op_st_lookup_miss.sum,lts__t_sectors_aperture_device_op_read.sum,lts__t_sectors_aperture_device_op_read_lookup_hit.sum,lts__t_sectors_aperture_device_op_read_lookup_miss.sum,lts__t_sectors_aperture_device_op_write.sum,lts__t_sectors_aperture_device_op_write_lookup_hit.sum,lts__t_sectors_aperture_device_op_write_lookup_miss.sum,dram__bytes_read.sum,dram__bytes_write.sum,dram__throughput.avg.pct_of_peak_sustained_elapsed

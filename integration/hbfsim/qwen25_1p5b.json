@@ -1,0 +1,35 @@
+{
+  "schema": "llmcompass.hbfsim.qwen_model.v1",
+  "model_id": "Qwen/Qwen2.5-1.5B-Instruct",
+  "source": {
+    "kind": "official_huggingface_config",
+    "url": "https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct/raw/main/config.json"
+  },
+  "architecture": {
+    "hidden_size": 1536,
+    "intermediate_size": 8960,
+    "num_hidden_layers": 28,
+    "num_attention_heads": 12,
+    "num_key_value_heads": 2,
+    "head_dim": 128,
+    "vocab_size": 151936,
+    "max_position_embeddings": 32768,
+    "tie_word_embeddings": true,
+    "attention_bias": true,
+    "hidden_act": "silu",
+    "normalization": "rmsnorm"
+  },
+  "precision": {
+    "weights": "bfloat16",
+    "activations": "bfloat16",
+    "kv_cache": "bfloat16",
+    "bytes_per_element": 2
+  },
+  "workload": {
+    "name": "P32D2",
+    "batch_size": 1,
+    "prefill_tokens": 32,
+    "decode_steps": 2,
+    "tensor_parallelism": 1
+  }
+}

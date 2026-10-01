@@ -1,0 +1,21 @@
+{
+  "claim_boundary": "operator-boundary analytical closed loop through the generic HBFSim HBM device with a GDDR-inspired numeric overlay; not a native GDDR6, CTA/warp/cycle/cache, or hardware-calibrated model",
+  "completed_utc": "2026-09-30T12:53:18.901699+00:00",
+  "completion_count": 4812,
+  "hbf_wear_artifacts": {},
+  "memory_layout": "gddr_abstract_all_hbm",
+  "operator_count": 1521,
+  "phase_finish_ns": {
+    "decode_1": 26752632.0,
+    "decode_2": 39786180.44444444,
+    "prefill": 13719310.222222222
+  },
+  "schema": "llmcompass-hbfsim-qwen-p32d2-summary-v1",
+  "simulated_finish_ms": 39.78618044444444,
+  "simulated_finish_ns": 39786180.44444444,
+  "status": "PASS",
+  "traffic_artifact": {
+    "path": "/home/xmu/nvidiagds/simulators/LLMCompass/integration/hbfsim/results/qwen-p32d2-rtx4000ada-gddr-abstract-aligned-full-r1/traffic.json",
+    "sha256": "2341e36eba41e8dfb32a70f79cc6a8fc8ec0f493e9116f3792ffff3e70cb81c3"
+  }
+}

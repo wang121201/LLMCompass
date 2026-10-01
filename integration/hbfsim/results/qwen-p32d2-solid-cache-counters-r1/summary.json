@@ -1,0 +1,959 @@
+{
+  "metric_semantics": {
+    "dram_throughput": "NCU range-profile pct_of_peak_sustained_elapsed; diagnostic only, not absolute native GB/s",
+    "l1": "L1 totals, lookup hits, lookup misses are raw NCU counters; total=hit+miss is verified per action",
+    "l2": "L2 total, lookup hits, lookup misses are raw NCU counters with different aggregation semantics; no L2 hit rate is calculated",
+    "sector": "32-byte sector on this Ada GPU"
+  },
+  "rois": {
+    "D1": {
+      "actions": [
+        {
+          "path": "D1/repeat-1/raw.csv",
+          "replay_passes": 2
+        },
+        {
+          "path": "D1/repeat-2/raw.csv",
+          "replay_passes": 2
+        },
+        {
+          "path": "D1/repeat-3/raw.csv",
+          "replay_passes": 2
+        },
+        {
+          "path": "D1/repeat-4/raw.csv",
+          "replay_passes": 2
+        },
+        {
+          "path": "D1/repeat-5/raw.csv",
+          "replay_passes": 2
+        }
+      ],
+      "metrics": {
+        "dram__bytes_read.sum": {
+          "coefficient_of_variation_pct": 0.0024060820284859917,
+          "count": 5,
+          "median": 3059848192,
+          "p10": 3059743974.4,
+          "p90": 3059878502.4,
+          "samples": [
+            3059701888,
+            3059807104,
+            3059848192,
+            3059877504,
+            3059879168
+          ]
+        },
+        "dram__bytes_write.sum": {
+          "coefficient_of_variation_pct": 1.745397373956729,
+          "count": 5,
+          "median": 3073152,
+          "p10": 3004083.2,
+          "p90": 3093068.8,
+          "samples": [
+            2965120,
+            3062528,
+            3073152,
+            3074560,
+            3105408
+          ]
+        },
+        "dram__throughput.avg.pct_of_peak_sustained_elapsed": {
+          "coefficient_of_variation_pct": 12.625412502268244,
+          "count": 5,
+          "median": 12.74,
+          "p10": 11.670000000000002,
+          "p90": 14.930000000000001,
+          "samples": [
+            10.97,
+            12.72,
+            12.74,
+            14.57,
+            15.17
+          ]
+        },
+        "l1tex__t_sectors_pipe_lsu_mem_global_op_ld.sum": {
+          "coefficient_of_variation_pct": 0.0,
+          "count": 5,
+          "median": 156915702,
+          "p10": 156915702.0,
+          "p90": 156915702.0,
+          "samples": [
+            156915702,
+            156915702,
+            156915702,
+            156915702,
+            156915702
+          ]
+        },
+        "l1tex__t_sectors_pipe_lsu_mem_global_op_ld_lookup_hit.sum": {
+          "coefficient_of_variation_pct": 0.002361101511635436,
+          "count": 5,
+          "median": 58972020,
+          "p10": 58970872.4,
+          "p90": 58973696.4,
+          "samples": [
+            58970758,
+            58971044,
+            58972020,
+            58973400,
+            58973894
+          ]
+        },
+        "l1tex__t_sectors_pipe_lsu_mem_global_op_ld_lookup_miss.sum": {
+          "coefficient_of_variation_pct": 0.001421630179446131,
+          "count": 5,
+          "median": 97943682,
+          "p10": 97942005.6,
+          "p90": 97944829.6,
+          "samples": [
+            97941808,
+            97942302,
+            97943682,
+            97944658,
+            97944944
+          ]
+        },
+        "l1tex__t_sectors_pipe_lsu_mem_global_op_st.sum": {
+          "coefficient_of_variation_pct": 0.0,
+          "count": 5,
+          "median": 473780,
+          "p10": 473780.0,
+          "p90": 473780.0,
+          "samples": [
+            473780,
+            473780,
+            473780,
+            473780,
+            473780
+          ]
+        },
+        "l1tex__t_sectors_pipe_lsu_mem_global_op_st_lookup_hit.sum": {
+          "coefficient_of_variation_pct": 0.06503560859537381,
+          "count": 5,
+          "median": 272495,
+          "p10": 272299.2,
+          "p90": 272645.2,
+          "samples": [
+            272216,
+            272424,
+            272495,
+            272599,
+            272676
+          ]
+        },
+        "l1tex__t_sectors_pipe_lsu_mem_global_op_st_lookup_miss.sum": {
+          "coefficient_of_variation_pct": 0.08803382398873635,
+          "count": 5,
+          "median": 201285,
+          "p10": 201134.8,
+          "p90": 201480.8,
+          "samples": [
+            201104,
+            201181,
+            201285,
+            201356,
+            201564
+          ]
+        },
+        "lts__t_sectors_aperture_device_op_read.sum": {
+          "coefficient_of_variation_pct": 0.01898504104488315,
+          "count": 5,
+          "median": 98131487,
+          "p10": 98115553.0,
+          "p90": 98151739.0,
+          "samples": [
+            98112765,
+            98119735,
+            98131487,
+            98138065,
+            98160855
+          ]
+        },
+        "lts__t_sectors_aperture_device_op_read_lookup_hit.sum": {
+          "coefficient_of_variation_pct": 0.7186025043500832,
+          "count": 5,
+          "median": 2515870,
+          "p10": 2495833.2,
+          "p90": 2530569.6,
+          "samples": [
+            2492530,
+            2500788,
+            2515870,
+            2516859,
+            2539710
+          ]
+        },
+        "lts__t_sectors_aperture_device_op_read_lookup_miss.sum": {
+          "coefficient_of_variation_pct": 0.002425500857220423,
+          "count": 5,
+          "median": 95620235,
+          "p10": 95616949.0,
+          "p90": 95621181.6,
+          "samples": [
+            95615617,
+            95618947,
+            95620235,
+            95621145,
+            95621206
+          ]
+        },
+        "lts__t_sectors_aperture_device_op_write.sum": {
+          "coefficient_of_variation_pct": 0.316185007850236,
+          "count": 5,
+          "median": 347666,
+          "p10": 346525.0,
+          "p90": 348390.8,
+          "samples": [
+            345785,
+            347635,
+            347666,
+            347714,
+            348842
+          ]
+        },
+        "lts__t_sectors_aperture_device_op_write_lookup_hit.sum": {
+          "coefficient_of_variation_pct": 0.2713500781611851,
+          "count": 5,
+          "median": 347745,
+          "p10": 346161.0,
+          "p90": 347981.8,
+          "samples": [
+            345973,
+            346443,
+            347745,
+            347824,
+            348087
+          ]
+        },
+        "lts__t_sectors_aperture_device_op_write_lookup_miss.sum": {
+          "coefficient_of_variation_pct": 67.2612028155374,
+          "count": 5,
+          "median": 26,
+          "p10": 13.6,
+          "p90": 56.6,
+          "samples": [
+            12,
+            16,
+            26,
+            44,
+            65
+          ]
+        }
+      },
+      "replay_passes": 2
+    },
+    "D2": {
+      "actions": [
+        {
+          "path": "D2/repeat-1/raw.csv",
+          "replay_passes": 2
+        },
+        {
+          "path": "D2/repeat-2/raw.csv",
+          "replay_passes": 2
+        },
+        {
+          "path": "D2/repeat-3/raw.csv",
+          "replay_passes": 2
+        },
+        {
+          "path": "D2/repeat-4/raw.csv",
+          "replay_passes": 2
+        },
+        {
+          "path": "D2/repeat-5/raw.csv",
+          "replay_passes": 2
+        }
+      ],
+      "metrics": {
+        "dram__bytes_read.sum": {
+          "coefficient_of_variation_pct": 0.0029990163200897505,
+          "count": 5,
+          "median": 3087808896,
+          "p10": 3087723622.4,
+          "p90": 3087886054.4,
+          "samples": [
+            3087674368,
+            3087797504,
+            3087808896,
+            3087811328,
+            3087935872
+          ]
+        },
+        "dram__bytes_write.sum": {
+          "coefficient_of_variation_pct": 21.045567098982442,
+          "count": 5,
+          "median": 849664,
+          "p10": 815360.0,
+          "p90": 1156864.0,
+          "samples": [
+            811776,
+            820736,
+            849664,
+            963712,
+            1285632
+          ]
+        },
+        "dram__throughput.avg.pct_of_peak_sustained_elapsed": {
+          "coefficient_of_variation_pct": 6.928067559704266,
+          "count": 5,
+          "median": 11.0,
+          "p10": 10.239999999999998,
+          "p90": 11.602,
+          "samples": [
+            9.78,
+            10.93,
+            11.0,
+            11.17,
+            11.89
+          ]
+        },
+        "l1tex__t_sectors_pipe_lsu_mem_global_op_ld.sum": {
+          "coefficient_of_variation_pct": 0.0,
+          "count": 5,
+          "median": 156916599,
+          "p10": 156916599.0,
+          "p90": 156916599.0,
+          "samples": [
+            156916599,
+            156916599,
+            156916599,
+            156916599,
+            156916599
+          ]
+        },
+        "l1tex__t_sectors_pipe_lsu_mem_global_op_ld_lookup_hit.sum": {
+          "coefficient_of_variation_pct": 0.0030606049687863955,
+          "count": 5,
+          "median": 58965314,
+          "p10": 58963168.8,
+          "p90": 58966837.4,
+          "samples": [
+            58962822,
+            58963689,
+            58965314,
+            58966445,
+            58967099
+          ]
+        },
+        "l1tex__t_sectors_pipe_lsu_mem_global_op_ld_lookup_miss.sum": {
+          "coefficient_of_variation_pct": 0.0018424296864050925,
+          "count": 5,
+          "median": 97951285,
+          "p10": 97949761.6,
+          "p90": 97953430.2,
+          "samples": [
+            97949500,
+            97950154,
+            97951285,
+            97952910,
+            97953777
+          ]
+        },
+        "l1tex__t_sectors_pipe_lsu_mem_global_op_st.sum": {
+          "coefficient_of_variation_pct": 0.0,
+          "count": 5,
+          "median": 473780,
+          "p10": 473780.0,
+          "p90": 473780.0,
+          "samples": [
+            473780,
+            473780,
+            473780,
+            473780,
+            473780
+          ]
+        },
+        "l1tex__t_sectors_pipe_lsu_mem_global_op_st_lookup_hit.sum": {
+          "coefficient_of_variation_pct": 0.05805996159217097,
+          "count": 5,
+          "median": 272704,
+          "p10": 272540.8,
+          "p90": 272826.2,
+          "samples": [
+            272436,
+            272698,
+            272704,
+            272795,
+            272847
+          ]
+        },
+        "l1tex__t_sectors_pipe_lsu_mem_global_op_st_lookup_miss.sum": {
+          "coefficient_of_variation_pct": 0.0787368427440207,
+          "count": 5,
+          "median": 201076,
+          "p10": 200953.8,
+          "p90": 201239.2,
+          "samples": [
+            200933,
+            200985,
+            201076,
+            201082,
+            201344
+          ]
+        },
+        "lts__t_sectors_aperture_device_op_read.sum": {
+          "coefficient_of_variation_pct": 0.016318823027031058,
+          "count": 5,
+          "median": 98152248,
+          "p10": 98124938.0,
+          "p90": 98155484.2,
+          "samples": [
+            98120136,
+            98132141,
+            98152248,
+            98152891,
+            98157213
+          ]
+        },
+        "lts__t_sectors_aperture_device_op_read_lookup_hit.sum": {
+          "coefficient_of_variation_pct": 0.8539076960373901,
+          "count": 5,
+          "median": 1654910,
+          "p10": 1633443.2,
+          "p90": 1661301.4,
+          "samples": [
+            1630320,
+            1638128,
+            1654910,
+            1658590,
+            1663109
+          ]
+        },
+        "lts__t_sectors_aperture_device_op_read_lookup_miss.sum": {
+          "coefficient_of_variation_pct": 0.002996671351023315,
+          "count": 5,
+          "median": 96494013,
+          "p10": 96491352.8,
+          "p90": 96496430.2,
+          "samples": [
+            96489816,
+            96493658,
+            96494013,
+            96494104,
+            96497981
+          ]
+        },
+        "lts__t_sectors_aperture_device_op_write.sum": {
+          "coefficient_of_variation_pct": 0.2783769461062647,
+          "count": 5,
+          "median": 347934,
+          "p10": 347609.4,
+          "p90": 349488.8,
+          "samples": [
+            347415,
+            347901,
+            347934,
+            349055,
+            349778
+          ]
+        },
+        "lts__t_sectors_aperture_device_op_write_lookup_hit.sum": {
+          "coefficient_of_variation_pct": 0.675472774753767,
+          "count": 5,
+          "median": 349455,
+          "p10": 347332.6,
+          "p90": 351897.4,
+          "samples": [
+            346963,
+            347887,
+            349455,
+            350110,
+            353089
+          ]
+        },
+        "lts__t_sectors_aperture_device_op_write_lookup_miss.sum": {
+          "coefficient_of_variation_pct": 21.67880769611189,
+          "count": 5,
+          "median": 14,
+          "p10": 9.8,
+          "p90": 15.2,
+          "samples": [
+            9,
+            11,
+            14,
+            14,
+            16
+          ]
+        }
+      },
+      "replay_passes": 2
+    },
+    "Prefill": {
+      "actions": [
+        {
+          "path": "Prefill/repeat-1/raw.csv",
+          "replay_passes": 2
+        },
+        {
+          "path": "Prefill/repeat-2/raw.csv",
+          "replay_passes": 2
+        },
+        {
+          "path": "Prefill/repeat-3/raw.csv",
+          "replay_passes": 2
+        },
+        {
+          "path": "Prefill/repeat-4/raw.csv",
+          "replay_passes": 2
+        },
+        {
+          "path": "Prefill/repeat-5/raw.csv",
+          "replay_passes": 2
+        }
+      ],
+      "metrics": {
+        "dram__bytes_read.sum": {
+          "coefficient_of_variation_pct": 0.010530177113560009,
+          "count": 5,
+          "median": 3094301312,
+          "p10": 3094223411.2,
+          "p90": 3094734310.4,
+          "samples": [
+            3094196736,
+            3094263424,
+            3094301312,
+            3094343552,
+            3094994816
+          ]
+        },
+        "dram__bytes_write.sum": {
+          "coefficient_of_variation_pct": 0.6261665362271387,
+          "count": 5,
+          "median": 66655104,
+          "p10": 66636800.0,
+          "p90": 67224985.6,
+          "samples": [
+            66626560,
+            66652160,
+            66655104,
+            66679936,
+            67588352
+          ]
+        },
+        "dram__throughput.avg.pct_of_peak_sustained_elapsed": {
+          "coefficient_of_variation_pct": 14.466932885918245,
+          "count": 5,
+          "median": 10.34,
+          "p10": 9.86,
+          "p90": 12.464,
+          "samples": [
+            9.66,
+            10.16,
+            10.34,
+            10.7,
+            13.64
+          ]
+        },
+        "l1tex__t_sectors_pipe_lsu_mem_global_op_ld.sum": {
+          "coefficient_of_variation_pct": 0.0,
+          "count": 5,
+          "median": 152261094,
+          "p10": 152261094.0,
+          "p90": 152261094.0,
+          "samples": [
+            152261094,
+            152261094,
+            152261094,
+            152261094,
+            152261094
+          ]
+        },
+        "l1tex__t_sectors_pipe_lsu_mem_global_op_ld_lookup_hit.sum": {
+          "coefficient_of_variation_pct": 0.08227036721454581,
+          "count": 5,
+          "median": 8858161,
+          "p10": 8851137.0,
+          "p90": 8864925.8,
+          "samples": [
+            8848449,
+            8855169,
+            8858161,
+            8859521,
+            8868529
+          ]
+        },
+        "l1tex__t_sectors_pipe_lsu_mem_global_op_ld_lookup_miss.sum": {
+          "coefficient_of_variation_pct": 0.005081814520276888,
+          "count": 5,
+          "median": 143402933,
+          "p10": 143396168.2,
+          "p90": 143409957.0,
+          "samples": [
+            143392565,
+            143401573,
+            143402933,
+            143405925,
+            143412645
+          ]
+        },
+        "l1tex__t_sectors_pipe_lsu_mem_global_op_st.sum": {
+          "coefficient_of_variation_pct": 0.0,
+          "count": 5,
+          "median": 2753475,
+          "p10": 2753475.0,
+          "p90": 2753475.0,
+          "samples": [
+            2753475,
+            2753475,
+            2753475,
+            2753475,
+            2753475
+          ]
+        },
+        "l1tex__t_sectors_pipe_lsu_mem_global_op_st_lookup_hit.sum": {
+          "coefficient_of_variation_pct": 0.0627837649828718,
+          "count": 5,
+          "median": 595033,
+          "p10": 594973.6,
+          "p90": 595682.4,
+          "samples": [
+            594944,
+            595018,
+            595033,
+            595650,
+            595704
+          ]
+        },
+        "l1tex__t_sectors_pipe_lsu_mem_global_op_st_lookup_miss.sum": {
+          "coefficient_of_variation_pct": 0.017316833091033743,
+          "count": 5,
+          "median": 2158442,
+          "p10": 2157792.6,
+          "p90": 2158501.4,
+          "samples": [
+            2157771,
+            2157825,
+            2158442,
+            2158457,
+            2158531
+          ]
+        },
+        "lts__t_sectors_aperture_device_op_read.sum": {
+          "coefficient_of_variation_pct": 0.016684114531501572,
+          "count": 5,
+          "median": 143834855,
+          "p10": 143825392.0,
+          "p90": 143868078.8,
+          "samples": [
+            143823492,
+            143828242,
+            143834855,
+            143845046,
+            143883434
+          ]
+        },
+        "lts__t_sectors_aperture_device_op_read_lookup_hit.sum": {
+          "coefficient_of_variation_pct": 0.02002395084622944,
+          "count": 5,
+          "median": 71225615,
+          "p10": 71216974.4,
+          "p90": 71244142.4,
+          "samples": [
+            71216422,
+            71217803,
+            71225615,
+            71233310,
+            71251364
+          ]
+        },
+        "lts__t_sectors_aperture_device_op_read_lookup_miss.sum": {
+          "coefficient_of_variation_pct": 0.01053273456283338,
+          "count": 5,
+          "median": 96696647,
+          "p10": 96694146.0,
+          "p90": 96710144.4,
+          "samples": [
+            96693278,
+            96695448,
+            96696647,
+            96697944,
+            96718278
+          ]
+        },
+        "lts__t_sectors_aperture_device_op_write.sum": {
+          "coefficient_of_variation_pct": 0.0664663216921182,
+          "count": 5,
+          "median": 2751161,
+          "p10": 2750718.4,
+          "p90": 2754196.2,
+          "samples": [
+            2750656,
+            2750812,
+            2751161,
+            2753244,
+            2754831
+          ]
+        },
+        "lts__t_sectors_aperture_device_op_write_lookup_hit.sum": {
+          "coefficient_of_variation_pct": 0.09468590961779505,
+          "count": 5,
+          "median": 2752915,
+          "p10": 2752067.0,
+          "p90": 2756471.4,
+          "samples": [
+            2751705,
+            2752610,
+            2752915,
+            2753670,
+            2758339
+          ]
+        },
+        "lts__t_sectors_aperture_device_op_write_lookup_miss.sum": {
+          "coefficient_of_variation_pct": 6.729524162785487,
+          "count": 5,
+          "median": 312,
+          "p10": 306.4,
+          "p90": 346.6,
+          "samples": [
+            306,
+            307,
+            312,
+            331,
+            357
+          ]
+        }
+      },
+      "replay_passes": 2
+    },
+    "full": {
+      "actions": [
+        {
+          "path": "full/repeat-1/raw.csv",
+          "replay_passes": 2
+        },
+        {
+          "path": "full/repeat-2/raw.csv",
+          "replay_passes": 2
+        },
+        {
+          "path": "full/repeat-3/raw.csv",
+          "replay_passes": 2
+        },
+        {
+          "path": "full/repeat-4/raw.csv",
+          "replay_passes": 2
+        },
+        {
+          "path": "full/repeat-5/raw.csv",
+          "replay_passes": 2
+        }
+      ],
+      "metrics": {
+        "dram__bytes_read.sum": {
+          "coefficient_of_variation_pct": 0.00639636653314256,
+          "count": 5,
+          "median": 9240764544,
+          "p10": 9240293376.0,
+          "p90": 9241361843.2,
+          "samples": [
+            9240121856,
+            9240550656,
+            9240764544,
+            9240802048,
+            9241735040
+          ]
+        },
+        "dram__bytes_write.sum": {
+          "coefficient_of_variation_pct": 0.6977937985156266,
+          "count": 5,
+          "median": 69214336,
+          "p10": 69178598.4,
+          "p90": 69897164.8,
+          "samples": [
+            69158272,
+            69209088,
+            69214336,
+            69296896,
+            70297344
+          ]
+        },
+        "dram__throughput.avg.pct_of_peak_sustained_elapsed": {
+          "coefficient_of_variation_pct": 18.676123795871273,
+          "count": 5,
+          "median": 13.52,
+          "p10": 10.118,
+          "p90": 13.842000000000002,
+          "samples": [
+            8.37,
+            12.74,
+            13.52,
+            13.65,
+            13.97
+          ]
+        },
+        "l1tex__t_sectors_pipe_lsu_mem_global_op_ld.sum": {
+          "coefficient_of_variation_pct": 0.0,
+          "count": 5,
+          "median": 466093395,
+          "p10": 466093395.0,
+          "p90": 466093395.0,
+          "samples": [
+            466093395,
+            466093395,
+            466093395,
+            466093395,
+            466093395
+          ]
+        },
+        "l1tex__t_sectors_pipe_lsu_mem_global_op_ld_lookup_hit.sum": {
+          "coefficient_of_variation_pct": 0.009190940532876174,
+          "count": 5,
+          "median": 126792727,
+          "p10": 126782735.4,
+          "p90": 126804342.0,
+          "samples": [
+            126777157,
+            126791103,
+            126792727,
+            126796335,
+            126809680
+          ]
+        },
+        "l1tex__t_sectors_pipe_lsu_mem_global_op_ld_lookup_miss.sum": {
+          "coefficient_of_variation_pct": 0.003434573007911147,
+          "count": 5,
+          "median": 339300668,
+          "p10": 339289053.0,
+          "p90": 339310659.6,
+          "samples": [
+            339283715,
+            339297060,
+            339300668,
+            339302292,
+            339316238
+          ]
+        },
+        "l1tex__t_sectors_pipe_lsu_mem_global_op_st.sum": {
+          "coefficient_of_variation_pct": 0.0,
+          "count": 5,
+          "median": 3701035,
+          "p10": 3701035.0,
+          "p90": 3701035.0,
+          "samples": [
+            3701035,
+            3701035,
+            3701035,
+            3701035,
+            3701035
+          ]
+        },
+        "l1tex__t_sectors_pipe_lsu_mem_global_op_st_lookup_hit.sum": {
+          "coefficient_of_variation_pct": 0.10049484101808835,
+          "count": 5,
+          "median": 1140638,
+          "p10": 1139376.4,
+          "p90": 1141408.4,
+          "samples": [
+            1138618,
+            1140514,
+            1140638,
+            1140926,
+            1141730
+          ]
+        },
+        "l1tex__t_sectors_pipe_lsu_mem_global_op_st_lookup_miss.sum": {
+          "coefficient_of_variation_pct": 0.04476104267039942,
+          "count": 5,
+          "median": 2560397,
+          "p10": 2559626.6,
+          "p90": 2561658.6,
+          "samples": [
+            2559305,
+            2560109,
+            2560397,
+            2560521,
+            2562417
+          ]
+        },
+        "lts__t_sectors_aperture_device_op_read.sum": {
+          "coefficient_of_variation_pct": 0.012154592218196016,
+          "count": 5,
+          "median": 340146367,
+          "p10": 340124888.8,
+          "p90": 340193762.2,
+          "samples": [
+            340115614,
+            340138801,
+            340146367,
+            340147045,
+            340224907
+          ]
+        },
+        "lts__t_sectors_aperture_device_op_read_lookup_hit.sum": {
+          "coefficient_of_variation_pct": 0.037077566407446715,
+          "count": 5,
+          "median": 75459641,
+          "p10": 75441050.4,
+          "p90": 75496015.6,
+          "samples": [
+            75434908,
+            75450264,
+            75459641,
+            75479080,
+            75507306
+          ]
+        },
+        "lts__t_sectors_aperture_device_op_read_lookup_miss.sum": {
+          "coefficient_of_variation_pct": 0.006382054637333373,
+          "count": 5,
+          "median": 288773612,
+          "p10": 288758862.6,
+          "p90": 288792183.4,
+          "samples": [
+            288753495,
+            288766914,
+            288773612,
+            288774745,
+            288803809
+          ]
+        },
+        "lts__t_sectors_aperture_device_op_write.sum": {
+          "coefficient_of_variation_pct": 0.14783483509392442,
+          "count": 5,
+          "median": 3442553,
+          "p10": 3441815.4,
+          "p90": 3449211.6,
+          "samples": [
+            3441423,
+            3442404,
+            3442553,
+            3442644,
+            3453590
+          ]
+        },
+        "lts__t_sectors_aperture_device_op_write_lookup_hit.sum": {
+          "coefficient_of_variation_pct": 0.07843586328583278,
+          "count": 5,
+          "median": 3441489,
+          "p10": 3440040.2,
+          "p90": 3444787.6,
+          "samples": [
+            3439919,
+            3440222,
+            3441489,
+            3442027,
+            3446628
+          ]
+        },
+        "lts__t_sectors_aperture_device_op_write_lookup_miss.sum": {
+          "coefficient_of_variation_pct": 6.143068730726805,
+          "count": 5,
+          "median": 290,
+          "p10": 278.6,
+          "p90": 315.0,
+          "samples": [
+            277,
+            281,
+            290,
+            312,
+            317
+          ]
+        }
+      },
+      "replay_passes": 2
+    }
+  },
+  "schema": "LLMCOMPASS_QWEN_P32D2_SOLID_CACHE_COUNTERS_V1"
+}

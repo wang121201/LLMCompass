@@ -1,0 +1,102 @@
+{
+  "adapter_script_sha256": "04383241a2d45bed083971ce80e66c737801089f7fbc2b678d8cfdf1abd5f212",
+  "completed_utc": "2026-09-30T12:53:18.901699+00:00",
+  "hbf_wear_artifacts": {},
+  "hbfsim_binary_sha256": "eaffa8a6ba5387ddbb10930c9b249bcafecaf16beef9b52ec963cefc7df747dd",
+  "hbfsim_config": "/home/xmu/nvidiagds/simulators/HBFSim/configs/systems/server-hbm128-hbf512.cfg",
+  "hbfsim_config_overlays": [
+    {
+      "path": "/home/xmu/nvidiagds/simulators/HBFSim/configs/overlays/gddr6/rtx4000-ada-uncalibrated.cfg",
+      "sha256": "b0b1098dd31828b92c11a8ec9d8eca8b61ccae5a2389e1f8612aba967a41a1ca"
+    }
+  ],
+  "hbfsim_config_sha256": "bb68c6fcf3b2f0639e22e63aca585808a2a4cd1e05c511b3bdf7116d51468f87",
+  "hbfsim_engine_source": {
+    "git_commit": "d7a2ca64614a6d9ce8d7a69beb77ce78b66df1a8",
+    "git_dirty": true,
+    "provenance_source": "build-time",
+    "source_sha256": "fff9ac60abc24046f2a1e8d22893c16f869ed1cb2c865cae05c47521522b94e1",
+    "tree_hash": "59462c7bde5dafca043cdf7d491d0cccfbc5de99"
+  },
+  "hbfsim_resolved_geometry": {
+    "hbf": {
+      "blocks_per_plane": 80,
+      "channels_per_stack": 16,
+      "dies_per_channel": 1,
+      "mapping_entries_per_page": 512,
+      "page_size_bytes": 4096,
+      "pages_per_block": 256,
+      "planes_per_die": 16,
+      "stacks": 4
+    },
+    "hbf_logical_capacity_bytes": 0,
+    "hbm_burst_bytes": 32,
+    "hbm_capacity_bytes": 21474836480
+  },
+  "hbfsim_source_head": "d7a2ca64614a6d9ce8d7a69beb77ce78b66df1a8",
+  "llmcompass_architecture": "/home/xmu/nvidiagds/simulators/LLMCompass/integration/hbfsim/RTX4000Ada_xmu_candidate_v0.json",
+  "llmcompass_architecture_sha256": "737e8d9fec990716d970c3426b51d5292b5835aafb29da0f3e8d1d5ef90c25bc",
+  "llmcompass_head": "2e015fd2ee750e6cad8d7152df52551e5b41ef20",
+  "memory_layout": "gddr_abstract_all_hbm",
+  "model_spec": "/home/xmu/nvidiagds/simulators/LLMCompass/integration/hbfsim/qwen25_1p5b.json",
+  "model_spec_sha256": "16a77dd5ea8e0de5ed2fafdf93561ca61d454bd8db91b24347d387cea2effd57",
+  "operators_sha256": "20971deef084e99ea4bd20022f958c83668342db2303141ca5a408240d9d7b2c",
+  "output": "/home/xmu/nvidiagds/simulators/LLMCompass/integration/hbfsim/results/qwen-p32d2-rtx4000ada-gddr-abstract-aligned-full-r1",
+  "plan": {
+    "hbm_address_shift_bytes": 3087716352,
+    "hbm_arena_bytes": 3155855360,
+    "llmcompass_architecture": "NVIDIA RTX 4000 Ada xmu candidate v0",
+    "memory_layout": "gddr_abstract_all_hbm",
+    "model": {
+      "attention_heads": 12,
+      "bytes_per_element": 2,
+      "decode_steps": 2,
+      "head_dim": 128,
+      "hidden_size": 1536,
+      "intermediate_size": 8960,
+      "kv_heads": 2,
+      "layers": 28,
+      "model_id": "Qwen/Qwen2.5-1.5B-Instruct",
+      "prefill_tokens": 32,
+      "vocab_size": 151936
+    },
+    "operator_count": 1521,
+    "operator_count_by_family": {
+      "down_projection": 84,
+      "elementwise_multiply": 84,
+      "embedding_lookup": 3,
+      "gate_projection": 84,
+      "grouped_query_attention_score": 84,
+      "grouped_query_attention_value": 84,
+      "k_projection": 84,
+      "kv_cache_append": 84,
+      "o_projection": 84,
+      "q_projection": 84,
+      "residual_add": 168,
+      "rmsnorm": 171,
+      "rotary_position_embedding": 84,
+      "silu": 84,
+      "softmax": 84,
+      "tied_lm_head": 3,
+      "up_projection": 84,
+      "v_projection": 84
+    },
+    "operator_count_by_phase": {
+      "decode_1": 507,
+      "decode_2": 507,
+      "prefill": 507
+    },
+    "schema": "llmcompass-hbfsim-qwen-p32d2-plan-v1",
+    "static_blocks_per_plane": 0,
+    "weight_bytes": 3087716352,
+    "weight_object_count": 338
+  },
+  "schema": "llmcompass-hbfsim-qwen-p32d2-run-v1",
+  "started_utc": "2026-09-30T12:50:40.720959+00:00",
+  "status": "PASS",
+  "summary_sha256": "382e0c78c7d5cc96b12c484449beced691f2405eaf567e86bd0eec6cb542dd24",
+  "traffic_artifact": {
+    "path": "/home/xmu/nvidiagds/simulators/LLMCompass/integration/hbfsim/results/qwen-p32d2-rtx4000ada-gddr-abstract-aligned-full-r1/traffic.json",
+    "sha256": "2341e36eba41e8dfb32a70f79cc6a8fc8ec0f493e9116f3792ffff3e70cb81c3"
+  }
+}
