@@ -1115,6 +1115,16 @@ def run_cosimulation(
     model_path: Path,
     architecture_path: Path,
 ) -> dict[str, Any]:
+    # The legacy adapter serialized memory-inclusive analytical intervals
+    # between external reads and writes. Do not emit more results from that
+    # invalid timing contract. Mapper latency must be reported independently;
+    # this entry point is restricted to zero-compute memory-service replay.
+    if any(op.timing.compute_ns != 0 for op in plan.operators):
+        raise CosimError(
+            "Legacy serial analytical-barrier timing is retired: report official "
+            "mapper latency separately and pass only main-memory boundary events "
+            "with zero compute barriers for HBFSim memory-service replay."
+        )
     _ensure_output_scope(adapter, output)
     output.mkdir(parents=True)
     manifest_path, operator_path = output/"manifest.json", output/"operators.jsonl"
@@ -1240,7 +1250,7 @@ def _default_paths(adapter: Path) -> dict[str, Path]:
     llmcompass = adapter.parents[1]
     hbfsim = llmcompass.parent/"HBFSim"
     return {
-        "model": adapter/"qwen25_1p5b.json", "architecture": adapter/"RTX4000Ada_xmu_profile_v2.json", "hbfsim_source": hbfsim,
+        "model": adapter/"qwen25_1p5b.json", "architecture": adapter/"RTX4000Ada_xmu_profile_v3.json", "hbfsim_source": hbfsim,
         "binary": adapter/"_build"/"hbfsim-current"/"hbfsim", "config": hbfsim/"configs"/"systems"/"server-hbm128-hbf512.cfg",
     }
 

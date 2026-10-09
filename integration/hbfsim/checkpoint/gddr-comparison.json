@@ -1,0 +1,808 @@
+[
+  {
+    "case": "p032d02",
+    "model_ns": 31927037.299858794,
+    "known_read_bytes": 9423759296,
+    "known_write_bytes": 128542912,
+    "service_read_bytes": 9423798272,
+    "service_write_bytes": 128581888,
+    "unclassified_io_bytes": 3153920,
+    "operators": 1521,
+    "phase_totals": {
+      "prefill": {
+        "model_ns": 12005878.973583385,
+        "known_read_bytes": 3230758912,
+        "known_write_bytes": 122127104,
+        "service_read_bytes": 3230758912,
+        "service_write_bytes": 122127104,
+        "unclassified_io_bytes": 3153920,
+        "operators": 507
+      },
+      "decode_1": {
+        "model_ns": 9960579.163137706,
+        "known_read_bytes": 3096413504,
+        "known_write_bytes": 3207232,
+        "service_read_bytes": 3096433664,
+        "service_write_bytes": 3227392,
+        "unclassified_io_bytes": 0,
+        "operators": 507
+      },
+      "decode_2": {
+        "model_ns": 9960579.163137706,
+        "known_read_bytes": 3096586880,
+        "known_write_bytes": 3208576,
+        "service_read_bytes": 3096605696,
+        "service_write_bytes": 3227392,
+        "unclassified_io_bytes": 0,
+        "operators": 507
+      }
+    },
+    "comparison": {
+      "metrics": {
+        "time": {
+          "candidate": 31927037.299858794,
+          "baseline": 28008958,
+          "hardware": 34526095.86715698,
+          "candidate_error_percent": -7.527809044203426,
+          "baseline_error_percent": -18.875976861769715,
+          "no_worse": true
+        },
+        "read": {
+          "candidate": 9423759296,
+          "baseline": 9423759296,
+          "hardware": 9240374144,
+          "candidate_error_percent": 1.9846074319304075,
+          "baseline_error_percent": 1.9846074319304075,
+          "no_worse": true
+        },
+        "write": {
+          "candidate": 128542912,
+          "baseline": 128542912,
+          "hardware": 73107968,
+          "candidate_error_percent": 75.8261315647564,
+          "baseline_error_percent": 75.8261315647564,
+          "no_worse": true
+        },
+        "bandwidth": {
+          "candidate": 299.2904113919227,
+          "baseline": 341.15714436788403,
+          "hardware": 269.7519623369716,
+          "candidate_error_percent": 10.950225829331295,
+          "baseline_error_percent": 26.4706812185165,
+          "no_worse": true
+        }
+      },
+      "no_worse": true
+    }
+  },
+  {
+    "case": "p064d02",
+    "model_ns": 35189335.68017736,
+    "known_read_bytes": 9580935104,
+    "known_write_bytes": 251902448,
+    "service_read_bytes": 9580974080,
+    "service_write_bytes": 251932800,
+    "unclassified_io_bytes": 7610064,
+    "operators": 1521,
+    "phase_totals": {
+      "prefill": {
+        "model_ns": 15376217.073200203,
+        "known_read_bytes": 3376838656,
+        "known_write_bytes": 245441280,
+        "service_read_bytes": 3376838656,
+        "service_write_bytes": 245441280,
+        "unclassified_io_bytes": 7569408,
+        "operators": 507
+      },
+      "decode_1": {
+        "model_ns": 9977690.274248818,
+        "known_read_bytes": 3101961536,
+        "known_write_bytes": 3250240,
+        "service_read_bytes": 3101981696,
+        "service_write_bytes": 3270400,
+        "unclassified_io_bytes": 0,
+        "operators": 507
+      },
+      "decode_2": {
+        "model_ns": 9835428.332728345,
+        "known_read_bytes": 3102134912,
+        "known_write_bytes": 3210928,
+        "service_read_bytes": 3102153728,
+        "service_write_bytes": 3221120,
+        "unclassified_io_bytes": 40656,
+        "operators": 507
+      }
+    },
+    "comparison": {
+      "metrics": {
+        "time": {
+          "candidate": 35189335.68017736,
+          "baseline": 28891240,
+          "hardware": 34811039.92462158,
+          "candidate_error_percent": 1.0867120211718095,
+          "baseline_error_percent": -17.005524504410317,
+          "no_worse": true
+        },
+        "read": {
+          "candidate": 9580935104,
+          "baseline": 9580935104,
+          "hardware": 9251040896,
+          "candidate_error_percent": 3.5660225882542695,
+          "baseline_error_percent": 3.5660225882542695,
+          "no_worse": true
+        },
+        "write": {
+          "candidate": 251902448,
+          "baseline": 251902448,
+          "hardware": 153408768,
+          "candidate_error_percent": 64.20342284477508,
+          "baseline_error_percent": 64.20342284477508,
+          "no_worse": true
+        },
+        "bandwidth": {
+          "candidate": 279.6428925352876,
+          "baseline": 340.6031591582777,
+          "hardware": 270.15710201028224,
+          "candidate_error_percent": 3.5112127182369335,
+          "baseline_error_percent": 26.075959737425023,
+          "no_worse": true
+        }
+      },
+      "no_worse": true
+    }
+  },
+  {
+    "case": "p128d02",
+    "model_ns": 40134699.62532766,
+    "known_read_bytes": 9903544256,
+    "known_write_bytes": 503137472,
+    "service_read_bytes": 9903574272,
+    "service_write_bytes": 503176448,
+    "unclassified_io_bytes": 20263936,
+    "operators": 1521,
+    "phase_totals": {
+      "prefill": {
+        "model_ns": 20245104.66747329,
+        "known_read_bytes": 3677255680,
+        "known_write_bytes": 496542464,
+        "service_read_bytes": 3677255680,
+        "service_write_bytes": 496542464,
+        "unclassified_io_bytes": 20185088,
+        "operators": 507
+      },
+      "decode_1": {
+        "model_ns": 10017101.502318997,
+        "known_read_bytes": 3113057600,
+        "known_write_bytes": 3336256,
+        "service_read_bytes": 3113077760,
+        "service_write_bytes": 3356416,
+        "unclassified_io_bytes": 0,
+        "operators": 507
+      },
+      "decode_2": {
+        "model_ns": 9872493.455535375,
+        "known_read_bytes": 3113230976,
+        "known_write_bytes": 3258752,
+        "service_read_bytes": 3113240832,
+        "service_write_bytes": 3277568,
+        "unclassified_io_bytes": 78848,
+        "operators": 507
+      }
+    },
+    "comparison": {
+      "metrics": {
+        "time": {
+          "candidate": 40134699.62532766,
+          "baseline": 30710656,
+          "hardware": 35625664.710998535,
+          "candidate_error_percent": 12.656703954598992,
+          "baseline_error_percent": -13.796258261761352,
+          "no_worse": true
+        },
+        "read": {
+          "candidate": 9903544256,
+          "baseline": 9903544256,
+          "hardware": 9274397952,
+          "candidate_error_percent": 6.783688895561424,
+          "baseline_error_percent": 6.783688895561424,
+          "no_worse": true
+        },
+        "write": {
+          "candidate": 503137472,
+          "baseline": 503137472,
+          "hardware": 280319360,
+          "candidate_error_percent": 79.48723627222893,
+          "baseline_error_percent": 79.48723627222893,
+          "no_worse": true
+        },
+        "bandwidth": {
+          "candidate": 259.798771669887,
+          "baseline": 339.5220754646205,
+          "hardware": 268.19758703478226,
+          "candidate_error_percent": -3.1315775275062463,
+          "baseline_error_percent": 26.594008252799185,
+          "no_worse": true
+        }
+      },
+      "no_worse": true
+    }
+  },
+  {
+    "case": "p256d02",
+    "model_ns": 39006400.471465975,
+    "known_read_bytes": 10581792704,
+    "known_write_bytes": 1023654080,
+    "service_read_bytes": 10581831680,
+    "service_write_bytes": 1023693056,
+    "unclassified_io_bytes": 60555264,
+    "operators": 1521,
+    "phase_totals": {
+      "prefill": {
+        "model_ns": 18833487.75922562,
+        "known_read_bytes": 4311119872,
+        "known_write_bytes": 1016636160,
+        "service_read_bytes": 4311119872,
+        "service_write_bytes": 1016636160,
+        "unclassified_io_bytes": 60555264,
+        "operators": 507
+      },
+      "decode_1": {
+        "model_ns": 10086456.356120175,
+        "known_read_bytes": 3135249728,
+        "known_write_bytes": 3508288,
+        "service_read_bytes": 3135269888,
+        "service_write_bytes": 3528448,
+        "unclassified_io_bytes": 0,
+        "operators": 507
+      },
+      "decode_2": {
+        "model_ns": 10086456.356120175,
+        "known_read_bytes": 3135423104,
+        "known_write_bytes": 3509632,
+        "service_read_bytes": 3135441920,
+        "service_write_bytes": 3528448,
+        "unclassified_io_bytes": 0,
+        "operators": 507
+      }
+    },
+    "comparison": {
+      "metrics": {
+        "time": {
+          "candidate": 39006400.471465975,
+          "baseline": 34987300,
+          "hardware": 38363984.10797119,
+          "candidate_error_percent": 1.6745298446761314,
+          "baseline_error_percent": -8.801703437442487,
+          "no_worse": true
+        },
+        "read": {
+          "candidate": 10581792704,
+          "baseline": 10581792704,
+          "hardware": 9363091200,
+          "candidate_error_percent": 13.016016590760104,
+          "baseline_error_percent": 13.016016590760104,
+          "no_worse": true
+        },
+        "write": {
+          "candidate": 1023654080,
+          "baseline": 1023654080,
+          "hardware": 646618880,
+          "candidate_error_percent": 58.308721205294844,
+          "baseline_error_percent": 58.308721205294844,
+          "no_worse": true
+        },
+        "bandwidth": {
+          "candidate": 299.07917436611285,
+          "baseline": 333.43533362105677,
+          "hardware": 260.9142484218734,
+          "candidate_error_percent": 14.627382818331336,
+          "baseline_error_percent": 27.79498844460333,
+          "no_worse": true
+        }
+      },
+      "no_worse": true
+    }
+  },
+  {
+    "case": "p512d02",
+    "model_ns": 52493555.363984615,
+    "known_read_bytes": 12070410176,
+    "known_write_bytes": 2136094912,
+    "service_read_bytes": 12070449152,
+    "service_write_bytes": 2136133888,
+    "unclassified_io_bytes": 201850880,
+    "operators": 1521,
+    "phase_totals": {
+      "prefill": {
+        "model_ns": 32054344.64004836,
+        "known_read_bytes": 5710968832,
+        "known_write_bytes": 2128388864,
+        "service_read_bytes": 5710968832,
+        "service_write_bytes": 2128388864,
+        "unclassified_io_bytes": 201850880,
+        "operators": 507
+      },
+      "decode_1": {
+        "model_ns": 10219605.361968126,
+        "known_read_bytes": 3179633984,
+        "known_write_bytes": 3852352,
+        "service_read_bytes": 3179654144,
+        "service_write_bytes": 3872512,
+        "unclassified_io_bytes": 0,
+        "operators": 507
+      },
+      "decode_2": {
+        "model_ns": 10219605.361968126,
+        "known_read_bytes": 3179807360,
+        "known_write_bytes": 3853696,
+        "service_read_bytes": 3179826176,
+        "service_write_bytes": 3872512,
+        "unclassified_io_bytes": 0,
+        "operators": 507
+      }
+    },
+    "comparison": {
+      "metrics": {
+        "time": {
+          "candidate": 52493555.363984615,
+          "baseline": 49474514,
+          "hardware": 46648031.71157837,
+          "candidate_error_percent": 12.531126047394082,
+          "baseline_error_percent": 6.059167310418534,
+          "no_worse": false
+        },
+        "read": {
+          "candidate": 12070410176,
+          "baseline": 12070410176,
+          "hardware": 9620897792,
+          "candidate_error_percent": 25.460330594477654,
+          "baseline_error_percent": 25.460330594477654,
+          "no_worse": true
+        },
+        "write": {
+          "candidate": 2136094912,
+          "baseline": 2136094912,
+          "hardware": 1204898048,
+          "candidate_error_percent": 77.28428687768942,
+          "baseline_error_percent": 77.28428687768942,
+          "no_worse": true
+        },
+        "bandwidth": {
+          "candidate": 274.4785691899515,
+          "baseline": 291.22784244025115,
+          "hardware": 232.07401133096386,
+          "candidate_error_percent": 18.271997633769477,
+          "baseline_error_percent": 25.489209571565176,
+          "no_worse": true
+        }
+      },
+      "no_worse": false
+    }
+  },
+  {
+    "case": "p128d04",
+    "model_ns": 60168900.99253874,
+    "known_read_bytes": 16130526336,
+    "known_write_bytes": 509816704,
+    "service_read_bytes": 16130591744,
+    "service_write_bytes": 509891072,
+    "unclassified_io_bytes": 20263936,
+    "operators": 2535,
+    "phase_totals": {
+      "prefill": {
+        "model_ns": 20245104.66747329,
+        "known_read_bytes": 3677255680,
+        "known_write_bytes": 496542464,
+        "service_read_bytes": 3677255680,
+        "service_write_bytes": 496542464,
+        "unclassified_io_bytes": 20185088,
+        "operators": 507
+      },
+      "decode_1": {
+        "model_ns": 10017101.502318997,
+        "known_read_bytes": 3113057600,
+        "known_write_bytes": 3336256,
+        "service_read_bytes": 3113077760,
+        "service_write_bytes": 3356416,
+        "unclassified_io_bytes": 0,
+        "operators": 507
+      },
+      "decode_2": {
+        "model_ns": 9872493.455535375,
+        "known_read_bytes": 3113230976,
+        "known_write_bytes": 3258752,
+        "service_read_bytes": 3113240832,
+        "service_write_bytes": 3277568,
+        "unclassified_io_bytes": 78848,
+        "operators": 507
+      },
+      "decode_3": {
+        "model_ns": 10017101.502318997,
+        "known_read_bytes": 3113404352,
+        "known_write_bytes": 3338944,
+        "service_read_bytes": 3113423616,
+        "service_write_bytes": 3358208,
+        "unclassified_io_bytes": 0,
+        "operators": 507
+      },
+      "decode_4": {
+        "model_ns": 10017099.86489209,
+        "known_read_bytes": 3113577728,
+        "known_write_bytes": 3340288,
+        "service_read_bytes": 3113593856,
+        "service_write_bytes": 3356416,
+        "unclassified_io_bytes": 0,
+        "operators": 507
+      }
+    },
+    "comparison": {
+      "metrics": {
+        "time": {
+          "candidate": 60168900.99253874,
+          "baseline": 48938108,
+          "hardware": 57832191.944122314,
+          "candidate_error_percent": 4.040498846514695,
+          "baseline_error_percent": -15.37912301978077,
+          "no_worse": true
+        },
+        "read": {
+          "candidate": 16130526336,
+          "baseline": 16130526336,
+          "hardware": 15450336384,
+          "candidate_error_percent": 4.402428109619594,
+          "baseline_error_percent": 4.402428109619594,
+          "no_worse": true
+        },
+        "write": {
+          "candidate": 509816704,
+          "baseline": 509816704,
+          "hardware": 280453504,
+          "candidate_error_percent": 81.78296820281483,
+          "baseline_error_percent": 81.78296820281483,
+          "no_worse": true
+        },
+        "bandwidth": {
+          "candidate": 276.8973124183538,
+          "baseline": 340.4424007564821,
+          "hardware": 272.0074989237681,
+          "candidate_error_percent": 1.7976759883212345,
+          "baseline_error_percent": 25.159196751370928,
+          "no_worse": true
+        }
+      },
+      "no_worse": true
+    }
+  },
+  {
+    "case": "p128d08",
+    "model_ns": 100237321.73865682,
+    "known_read_bytes": 28586571008,
+    "known_write_bytes": 523191296,
+    "service_read_bytes": 28586697344,
+    "service_write_bytes": 523326592,
+    "unclassified_io_bytes": 20263936,
+    "operators": 4563,
+    "phase_totals": {
+      "prefill": {
+        "model_ns": 20245104.66747329,
+        "known_read_bytes": 3677255680,
+        "known_write_bytes": 496542464,
+        "service_read_bytes": 3677255680,
+        "service_write_bytes": 496542464,
+        "unclassified_io_bytes": 20185088,
+        "operators": 507
+      },
+      "decode_1": {
+        "model_ns": 10017101.502318997,
+        "known_read_bytes": 3113057600,
+        "known_write_bytes": 3336256,
+        "service_read_bytes": 3113077760,
+        "service_write_bytes": 3356416,
+        "unclassified_io_bytes": 0,
+        "operators": 507
+      },
+      "decode_2": {
+        "model_ns": 9872493.455535375,
+        "known_read_bytes": 3113230976,
+        "known_write_bytes": 3258752,
+        "service_read_bytes": 3113240832,
+        "service_write_bytes": 3277568,
+        "unclassified_io_bytes": 78848,
+        "operators": 507
+      },
+      "decode_3": {
+        "model_ns": 10017101.502318997,
+        "known_read_bytes": 3113404352,
+        "known_write_bytes": 3338944,
+        "service_read_bytes": 3113423616,
+        "service_write_bytes": 3358208,
+        "unclassified_io_bytes": 0,
+        "operators": 507
+      },
+      "decode_4": {
+        "model_ns": 10017099.86489209,
+        "known_read_bytes": 3113577728,
+        "known_write_bytes": 3340288,
+        "service_read_bytes": 3113593856,
+        "service_write_bytes": 3356416,
+        "unclassified_io_bytes": 0,
+        "operators": 507
+      },
+      "decode_5": {
+        "model_ns": 10017111.326880401,
+        "known_read_bytes": 3113751104,
+        "known_write_bytes": 3341632,
+        "service_read_bytes": 3113768576,
+        "service_write_bytes": 3359104,
+        "unclassified_io_bytes": 0,
+        "operators": 507
+      },
+      "decode_6": {
+        "model_ns": 10017111.326880401,
+        "known_read_bytes": 3113924480,
+        "known_write_bytes": 3342976,
+        "service_read_bytes": 3113940608,
+        "service_write_bytes": 3359104,
+        "unclassified_io_bytes": 0,
+        "operators": 507
+      },
+      "decode_7": {
+        "model_ns": 10017112.964307293,
+        "known_read_bytes": 3114097856,
+        "known_write_bytes": 3344320,
+        "service_read_bytes": 3114114432,
+        "service_write_bytes": 3360896,
+        "unclassified_io_bytes": 0,
+        "operators": 507
+      },
+      "decode_8": {
+        "model_ns": 10017085.128049985,
+        "known_read_bytes": 3114271232,
+        "known_write_bytes": 3345664,
+        "service_read_bytes": 3114281984,
+        "service_write_bytes": 3356416,
+        "unclassified_io_bytes": 0,
+        "operators": 507
+      }
+    },
+    "comparison": {
+      "metrics": {
+        "time": {
+          "candidate": 100237321.73865682,
+          "baseline": 85399396,
+          "hardware": 102381280.4222107,
+          "candidate_error_percent": -2.09409246955341,
+          "baseline_error_percent": -16.586903731013148,
+          "no_worse": true
+        },
+        "read": {
+          "candidate": 28586571008,
+          "baseline": 28586571008,
+          "hardware": 27803246976,
+          "candidate_error_percent": 2.8173832814425204,
+          "baseline_error_percent": 2.8173832814425204,
+          "no_worse": true
+        },
+        "write": {
+          "candidate": 523191296,
+          "baseline": 523191296,
+          "hardware": 281506048,
+          "candidate_error_percent": 85.8543714130078,
+          "baseline_error_percent": 85.8543714130078,
+          "no_worse": true
+        },
+        "bandwidth": {
+          "candidate": 290.6105803180685,
+          "baseline": 341.10342232397056,
+          "hardware": 274.31531338718503,
+          "candidate_error_percent": 5.940341692803486,
+          "baseline_error_percent": 24.3472039938641,
+          "no_worse": true
+        }
+      },
+      "no_worse": true
+    }
+  },
+  {
+    "case": "p128d16",
+    "model_ns": 180416451.4180276,
+    "known_read_bytes": 53506982400,
+    "known_write_bytes": 550004992,
+    "service_read_bytes": 53507195648,
+    "service_write_bytes": 550227200,
+    "unclassified_io_bytes": 20263936,
+    "operators": 8619,
+    "phase_totals": {
+      "prefill": {
+        "model_ns": 20245104.66747329,
+        "known_read_bytes": 3677255680,
+        "known_write_bytes": 496542464,
+        "service_read_bytes": 3677255680,
+        "service_write_bytes": 496542464,
+        "unclassified_io_bytes": 20185088,
+        "operators": 507
+      },
+      "decode_1": {
+        "model_ns": 10017101.502318997,
+        "known_read_bytes": 3113057600,
+        "known_write_bytes": 3336256,
+        "service_read_bytes": 3113077760,
+        "service_write_bytes": 3356416,
+        "unclassified_io_bytes": 0,
+        "operators": 507
+      },
+      "decode_2": {
+        "model_ns": 9872493.455535375,
+        "known_read_bytes": 3113230976,
+        "known_write_bytes": 3258752,
+        "service_read_bytes": 3113240832,
+        "service_write_bytes": 3277568,
+        "unclassified_io_bytes": 78848,
+        "operators": 507
+      },
+      "decode_3": {
+        "model_ns": 10017101.502318997,
+        "known_read_bytes": 3113404352,
+        "known_write_bytes": 3338944,
+        "service_read_bytes": 3113423616,
+        "service_write_bytes": 3358208,
+        "unclassified_io_bytes": 0,
+        "operators": 507
+      },
+      "decode_4": {
+        "model_ns": 10017099.86489209,
+        "known_read_bytes": 3113577728,
+        "known_write_bytes": 3340288,
+        "service_read_bytes": 3113593856,
+        "service_write_bytes": 3356416,
+        "unclassified_io_bytes": 0,
+        "operators": 507
+      },
+      "decode_5": {
+        "model_ns": 10017111.326880401,
+        "known_read_bytes": 3113751104,
+        "known_write_bytes": 3341632,
+        "service_read_bytes": 3113768576,
+        "service_write_bytes": 3359104,
+        "unclassified_io_bytes": 0,
+        "operators": 507
+      },
+      "decode_6": {
+        "model_ns": 10017111.326880401,
+        "known_read_bytes": 3113924480,
+        "known_write_bytes": 3342976,
+        "service_read_bytes": 3113940608,
+        "service_write_bytes": 3359104,
+        "unclassified_io_bytes": 0,
+        "operators": 507
+      },
+      "decode_7": {
+        "model_ns": 10017112.964307293,
+        "known_read_bytes": 3114097856,
+        "known_write_bytes": 3344320,
+        "service_read_bytes": 3114114432,
+        "service_write_bytes": 3360896,
+        "unclassified_io_bytes": 0,
+        "operators": 507
+      },
+      "decode_8": {
+        "model_ns": 10017085.128049985,
+        "known_read_bytes": 3114271232,
+        "known_write_bytes": 3345664,
+        "service_read_bytes": 3114281984,
+        "service_write_bytes": 3356416,
+        "unclassified_io_bytes": 0,
+        "operators": 507
+      },
+      "decode_9": {
+        "model_ns": 10022369.104658188,
+        "known_read_bytes": 3114444608,
+        "known_write_bytes": 3347008,
+        "service_read_bytes": 3114459392,
+        "service_write_bytes": 3361792,
+        "unclassified_io_bytes": 0,
+        "operators": 507
+      },
+      "decode_10": {
+        "model_ns": 10022370.742085095,
+        "known_read_bytes": 3114617984,
+        "known_write_bytes": 3348352,
+        "service_read_bytes": 3114631424,
+        "service_write_bytes": 3361792,
+        "unclassified_io_bytes": 0,
+        "operators": 507
+      },
+      "decode_11": {
+        "model_ns": 10022370.742085095,
+        "known_read_bytes": 3114791360,
+        "known_write_bytes": 3349696,
+        "service_read_bytes": 3114805248,
+        "service_write_bytes": 3363584,
+        "unclassified_io_bytes": 0,
+        "operators": 507
+      },
+      "decode_12": {
+        "model_ns": 10022372.379511988,
+        "known_read_bytes": 3114964736,
+        "known_write_bytes": 3351040,
+        "service_read_bytes": 3114975488,
+        "service_write_bytes": 3361792,
+        "unclassified_io_bytes": 0,
+        "operators": 507
+      },
+      "decode_13": {
+        "model_ns": 10022400.215769297,
+        "known_read_bytes": 3115138112,
+        "known_write_bytes": 3352384,
+        "service_read_bytes": 3115150208,
+        "service_write_bytes": 3364480,
+        "unclassified_io_bytes": 0,
+        "operators": 507
+      },
+      "decode_14": {
+        "model_ns": 10022424.777172806,
+        "known_read_bytes": 3115311488,
+        "known_write_bytes": 3353728,
+        "service_read_bytes": 3115322240,
+        "service_write_bytes": 3364480,
+        "unclassified_io_bytes": 0,
+        "operators": 507
+      },
+      "decode_15": {
+        "model_ns": 10022450.976003222,
+        "known_read_bytes": 3115484864,
+        "known_write_bytes": 3355072,
+        "service_read_bytes": 3115496064,
+        "service_write_bytes": 3366272,
+        "unclassified_io_bytes": 0,
+        "operators": 507
+      },
+      "decode_16": {
+        "model_ns": 10022370.742085095,
+        "known_read_bytes": 3115658240,
+        "known_write_bytes": 3356416,
+        "service_read_bytes": 3115658240,
+        "service_write_bytes": 3356416,
+        "unclassified_io_bytes": 0,
+        "operators": 507
+      }
+    },
+    "comparison": {
+      "metrics": {
+        "time": {
+          "candidate": 180416451.4180276,
+          "baseline": 158346696,
+          "hardware": 189116671.08535767,
+          "candidate_error_percent": -4.600450937190626,
+          "baseline_error_percent": -16.270366281706416,
+          "no_worse": true
+        },
+        "read": {
+          "candidate": 53506982400,
+          "baseline": 53506982400,
+          "hardware": 52502469632,
+          "candidate_error_percent": 1.9132676520567937,
+          "baseline_error_percent": 1.9132676520567937,
+          "no_worse": true
+        },
+        "write": {
+          "candidate": 550004992,
+          "baseline": 550004992,
+          "hardware": 282022912,
+          "candidate_error_percent": 95.02138606383868,
+          "baseline_error_percent": 95.02138606383868,
+          "no_worse": true
+        },
+        "bandwidth": {
+          "candidate": 299.73569983760626,
+          "baseline": 341.5117125525625,
+          "hardware": 279.1107322324628,
+          "candidate_error_percent": 7.389528679236013,
+          "baseline_error_percent": 22.357069475969805,
+          "no_worse": true
+        }
+      },
+      "no_worse": true
+    }
+  }
+]

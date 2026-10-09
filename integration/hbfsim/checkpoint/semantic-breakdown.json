@@ -1,0 +1,5503 @@
+{
+  "schema": "LLMCOMPASS_MAIN_BOUNDARY_SEMANTIC_TRAFFIC_V1",
+  "status": "PASS_EIGHT_CASE_SEMANTIC_ACCOUNTING_MODEL_ESTIMATE",
+  "source_matrix": "/home/xmu/nvidiagds/experiments/llm-solid-footprint-20260904/llmcompus/source/LLMCompass-curated-20261001/integration/hbfsim/results/official-inference-matrix-20261007-r3",
+  "profile_sha256": "d7c2659d32b14c4cf0f5da876be09375a810bcdbfdc7b03c4b820cf2fc4288b1",
+  "units": "byte; decimal GB/MB for plotting",
+  "scope": "Full Prefill plus every Decode step; direct selected-mapper boundary transfers plus explicit Qwen adapters, MODEL_ESTIMATE, not native physical DRAM attribution.",
+  "definitions": {
+    "weights": "Learned projection, tied embedding/lm-head, normalization and bias accesses; traffic, not unique parameter footprint; no inference writes.",
+    "kv_cache": "Persistent key_cache/value_cache appends and attention reads. Temporary projected K/V and their rotary transforms are activation.",
+    "activation": "Hidden/residual, Q/K/V temporaries, MLP tensors, attention scores/probabilities, logits and official mapper C intermediate/partial-output transfers.",
+    "other": "Unclassified official batch-surrogate extra IO; direction and exact tensor ownership unavailable; counted once in combined traffic only."
+  },
+  "read_write_pie_rule": "Read and Write pies use their own classified directional totals; unknown-direction IO excluded, disclosed separately. Combined pie includes this IO exactly once as Other.",
+  "batch_semantic_rule": "Preserve the official chosen candidate and its operand identities/multiplicity. K-concatenated surrogate bytes remain surrogate accounting, not a native executable batch graph or unique KV footprint.",
+  "hardware_semantic_breakdown_status": "NOT_AVAILABLE: archived NCU counters lack per-object attribution; no proportional allocation or model shares applied to hardware.",
+  "cases": [
+    {
+      "case": "p032d02",
+      "operator_count": 1521,
+      "categories": {
+        "weights": {
+          "read_bytes": 9262390272,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 0
+        },
+        "kv_cache": {
+          "read_bytes": 17031168,
+          "write_bytes": 974848,
+          "unknown_direction_bytes": 0
+        },
+        "activation": {
+          "read_bytes": 144337856,
+          "write_bytes": 127568064,
+          "unknown_direction_bytes": 0
+        },
+        "other": {
+          "read_bytes": 0,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 3153920
+        }
+      },
+      "phases": {
+        "prefill": {
+          "weights": {
+            "read_bytes": 3087526912,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 5505024,
+            "write_bytes": 917504,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 137726976,
+            "write_bytes": 121209600,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 3153920
+          }
+        },
+        "decode_1": {
+          "weights": {
+            "read_bytes": 3087431680,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 5677056,
+            "write_bytes": 28672,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 3304768,
+            "write_bytes": 3178560,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "decode_2": {
+          "weights": {
+            "read_bytes": 3087431680,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 5849088,
+            "write_bytes": 28672,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 3306112,
+            "write_bytes": 3179904,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        }
+      },
+      "subobjects": {
+        "weights/embedding_and_lm_head_weights": {
+          "read_bytes": 1400346624,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 0
+        },
+        "activation/hidden_and_residual_activations": {
+          "read_bytes": 32283648,
+          "write_bytes": 17756160,
+          "unknown_direction_bytes": 0
+        },
+        "weights/normalization_weights": {
+          "read_bytes": 525312,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 0
+        },
+        "weights/attention_weights": {
+          "read_bytes": 925188096,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 0
+        },
+        "activation/qkv_attention_activations": {
+          "read_bytes": 10235904,
+          "write_bytes": 7712768,
+          "unknown_direction_bytes": 0
+        },
+        "kv_cache/key_cache": {
+          "read_bytes": 8515584,
+          "write_bytes": 487424,
+          "unknown_direction_bytes": 0
+        },
+        "kv_cache/value_cache": {
+          "read_bytes": 8515584,
+          "write_bytes": 487424,
+          "unknown_direction_bytes": 0
+        },
+        "activation/attention_intermediates": {
+          "read_bytes": 1466304,
+          "write_bytes": 835520,
+          "unknown_direction_bytes": 0
+        },
+        "other/unclassified_batch_surrogate_io": {
+          "read_bytes": 0,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 3153920
+        },
+        "weights/mlp_weights": {
+          "read_bytes": 6936330240,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 0
+        },
+        "activation/mlp_intermediates": {
+          "read_bytes": 100352000,
+          "write_bytes": 100352000,
+          "unknown_direction_bytes": 0
+        },
+        "activation/logits": {
+          "read_bytes": 0,
+          "write_bytes": 911616,
+          "unknown_direction_bytes": 0
+        }
+      },
+      "by_operator": {
+        "token_embedding": {
+          "weights": {
+            "read_bytes": 104448,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 0,
+            "write_bytes": 104448,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "input_rmsnorm": {
+          "weights": {
+            "read_bytes": 258048,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 2924544,
+            "write_bytes": 2924544,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "q_proj": {
+          "weights": {
+            "read_bytes": 396619776,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 2924544,
+            "write_bytes": 2924544,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "k_proj": {
+          "weights": {
+            "read_bytes": 66103296,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 2924544,
+            "write_bytes": 487424,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "v_proj": {
+          "weights": {
+            "read_bytes": 66103296,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 2924544,
+            "write_bytes": 487424,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "rope": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 3411968,
+            "write_bytes": 3411968,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "kv_append": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 974848,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 974848,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "attention_score": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 8515584,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 2924544,
+            "write_bytes": 102368,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 630784
+          }
+        },
+        "attention_softmax": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 733152,
+            "write_bytes": 733152,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "attention_value": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 8515584,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 733152,
+            "write_bytes": 401408,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 2523136
+          }
+        },
+        "o_proj": {
+          "weights": {
+            "read_bytes": 396361728,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 2924544,
+            "write_bytes": 2924544,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "attention_residual": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 5849088,
+            "write_bytes": 2924544,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "post_attention_rmsnorm": {
+          "weights": {
+            "read_bytes": 258048,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 2924544,
+            "write_bytes": 2924544,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "gate_proj": {
+          "weights": {
+            "read_bytes": 2312110080,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 18980864,
+            "write_bytes": 33116160,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "up_proj": {
+          "weights": {
+            "read_bytes": 2312110080,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 18980864,
+            "write_bytes": 33116160,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "silu": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 17059840,
+            "write_bytes": 17059840,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "gated_multiply": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 34119680,
+            "write_bytes": 17059840,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "down_proj": {
+          "weights": {
+            "read_bytes": 2312110080,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 17059840,
+            "write_bytes": 2924544,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "mlp_residual": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 5849088,
+            "write_bytes": 2924544,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "final_rmsnorm": {
+          "weights": {
+            "read_bytes": 9216,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 104448,
+            "write_bytes": 104448,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "lm_head": {
+          "weights": {
+            "read_bytes": 1400242176,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 9216,
+            "write_bytes": 911616,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        }
+      },
+      "known_read_bytes": 9423759296,
+      "known_write_bytes": 128542912,
+      "unclassified_io_bytes": 3153920,
+      "total_boundary_bytes": 9555456128,
+      "hardware_semantic_breakdown_status": "NOT_AVAILABLE_FROM_AGGREGATE_COUNTERS"
+    },
+    {
+      "case": "p064d02",
+      "operator_count": 1521,
+      "categories": {
+        "weights": {
+          "read_bytes": 9262488576,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 0
+        },
+        "kv_cache": {
+          "read_bytes": 33546240,
+          "write_bytes": 1892352,
+          "unknown_direction_bytes": 0
+        },
+        "activation": {
+          "read_bytes": 284900288,
+          "write_bytes": 250010096,
+          "unknown_direction_bytes": 0
+        },
+        "other": {
+          "read_bytes": 0,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 7610064
+        }
+      },
+      "phases": {
+        "prefill": {
+          "weights": {
+            "read_bytes": 3087625216,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 11010048,
+            "write_bytes": 1835008,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 278203392,
+            "write_bytes": 243606272,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 7569408
+          }
+        },
+        "decode_1": {
+          "weights": {
+            "read_bytes": 3087431680,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 11182080,
+            "write_bytes": 28672,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 3347776,
+            "write_bytes": 3221568,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "decode_2": {
+          "weights": {
+            "read_bytes": 3087431680,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 11354112,
+            "write_bytes": 28672,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 3349120,
+            "write_bytes": 3182256,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 40656
+          }
+        }
+      },
+      "subobjects": {
+        "weights/embedding_and_lm_head_weights": {
+          "read_bytes": 1400444928,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 0
+        },
+        "activation/hidden_and_residual_activations": {
+          "read_bytes": 62659584,
+          "write_bytes": 34467840,
+          "unknown_direction_bytes": 0
+        },
+        "weights/normalization_weights": {
+          "read_bytes": 525312,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 0
+        },
+        "weights/attention_weights": {
+          "read_bytes": 925188096,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 0
+        },
+        "activation/qkv_attention_activations": {
+          "read_bytes": 19869696,
+          "write_bytes": 14823424,
+          "unknown_direction_bytes": 0
+        },
+        "kv_cache/key_cache": {
+          "read_bytes": 16773120,
+          "write_bytes": 946176,
+          "unknown_direction_bytes": 0
+        },
+        "kv_cache/value_cache": {
+          "read_bytes": 16773120,
+          "write_bytes": 946176,
+          "unknown_direction_bytes": 0
+        },
+        "activation/attention_intermediates": {
+          "read_bytes": 5681088,
+          "write_bytes": 3117296,
+          "unknown_direction_bytes": 0
+        },
+        "other/unclassified_batch_surrogate_io": {
+          "read_bytes": 0,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 7610064
+        },
+        "weights/mlp_weights": {
+          "read_bytes": 6936330240,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 0
+        },
+        "activation/mlp_intermediates": {
+          "read_bytes": 196689920,
+          "write_bytes": 196689920,
+          "unknown_direction_bytes": 0
+        },
+        "activation/logits": {
+          "read_bytes": 0,
+          "write_bytes": 911616,
+          "unknown_direction_bytes": 0
+        }
+      },
+      "by_operator": {
+        "token_embedding": {
+          "weights": {
+            "read_bytes": 202752,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 0,
+            "write_bytes": 202752,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "input_rmsnorm": {
+          "weights": {
+            "read_bytes": 258048,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 5677056,
+            "write_bytes": 5677056,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "q_proj": {
+          "weights": {
+            "read_bytes": 396619776,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 5677056,
+            "write_bytes": 5677056,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "k_proj": {
+          "weights": {
+            "read_bytes": 66103296,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 5677056,
+            "write_bytes": 946176,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "v_proj": {
+          "weights": {
+            "read_bytes": 66103296,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 5677056,
+            "write_bytes": 946176,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "rope": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 6623232,
+            "write_bytes": 6623232,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "kv_append": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 1892352,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 1892352,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "attention_score": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 16773120,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 5677056,
+            "write_bytes": 276752,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 2563792
+          }
+        },
+        "attention_softmax": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 2840544,
+            "write_bytes": 2840544,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "attention_value": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 16773120,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 2840544,
+            "write_bytes": 630784,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 5046272
+          }
+        },
+        "o_proj": {
+          "weights": {
+            "read_bytes": 396361728,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 5677056,
+            "write_bytes": 5677056,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "attention_residual": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 11354112,
+            "write_bytes": 5677056,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "post_attention_rmsnorm": {
+          "weights": {
+            "read_bytes": 258048,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 5677056,
+            "write_bytes": 5677056,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "gate_proj": {
+          "weights": {
+            "read_bytes": 2312110080,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 37789696,
+            "write_bytes": 65228800,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "up_proj": {
+          "weights": {
+            "read_bytes": 2312110080,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 37789696,
+            "write_bytes": 65228800,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "silu": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 33116160,
+            "write_bytes": 33116160,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "gated_multiply": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 66232320,
+            "write_bytes": 33116160,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "down_proj": {
+          "weights": {
+            "read_bytes": 2312110080,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 33116160,
+            "write_bytes": 5677056,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "mlp_residual": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 11354112,
+            "write_bytes": 5677056,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "final_rmsnorm": {
+          "weights": {
+            "read_bytes": 9216,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 202752,
+            "write_bytes": 202752,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "lm_head": {
+          "weights": {
+            "read_bytes": 1400242176,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 9216,
+            "write_bytes": 911616,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        }
+      },
+      "known_read_bytes": 9580935104,
+      "known_write_bytes": 251902448,
+      "unclassified_io_bytes": 7610064,
+      "total_boundary_bytes": 9840447616,
+      "hardware_semantic_breakdown_status": "NOT_AVAILABLE_FROM_AGGREGATE_COUNTERS"
+    },
+    {
+      "case": "p128d02",
+      "operator_count": 1521,
+      "categories": {
+        "weights": {
+          "read_bytes": 9262685184,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 0
+        },
+        "kv_cache": {
+          "read_bytes": 66576384,
+          "write_bytes": 3727360,
+          "unknown_direction_bytes": 0
+        },
+        "activation": {
+          "read_bytes": 574282688,
+          "write_bytes": 499410112,
+          "unknown_direction_bytes": 0
+        },
+        "other": {
+          "read_bytes": 0,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 20263936
+        }
+      },
+      "phases": {
+        "prefill": {
+          "weights": {
+            "read_bytes": 3087821824,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 22020096,
+            "write_bytes": 3670016,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 567413760,
+            "write_bytes": 492872448,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 20185088
+          }
+        },
+        "decode_1": {
+          "weights": {
+            "read_bytes": 3087431680,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 22192128,
+            "write_bytes": 28672,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 3433792,
+            "write_bytes": 3307584,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "decode_2": {
+          "weights": {
+            "read_bytes": 3087431680,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 22364160,
+            "write_bytes": 28672,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 3435136,
+            "write_bytes": 3230080,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 78848
+          }
+        }
+      },
+      "subobjects": {
+        "weights/embedding_and_lm_head_weights": {
+          "read_bytes": 1400641536,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 0
+        },
+        "activation/hidden_and_residual_activations": {
+          "read_bytes": 123411456,
+          "write_bytes": 67891200,
+          "unknown_direction_bytes": 0
+        },
+        "weights/normalization_weights": {
+          "read_bytes": 525312,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 0
+        },
+        "weights/attention_weights": {
+          "read_bytes": 925188096,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 0
+        },
+        "activation/qkv_attention_activations": {
+          "read_bytes": 39137280,
+          "write_bytes": 28965888,
+          "unknown_direction_bytes": 0
+        },
+        "kv_cache/key_cache": {
+          "read_bytes": 33288192,
+          "write_bytes": 1863680,
+          "unknown_direction_bytes": 0
+        },
+        "kv_cache/value_cache": {
+          "read_bytes": 33288192,
+          "write_bytes": 1863680,
+          "unknown_direction_bytes": 0
+        },
+        "activation/attention_intermediates": {
+          "read_bytes": 22368192,
+          "write_bytes": 12275648,
+          "unknown_direction_bytes": 0
+        },
+        "other/unclassified_batch_surrogate_io": {
+          "read_bytes": 0,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 20263936
+        },
+        "weights/mlp_weights": {
+          "read_bytes": 6936330240,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 0
+        },
+        "activation/mlp_intermediates": {
+          "read_bytes": 389365760,
+          "write_bytes": 389365760,
+          "unknown_direction_bytes": 0
+        },
+        "activation/logits": {
+          "read_bytes": 0,
+          "write_bytes": 911616,
+          "unknown_direction_bytes": 0
+        }
+      },
+      "by_operator": {
+        "token_embedding": {
+          "weights": {
+            "read_bytes": 399360,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 0,
+            "write_bytes": 399360,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "input_rmsnorm": {
+          "weights": {
+            "read_bytes": 258048,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 11182080,
+            "write_bytes": 11182080,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "q_proj": {
+          "weights": {
+            "read_bytes": 396619776,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 11182080,
+            "write_bytes": 11182080,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "k_proj": {
+          "weights": {
+            "read_bytes": 66103296,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 11182080,
+            "write_bytes": 1863680,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "v_proj": {
+          "weights": {
+            "read_bytes": 66103296,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 11182080,
+            "write_bytes": 1863680,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "rope": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 13045760,
+            "write_bytes": 13045760,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "kv_append": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 3727360,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 3727360,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "attention_score": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 33288192,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 11182080,
+            "write_bytes": 1091552,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 10092544
+          }
+        },
+        "attention_softmax": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 11184096,
+            "write_bytes": 11184096,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "attention_value": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 33288192,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 11184096,
+            "write_bytes": 1010688,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 10171392
+          }
+        },
+        "o_proj": {
+          "weights": {
+            "read_bytes": 396361728,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 11182080,
+            "write_bytes": 11182080,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "attention_residual": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 22364160,
+            "write_bytes": 11182080,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "post_attention_rmsnorm": {
+          "weights": {
+            "read_bytes": 258048,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 11182080,
+            "write_bytes": 11182080,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "gate_proj": {
+          "weights": {
+            "read_bytes": 2312110080,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 75407360,
+            "write_bytes": 129454080,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "up_proj": {
+          "weights": {
+            "read_bytes": 2312110080,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 75407360,
+            "write_bytes": 129454080,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "silu": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 65228800,
+            "write_bytes": 65228800,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "gated_multiply": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 130457600,
+            "write_bytes": 65228800,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "down_proj": {
+          "weights": {
+            "read_bytes": 2312110080,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 65228800,
+            "write_bytes": 11182080,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "mlp_residual": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 22364160,
+            "write_bytes": 11182080,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "final_rmsnorm": {
+          "weights": {
+            "read_bytes": 9216,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 399360,
+            "write_bytes": 399360,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "lm_head": {
+          "weights": {
+            "read_bytes": 1400242176,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 9216,
+            "write_bytes": 911616,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        }
+      },
+      "known_read_bytes": 9903544256,
+      "known_write_bytes": 503137472,
+      "unclassified_io_bytes": 20263936,
+      "total_boundary_bytes": 10426945664,
+      "hardware_semantic_breakdown_status": "NOT_AVAILABLE_FROM_AGGREGATE_COUNTERS"
+    },
+    {
+      "case": "p256d02",
+      "operator_count": 1521,
+      "categories": {
+        "weights": {
+          "read_bytes": 9263078400,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 0
+        },
+        "kv_cache": {
+          "read_bytes": 132636672,
+          "write_bytes": 7397376,
+          "unknown_direction_bytes": 0
+        },
+        "activation": {
+          "read_bytes": 1186077632,
+          "write_bytes": 1016256704,
+          "unknown_direction_bytes": 0
+        },
+        "other": {
+          "read_bytes": 0,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 60555264
+        }
+      },
+      "phases": {
+        "prefill": {
+          "weights": {
+            "read_bytes": 3088215040,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 44040192,
+            "write_bytes": 7340032,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 1178864640,
+            "write_bytes": 1009296128,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 60555264
+          }
+        },
+        "decode_1": {
+          "weights": {
+            "read_bytes": 3087431680,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 44212224,
+            "write_bytes": 28672,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 3605824,
+            "write_bytes": 3479616,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "decode_2": {
+          "weights": {
+            "read_bytes": 3087431680,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 44384256,
+            "write_bytes": 28672,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 3607168,
+            "write_bytes": 3480960,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        }
+      },
+      "subobjects": {
+        "weights/embedding_and_lm_head_weights": {
+          "read_bytes": 1401034752,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 0
+        },
+        "activation/hidden_and_residual_activations": {
+          "read_bytes": 244915200,
+          "write_bytes": 134737920,
+          "unknown_direction_bytes": 0
+        },
+        "weights/normalization_weights": {
+          "read_bytes": 525312,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 0
+        },
+        "weights/attention_weights": {
+          "read_bytes": 925188096,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 0
+        },
+        "activation/qkv_attention_activations": {
+          "read_bytes": 77672448,
+          "write_bytes": 57487360,
+          "unknown_direction_bytes": 0
+        },
+        "kv_cache/key_cache": {
+          "read_bytes": 66318336,
+          "write_bytes": 3698688,
+          "unknown_direction_bytes": 0
+        },
+        "kv_cache/value_cache": {
+          "read_bytes": 66318336,
+          "write_bytes": 3698688,
+          "unknown_direction_bytes": 0
+        },
+        "activation/attention_intermediates": {
+          "read_bytes": 88772544,
+          "write_bytes": 48402368,
+          "unknown_direction_bytes": 0
+        },
+        "other/unclassified_batch_surrogate_io": {
+          "read_bytes": 0,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 60555264
+        },
+        "weights/mlp_weights": {
+          "read_bytes": 6936330240,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 0
+        },
+        "activation/mlp_intermediates": {
+          "read_bytes": 774717440,
+          "write_bytes": 774717440,
+          "unknown_direction_bytes": 0
+        },
+        "activation/logits": {
+          "read_bytes": 0,
+          "write_bytes": 911616,
+          "unknown_direction_bytes": 0
+        }
+      },
+      "by_operator": {
+        "token_embedding": {
+          "weights": {
+            "read_bytes": 792576,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 0,
+            "write_bytes": 792576,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "input_rmsnorm": {
+          "weights": {
+            "read_bytes": 258048,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 22192128,
+            "write_bytes": 22192128,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "q_proj": {
+          "weights": {
+            "read_bytes": 396619776,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 22192128,
+            "write_bytes": 22192128,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "k_proj": {
+          "weights": {
+            "read_bytes": 66103296,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 22192128,
+            "write_bytes": 3698688,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "v_proj": {
+          "weights": {
+            "read_bytes": 66103296,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 22192128,
+            "write_bytes": 3698688,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "rope": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 25890816,
+            "write_bytes": 25890816,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "kv_append": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 7397376,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 7397376,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "attention_score": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 66318336,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 22192128,
+            "write_bytes": 4016096,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 40370176
+          }
+        },
+        "attention_softmax": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 44386272,
+            "write_bytes": 44386272,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "attention_value": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 66318336,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 44386272,
+            "write_bytes": 2007040,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 20185088
+          }
+        },
+        "o_proj": {
+          "weights": {
+            "read_bytes": 396361728,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 22192128,
+            "write_bytes": 22192128,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "attention_residual": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 44384256,
+            "write_bytes": 22192128,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "post_attention_rmsnorm": {
+          "weights": {
+            "read_bytes": 258048,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 22192128,
+            "write_bytes": 22192128,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "gate_proj": {
+          "weights": {
+            "read_bytes": 2312110080,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 150642688,
+            "write_bytes": 257904640,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "up_proj": {
+          "weights": {
+            "read_bytes": 2312110080,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 150642688,
+            "write_bytes": 257904640,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "silu": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 129454080,
+            "write_bytes": 129454080,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "gated_multiply": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 258908160,
+            "write_bytes": 129454080,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "down_proj": {
+          "weights": {
+            "read_bytes": 2312110080,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 129454080,
+            "write_bytes": 22192128,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "mlp_residual": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 44384256,
+            "write_bytes": 22192128,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "final_rmsnorm": {
+          "weights": {
+            "read_bytes": 9216,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 792576,
+            "write_bytes": 792576,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "lm_head": {
+          "weights": {
+            "read_bytes": 1400242176,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 9216,
+            "write_bytes": 911616,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        }
+      },
+      "known_read_bytes": 10581792704,
+      "known_write_bytes": 1023654080,
+      "unclassified_io_bytes": 60555264,
+      "total_boundary_bytes": 11666002048,
+      "hardware_semantic_breakdown_status": "NOT_AVAILABLE_FROM_AGGREGATE_COUNTERS"
+    },
+    {
+      "case": "p512d02",
+      "operator_count": 1521,
+      "categories": {
+        "weights": {
+          "read_bytes": 9263864832,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 0
+        },
+        "kv_cache": {
+          "read_bytes": 264757248,
+          "write_bytes": 14737408,
+          "unknown_direction_bytes": 0
+        },
+        "activation": {
+          "read_bytes": 2541788096,
+          "write_bytes": 2121357504,
+          "unknown_direction_bytes": 0
+        },
+        "other": {
+          "read_bytes": 0,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 201850880
+        }
+      },
+      "phases": {
+        "prefill": {
+          "weights": {
+            "read_bytes": 3089001472,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 88080384,
+            "write_bytes": 14680064,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 2533886976,
+            "write_bytes": 2113708800,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 201850880
+          }
+        },
+        "decode_1": {
+          "weights": {
+            "read_bytes": 3087431680,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 88252416,
+            "write_bytes": 28672,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 3949888,
+            "write_bytes": 3823680,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "decode_2": {
+          "weights": {
+            "read_bytes": 3087431680,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 88424448,
+            "write_bytes": 28672,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 3951232,
+            "write_bytes": 3825024,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        }
+      },
+      "subobjects": {
+        "weights/embedding_and_lm_head_weights": {
+          "read_bytes": 1401821184,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 0
+        },
+        "activation/hidden_and_residual_activations": {
+          "read_bytes": 487922688,
+          "write_bytes": 268431360,
+          "unknown_direction_bytes": 0
+        },
+        "weights/normalization_weights": {
+          "read_bytes": 525312,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 0
+        },
+        "weights/attention_weights": {
+          "read_bytes": 925188096,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 0
+        },
+        "activation/qkv_attention_activations": {
+          "read_bytes": 154742784,
+          "write_bytes": 114372608,
+          "unknown_direction_bytes": 0
+        },
+        "kv_cache/key_cache": {
+          "read_bytes": 132378624,
+          "write_bytes": 7368704,
+          "unknown_direction_bytes": 0
+        },
+        "kv_cache/value_cache": {
+          "read_bytes": 132378624,
+          "write_bytes": 7368704,
+          "unknown_direction_bytes": 0
+        },
+        "activation/attention_intermediates": {
+          "read_bytes": 353701824,
+          "write_bytes": 192221120,
+          "unknown_direction_bytes": 0
+        },
+        "other/unclassified_batch_surrogate_io": {
+          "read_bytes": 0,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 201850880
+        },
+        "weights/mlp_weights": {
+          "read_bytes": 6936330240,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 0
+        },
+        "activation/mlp_intermediates": {
+          "read_bytes": 1545420800,
+          "write_bytes": 1545420800,
+          "unknown_direction_bytes": 0
+        },
+        "activation/logits": {
+          "read_bytes": 0,
+          "write_bytes": 911616,
+          "unknown_direction_bytes": 0
+        }
+      },
+      "by_operator": {
+        "token_embedding": {
+          "weights": {
+            "read_bytes": 1579008,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 0,
+            "write_bytes": 1579008,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "input_rmsnorm": {
+          "weights": {
+            "read_bytes": 258048,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 44212224,
+            "write_bytes": 44212224,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "q_proj": {
+          "weights": {
+            "read_bytes": 396619776,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 44212224,
+            "write_bytes": 44212224,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "k_proj": {
+          "weights": {
+            "read_bytes": 66103296,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 44212224,
+            "write_bytes": 7368704,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "v_proj": {
+          "weights": {
+            "read_bytes": 66103296,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 44212224,
+            "write_bytes": 7368704,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "rope": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 51580928,
+            "write_bytes": 51580928,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "kv_append": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 14737408,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 14737408,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "attention_score": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 132378624,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 44212224,
+            "write_bytes": 15370208,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 161480704
+          }
+        },
+        "attention_softmax": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 176850912,
+            "write_bytes": 176850912,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "attention_value": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 132378624,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 176850912,
+            "write_bytes": 3842048,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 40370176
+          }
+        },
+        "o_proj": {
+          "weights": {
+            "read_bytes": 396361728,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 44212224,
+            "write_bytes": 44212224,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "attention_residual": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 88424448,
+            "write_bytes": 44212224,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "post_attention_rmsnorm": {
+          "weights": {
+            "read_bytes": 258048,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 44212224,
+            "write_bytes": 44212224,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "gate_proj": {
+          "weights": {
+            "read_bytes": 2312110080,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 301113344,
+            "write_bytes": 514805760,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "up_proj": {
+          "weights": {
+            "read_bytes": 2312110080,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 301113344,
+            "write_bytes": 514805760,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "silu": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 257904640,
+            "write_bytes": 257904640,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "gated_multiply": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 515809280,
+            "write_bytes": 257904640,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "down_proj": {
+          "weights": {
+            "read_bytes": 2312110080,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 257904640,
+            "write_bytes": 44212224,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "mlp_residual": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 88424448,
+            "write_bytes": 44212224,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "final_rmsnorm": {
+          "weights": {
+            "read_bytes": 9216,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 1579008,
+            "write_bytes": 1579008,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "lm_head": {
+          "weights": {
+            "read_bytes": 1400242176,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 9216,
+            "write_bytes": 911616,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        }
+      },
+      "known_read_bytes": 12070410176,
+      "known_write_bytes": 2136094912,
+      "unclassified_io_bytes": 201850880,
+      "total_boundary_bytes": 14408355968,
+      "hardware_semantic_breakdown_status": "NOT_AVAILABLE_FROM_AGGREGATE_COUNTERS"
+    },
+    {
+      "case": "p128d04",
+      "operator_count": 2535,
+      "categories": {
+        "weights": {
+          "read_bytes": 15437548544,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 0
+        },
+        "kv_cache": {
+          "read_bytes": 111820800,
+          "write_bytes": 3784704,
+          "unknown_direction_bytes": 0
+        },
+        "activation": {
+          "read_bytes": 581156992,
+          "write_bytes": 506032000,
+          "unknown_direction_bytes": 0
+        },
+        "other": {
+          "read_bytes": 0,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 20263936
+        }
+      },
+      "phases": {
+        "prefill": {
+          "weights": {
+            "read_bytes": 3087821824,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 22020096,
+            "write_bytes": 3670016,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 567413760,
+            "write_bytes": 492872448,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 20185088
+          }
+        },
+        "decode_1": {
+          "weights": {
+            "read_bytes": 3087431680,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 22192128,
+            "write_bytes": 28672,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 3433792,
+            "write_bytes": 3307584,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "decode_2": {
+          "weights": {
+            "read_bytes": 3087431680,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 22364160,
+            "write_bytes": 28672,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 3435136,
+            "write_bytes": 3230080,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 78848
+          }
+        },
+        "decode_3": {
+          "weights": {
+            "read_bytes": 3087431680,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 22536192,
+            "write_bytes": 28672,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 3436480,
+            "write_bytes": 3310272,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "decode_4": {
+          "weights": {
+            "read_bytes": 3087431680,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 22708224,
+            "write_bytes": 28672,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 3437824,
+            "write_bytes": 3311616,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        }
+      },
+      "subobjects": {
+        "weights/embedding_and_lm_head_weights": {
+          "read_bytes": 2334142464,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 0
+        },
+        "activation/hidden_and_residual_activations": {
+          "read_bytes": 125316096,
+          "write_bytes": 68935680,
+          "unknown_direction_bytes": 0
+        },
+        "weights/normalization_weights": {
+          "read_bytes": 875520,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 0
+        },
+        "weights/attention_weights": {
+          "read_bytes": 1541980160,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 0
+        },
+        "activation/qkv_attention_activations": {
+          "read_bytes": 39739392,
+          "write_bytes": 29568000,
+          "unknown_direction_bytes": 0
+        },
+        "kv_cache/key_cache": {
+          "read_bytes": 55910400,
+          "write_bytes": 1892352,
+          "unknown_direction_bytes": 0
+        },
+        "kv_cache/value_cache": {
+          "read_bytes": 55910400,
+          "write_bytes": 1892352,
+          "unknown_direction_bytes": 0
+        },
+        "activation/attention_intermediates": {
+          "read_bytes": 22721664,
+          "write_bytes": 12629120,
+          "unknown_direction_bytes": 0
+        },
+        "other/unclassified_batch_surrogate_io": {
+          "read_bytes": 0,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 20263936
+        },
+        "weights/mlp_weights": {
+          "read_bytes": 11560550400,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 0
+        },
+        "activation/mlp_intermediates": {
+          "read_bytes": 393379840,
+          "write_bytes": 393379840,
+          "unknown_direction_bytes": 0
+        },
+        "activation/logits": {
+          "read_bytes": 0,
+          "write_bytes": 1519360,
+          "unknown_direction_bytes": 0
+        }
+      },
+      "by_operator": {
+        "token_embedding": {
+          "weights": {
+            "read_bytes": 405504,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 0,
+            "write_bytes": 405504,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "input_rmsnorm": {
+          "weights": {
+            "read_bytes": 430080,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 11354112,
+            "write_bytes": 11354112,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "q_proj": {
+          "weights": {
+            "read_bytes": 661032960,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 11354112,
+            "write_bytes": 11354112,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "k_proj": {
+          "weights": {
+            "read_bytes": 110172160,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 11354112,
+            "write_bytes": 1892352,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "v_proj": {
+          "weights": {
+            "read_bytes": 110172160,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 11354112,
+            "write_bytes": 1892352,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "rope": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 13246464,
+            "write_bytes": 13246464,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "kv_append": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 3784704,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 3784704,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "attention_score": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 55910400,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 11354112,
+            "write_bytes": 1268288,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 10092544
+          }
+        },
+        "attention_softmax": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 11360832,
+            "write_bytes": 11360832,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "attention_value": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 55910400,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 11360832,
+            "write_bytes": 1182720,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 10171392
+          }
+        },
+        "o_proj": {
+          "weights": {
+            "read_bytes": 660602880,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 11354112,
+            "write_bytes": 11354112,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "attention_residual": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 22708224,
+            "write_bytes": 11354112,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "post_attention_rmsnorm": {
+          "weights": {
+            "read_bytes": 430080,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 11354112,
+            "write_bytes": 11354112,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "gate_proj": {
+          "weights": {
+            "read_bytes": 3853516800,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 75579392,
+            "write_bytes": 130457600,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "up_proj": {
+          "weights": {
+            "read_bytes": 3853516800,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 75579392,
+            "write_bytes": 130457600,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "silu": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 66232320,
+            "write_bytes": 66232320,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "gated_multiply": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 132464640,
+            "write_bytes": 66232320,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "down_proj": {
+          "weights": {
+            "read_bytes": 3853516800,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 66232320,
+            "write_bytes": 11354112,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "mlp_residual": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 22708224,
+            "write_bytes": 11354112,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "final_rmsnorm": {
+          "weights": {
+            "read_bytes": 15360,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 405504,
+            "write_bytes": 405504,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "lm_head": {
+          "weights": {
+            "read_bytes": 2333736960,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 15360,
+            "write_bytes": 1519360,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        }
+      },
+      "known_read_bytes": 16130526336,
+      "known_write_bytes": 509816704,
+      "unclassified_io_bytes": 20263936,
+      "total_boundary_bytes": 16660606976,
+      "hardware_semantic_breakdown_status": "NOT_AVAILABLE_FROM_AGGREGATE_COUNTERS"
+    },
+    {
+      "case": "p128d08",
+      "operator_count": 4563,
+      "categories": {
+        "weights": {
+          "read_bytes": 27787275264,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 0
+        },
+        "kv_cache": {
+          "read_bytes": 204374016,
+          "write_bytes": 3899392,
+          "unknown_direction_bytes": 0
+        },
+        "activation": {
+          "read_bytes": 594921728,
+          "write_bytes": 519291904,
+          "unknown_direction_bytes": 0
+        },
+        "other": {
+          "read_bytes": 0,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 20263936
+        }
+      },
+      "phases": {
+        "prefill": {
+          "weights": {
+            "read_bytes": 3087821824,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 22020096,
+            "write_bytes": 3670016,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 567413760,
+            "write_bytes": 492872448,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 20185088
+          }
+        },
+        "decode_1": {
+          "weights": {
+            "read_bytes": 3087431680,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 22192128,
+            "write_bytes": 28672,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 3433792,
+            "write_bytes": 3307584,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "decode_2": {
+          "weights": {
+            "read_bytes": 3087431680,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 22364160,
+            "write_bytes": 28672,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 3435136,
+            "write_bytes": 3230080,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 78848
+          }
+        },
+        "decode_3": {
+          "weights": {
+            "read_bytes": 3087431680,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 22536192,
+            "write_bytes": 28672,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 3436480,
+            "write_bytes": 3310272,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "decode_4": {
+          "weights": {
+            "read_bytes": 3087431680,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 22708224,
+            "write_bytes": 28672,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 3437824,
+            "write_bytes": 3311616,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "decode_5": {
+          "weights": {
+            "read_bytes": 3087431680,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 22880256,
+            "write_bytes": 28672,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 3439168,
+            "write_bytes": 3312960,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "decode_6": {
+          "weights": {
+            "read_bytes": 3087431680,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 23052288,
+            "write_bytes": 28672,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 3440512,
+            "write_bytes": 3314304,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "decode_7": {
+          "weights": {
+            "read_bytes": 3087431680,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 23224320,
+            "write_bytes": 28672,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 3441856,
+            "write_bytes": 3315648,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "decode_8": {
+          "weights": {
+            "read_bytes": 3087431680,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 23396352,
+            "write_bytes": 28672,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 3443200,
+            "write_bytes": 3316992,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        }
+      },
+      "subobjects": {
+        "weights/embedding_and_lm_head_weights": {
+          "read_bytes": 4201144320,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 0
+        },
+        "activation/hidden_and_residual_activations": {
+          "read_bytes": 129125376,
+          "write_bytes": 71024640,
+          "unknown_direction_bytes": 0
+        },
+        "weights/normalization_weights": {
+          "read_bytes": 1575936,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 0
+        },
+        "weights/attention_weights": {
+          "read_bytes": 2775564288,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 0
+        },
+        "activation/qkv_attention_activations": {
+          "read_bytes": 40943616,
+          "write_bytes": 30772224,
+          "unknown_direction_bytes": 0
+        },
+        "kv_cache/key_cache": {
+          "read_bytes": 102187008,
+          "write_bytes": 1949696,
+          "unknown_direction_bytes": 0
+        },
+        "kv_cache/value_cache": {
+          "read_bytes": 102187008,
+          "write_bytes": 1949696,
+          "unknown_direction_bytes": 0
+        },
+        "activation/attention_intermediates": {
+          "read_bytes": 23444736,
+          "write_bytes": 13352192,
+          "unknown_direction_bytes": 0
+        },
+        "other/unclassified_batch_surrogate_io": {
+          "read_bytes": 0,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 20263936
+        },
+        "weights/mlp_weights": {
+          "read_bytes": 20808990720,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 0
+        },
+        "activation/mlp_intermediates": {
+          "read_bytes": 401408000,
+          "write_bytes": 401408000,
+          "unknown_direction_bytes": 0
+        },
+        "activation/logits": {
+          "read_bytes": 0,
+          "write_bytes": 2734848,
+          "unknown_direction_bytes": 0
+        }
+      },
+      "by_operator": {
+        "token_embedding": {
+          "weights": {
+            "read_bytes": 417792,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 0,
+            "write_bytes": 417792,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "input_rmsnorm": {
+          "weights": {
+            "read_bytes": 774144,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 11698176,
+            "write_bytes": 11698176,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "q_proj": {
+          "weights": {
+            "read_bytes": 1189859328,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 11698176,
+            "write_bytes": 11698176,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "k_proj": {
+          "weights": {
+            "read_bytes": 198309888,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 11698176,
+            "write_bytes": 1949696,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "v_proj": {
+          "weights": {
+            "read_bytes": 198309888,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 11698176,
+            "write_bytes": 1949696,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "rope": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 13647872,
+            "write_bytes": 13647872,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "kv_append": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 3899392,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 3899392,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "attention_score": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 102187008,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 11698176,
+            "write_bytes": 1629824,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 10092544
+          }
+        },
+        "attention_softmax": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 11722368,
+            "write_bytes": 11722368,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "attention_value": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 102187008,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 11722368,
+            "write_bytes": 1526784,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 10171392
+          }
+        },
+        "o_proj": {
+          "weights": {
+            "read_bytes": 1189085184,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 11698176,
+            "write_bytes": 11698176,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "attention_residual": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 23396352,
+            "write_bytes": 11698176,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "post_attention_rmsnorm": {
+          "weights": {
+            "read_bytes": 774144,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 11698176,
+            "write_bytes": 11698176,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "gate_proj": {
+          "weights": {
+            "read_bytes": 6936330240,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 75923456,
+            "write_bytes": 132464640,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "up_proj": {
+          "weights": {
+            "read_bytes": 6936330240,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 75923456,
+            "write_bytes": 132464640,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "silu": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 68239360,
+            "write_bytes": 68239360,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "gated_multiply": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 136478720,
+            "write_bytes": 68239360,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "down_proj": {
+          "weights": {
+            "read_bytes": 6936330240,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 68239360,
+            "write_bytes": 11698176,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "mlp_residual": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 23396352,
+            "write_bytes": 11698176,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "final_rmsnorm": {
+          "weights": {
+            "read_bytes": 27648,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 417792,
+            "write_bytes": 417792,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "lm_head": {
+          "weights": {
+            "read_bytes": 4200726528,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 27648,
+            "write_bytes": 2734848,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        }
+      },
+      "known_read_bytes": 28586571008,
+      "known_write_bytes": 523191296,
+      "unclassified_io_bytes": 20263936,
+      "total_boundary_bytes": 29130026240,
+      "hardware_semantic_breakdown_status": "NOT_AVAILABLE_FROM_AGGREGATE_COUNTERS"
+    },
+    {
+      "case": "p128d16",
+      "operator_count": 8619,
+      "categories": {
+        "weights": {
+          "read_bytes": 52486728704,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 0
+        },
+        "kv_cache": {
+          "read_bytes": 397737984,
+          "write_bytes": 4128768,
+          "unknown_direction_bytes": 0
+        },
+        "activation": {
+          "read_bytes": 622515712,
+          "write_bytes": 545876224,
+          "unknown_direction_bytes": 0
+        },
+        "other": {
+          "read_bytes": 0,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 20263936
+        }
+      },
+      "phases": {
+        "prefill": {
+          "weights": {
+            "read_bytes": 3087821824,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 22020096,
+            "write_bytes": 3670016,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 567413760,
+            "write_bytes": 492872448,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 20185088
+          }
+        },
+        "decode_1": {
+          "weights": {
+            "read_bytes": 3087431680,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 22192128,
+            "write_bytes": 28672,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 3433792,
+            "write_bytes": 3307584,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "decode_2": {
+          "weights": {
+            "read_bytes": 3087431680,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 22364160,
+            "write_bytes": 28672,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 3435136,
+            "write_bytes": 3230080,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 78848
+          }
+        },
+        "decode_3": {
+          "weights": {
+            "read_bytes": 3087431680,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 22536192,
+            "write_bytes": 28672,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 3436480,
+            "write_bytes": 3310272,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "decode_4": {
+          "weights": {
+            "read_bytes": 3087431680,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 22708224,
+            "write_bytes": 28672,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 3437824,
+            "write_bytes": 3311616,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "decode_5": {
+          "weights": {
+            "read_bytes": 3087431680,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 22880256,
+            "write_bytes": 28672,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 3439168,
+            "write_bytes": 3312960,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "decode_6": {
+          "weights": {
+            "read_bytes": 3087431680,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 23052288,
+            "write_bytes": 28672,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 3440512,
+            "write_bytes": 3314304,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "decode_7": {
+          "weights": {
+            "read_bytes": 3087431680,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 23224320,
+            "write_bytes": 28672,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 3441856,
+            "write_bytes": 3315648,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "decode_8": {
+          "weights": {
+            "read_bytes": 3087431680,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 23396352,
+            "write_bytes": 28672,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 3443200,
+            "write_bytes": 3316992,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "decode_9": {
+          "weights": {
+            "read_bytes": 3087431680,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 23568384,
+            "write_bytes": 28672,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 3444544,
+            "write_bytes": 3318336,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "decode_10": {
+          "weights": {
+            "read_bytes": 3087431680,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 23740416,
+            "write_bytes": 28672,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 3445888,
+            "write_bytes": 3319680,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "decode_11": {
+          "weights": {
+            "read_bytes": 3087431680,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 23912448,
+            "write_bytes": 28672,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 3447232,
+            "write_bytes": 3321024,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "decode_12": {
+          "weights": {
+            "read_bytes": 3087431680,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 24084480,
+            "write_bytes": 28672,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 3448576,
+            "write_bytes": 3322368,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "decode_13": {
+          "weights": {
+            "read_bytes": 3087431680,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 24256512,
+            "write_bytes": 28672,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 3449920,
+            "write_bytes": 3323712,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "decode_14": {
+          "weights": {
+            "read_bytes": 3087431680,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 24428544,
+            "write_bytes": 28672,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 3451264,
+            "write_bytes": 3325056,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "decode_15": {
+          "weights": {
+            "read_bytes": 3087431680,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 24600576,
+            "write_bytes": 28672,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 3452608,
+            "write_bytes": 3326400,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "decode_16": {
+          "weights": {
+            "read_bytes": 3087431680,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 24772608,
+            "write_bytes": 28672,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 3453952,
+            "write_bytes": 3327744,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        }
+      },
+      "subobjects": {
+        "weights/embedding_and_lm_head_weights": {
+          "read_bytes": 7935148032,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 0
+        },
+        "activation/hidden_and_residual_activations": {
+          "read_bytes": 136743936,
+          "write_bytes": 75202560,
+          "unknown_direction_bytes": 0
+        },
+        "weights/normalization_weights": {
+          "read_bytes": 2976768,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 0
+        },
+        "weights/attention_weights": {
+          "read_bytes": 5242732544,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 0
+        },
+        "activation/qkv_attention_activations": {
+          "read_bytes": 43352064,
+          "write_bytes": 33180672,
+          "unknown_direction_bytes": 0
+        },
+        "kv_cache/key_cache": {
+          "read_bytes": 198868992,
+          "write_bytes": 2064384,
+          "unknown_direction_bytes": 0
+        },
+        "kv_cache/value_cache": {
+          "read_bytes": 198868992,
+          "write_bytes": 2064384,
+          "unknown_direction_bytes": 0
+        },
+        "activation/attention_intermediates": {
+          "read_bytes": 24955392,
+          "write_bytes": 14862848,
+          "unknown_direction_bytes": 0
+        },
+        "other/unclassified_batch_surrogate_io": {
+          "read_bytes": 0,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 20263936
+        },
+        "weights/mlp_weights": {
+          "read_bytes": 39305871360,
+          "write_bytes": 0,
+          "unknown_direction_bytes": 0
+        },
+        "activation/mlp_intermediates": {
+          "read_bytes": 417464320,
+          "write_bytes": 417464320,
+          "unknown_direction_bytes": 0
+        },
+        "activation/logits": {
+          "read_bytes": 0,
+          "write_bytes": 5165824,
+          "unknown_direction_bytes": 0
+        }
+      },
+      "by_operator": {
+        "token_embedding": {
+          "weights": {
+            "read_bytes": 442368,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 0,
+            "write_bytes": 442368,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "input_rmsnorm": {
+          "weights": {
+            "read_bytes": 1462272,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 12386304,
+            "write_bytes": 12386304,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "q_proj": {
+          "weights": {
+            "read_bytes": 2247512064,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 12386304,
+            "write_bytes": 12386304,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "k_proj": {
+          "weights": {
+            "read_bytes": 374585344,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 12386304,
+            "write_bytes": 2064384,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "v_proj": {
+          "weights": {
+            "read_bytes": 374585344,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 12386304,
+            "write_bytes": 2064384,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "rope": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 14450688,
+            "write_bytes": 14450688,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "kv_append": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 4128768,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 4128768,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "attention_score": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 198868992,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 12386304,
+            "write_bytes": 2385152,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 10092544
+          }
+        },
+        "attention_softmax": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 12477696,
+            "write_bytes": 12477696,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "attention_value": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 198868992,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 12477696,
+            "write_bytes": 2214912,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 10171392
+          }
+        },
+        "o_proj": {
+          "weights": {
+            "read_bytes": 2246049792,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 12386304,
+            "write_bytes": 12386304,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "attention_residual": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 24772608,
+            "write_bytes": 12386304,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "post_attention_rmsnorm": {
+          "weights": {
+            "read_bytes": 1462272,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 12386304,
+            "write_bytes": 12386304,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "gate_proj": {
+          "weights": {
+            "read_bytes": 13101957120,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 76611584,
+            "write_bytes": 136478720,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "up_proj": {
+          "weights": {
+            "read_bytes": 13101957120,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 76611584,
+            "write_bytes": 136478720,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "silu": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 72253440,
+            "write_bytes": 72253440,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "gated_multiply": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 144506880,
+            "write_bytes": 72253440,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "down_proj": {
+          "weights": {
+            "read_bytes": 13101957120,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 72253440,
+            "write_bytes": 12386304,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "mlp_residual": {
+          "weights": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 24772608,
+            "write_bytes": 12386304,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "final_rmsnorm": {
+          "weights": {
+            "read_bytes": 52224,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 442368,
+            "write_bytes": 442368,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        },
+        "lm_head": {
+          "weights": {
+            "read_bytes": 7934705664,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "kv_cache": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          },
+          "activation": {
+            "read_bytes": 52224,
+            "write_bytes": 5165824,
+            "unknown_direction_bytes": 0
+          },
+          "other": {
+            "read_bytes": 0,
+            "write_bytes": 0,
+            "unknown_direction_bytes": 0
+          }
+        }
+      },
+      "known_read_bytes": 53506982400,
+      "known_write_bytes": 550004992,
+      "unclassified_io_bytes": 20263936,
+      "total_boundary_bytes": 54077251328,
+      "hardware_semantic_breakdown_status": "NOT_AVAILABLE_FROM_AGGREGATE_COUNTERS"
+    }
+  ]
+}

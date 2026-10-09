@@ -1,0 +1,21 @@
+{
+  "status": "PASS_INDEPENDENT_PAIRING_AND_AGGREGATE_ACCOUNTING_NOT_ACCURACY",
+  "cases": [
+    "p032d02",
+    "p064d02",
+    "p128d02",
+    "p256d02",
+    "p512d02",
+    "p128d04",
+    "p128d08",
+    "p128d16"
+  ],
+  "unprofiled_timing_workflows": 320,
+  "full_counter_ranges": 80,
+  "local_group_counter_ranges": 120,
+  "strict_elementwise_logit_pass_cases": 5,
+  "strict_cross_implementation_kv_pass_cases": 0,
+  "maximum_phase_logit_relative_l2": 0.0195013377815485,
+  "trace_or_binary_reports": [],
+  "collection_sha256": "3f19c68eba3ae7c42e2a952e20150bc8bf746394901d3fcb8f09e29223b991a5"
+}

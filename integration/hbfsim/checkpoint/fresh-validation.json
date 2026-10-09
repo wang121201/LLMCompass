@@ -1,0 +1,89 @@
+{
+  "status": "PASS_FRESH_ARCHIVE_CHECKS_NOT_HARDWARE_ACCURACY",
+  "unit_tests": 53,
+  "unit_command": [
+    "/home/xmu/sgl/bin/python",
+    "-B",
+    "-m",
+    "unittest",
+    "test_qwen_hbfsim_cosim",
+    "test_semantic_traffic_breakdown",
+    "test_verify_official_inference",
+    "test_paired_qwen_reference",
+    "test_evaluate_gddr_integration",
+    "test_verify_stage_checkpoint"
+  ],
+  "unit_returncode": 0,
+  "unit_output": ".....................................................\n----------------------------------------------------------------------\nRan 53 tests in 0.569s\n\nOK\n",
+  "html_regeneration": "IDENTICAL_NORMALIZED_TEXT",
+  "mapper_checks": {
+    "matmul_shapes": [
+      [
+        1,
+        1536,
+        1536
+      ],
+      [
+        32,
+        1536,
+        1536
+      ],
+      [
+        64,
+        1536,
+        256
+      ],
+      [
+        33,
+        129,
+        65
+      ]
+    ],
+    "matmul_status": "PASS_MAPPER_CYCLE_AND_MAPPING_PARITY",
+    "batch_shapes": [
+      [
+        12,
+        1,
+        128,
+        32
+      ],
+      [
+        12,
+        32,
+        128,
+        32
+      ],
+      [
+        12,
+        32,
+        32,
+        128
+      ]
+    ],
+    "softmax_shape": [
+      12,
+      32,
+      32
+    ],
+    "extended_status": "PASS_EXTENDED_PARITY",
+    "all_exit_codes_zero": true
+  },
+  "tensor_view_check": {
+    "status": "PASS_FULL_PLAN_TENSOR_BOUNDS_NOT_FULL_SIMULATION",
+    "operators": 1521,
+    "matrix_views": 7989
+  },
+  "full_evidence_rechecks": [
+    "official accounting 23322 operators/111 shapes",
+    "paired 320 timing workflows/80 full counters/120 groups",
+    "GDDR accounting 23322 operators/46 phases"
+  ],
+  "no_new_hardware_collection": true,
+  "no_new_eight_case_simulation": true,
+  "official_cost_class_ast_unchanged": true,
+  "subagents": {
+    "started": 0,
+    "completed": 0,
+    "active": 0
+  }
+}

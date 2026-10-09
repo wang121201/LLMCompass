@@ -1,0 +1,520 @@
+{
+  "status": "PASS_INDEPENDENT_GDDR_MATRIX_ACCOUNTING_NOT_HARDWARE_ACCEPTANCE",
+  "verified_operators": 23322,
+  "verified_cases": 8,
+  "verified_phases": 46,
+  "full_no_worse_gate": "FAIL",
+  "every_phase_no_worse_gate": "FAIL",
+  "full_no_worse_cases": [
+    "p032d02",
+    "p064d02",
+    "p128d02",
+    "p256d02",
+    "p128d04",
+    "p128d08",
+    "p128d16"
+  ],
+  "every_phase_no_worse_cases": [
+    "p032d02"
+  ],
+  "full_within_10_percent_cases": [
+    "p032d02",
+    "p064d02",
+    "p256d02",
+    "p128d04",
+    "p128d08",
+    "p128d16"
+  ],
+  "every_phase_within_10_percent_cases": [],
+  "verifier_sha256": "ef143b0f31b2e58fb8ec4f5020966dba7fc930dc6b1bca65ee13913ff2f70cff",
+  "cases": {
+    "p032d02": {
+      "full_no_worse": true,
+      "every_phase_no_worse": true,
+      "full_within_10_percent": true,
+      "every_phase_within_10_percent": false,
+      "phases": {
+        "prefill": {
+          "candidate_ms": 12.005878973583386,
+          "hardware_ms": 12.242432117462158,
+          "candidate_error_percent": -1.9322397838037575,
+          "baseline_error_percent": -19.274814798412155,
+          "no_worse": true,
+          "within_10_percent": true
+        },
+        "decode_1": {
+          "candidate_ms": 9.960579163137705,
+          "hardware_ms": 11.103184223175049,
+          "candidate_error_percent": -10.290787192852735,
+          "baseline_error_percent": -18.37599180707462,
+          "no_worse": true,
+          "within_10_percent": false
+        },
+        "decode_2": {
+          "candidate_ms": 9.960579163137705,
+          "hardware_ms": 11.116432189941406,
+          "candidate_error_percent": -10.39769781395835,
+          "baseline_error_percent": -18.468733086854073,
+          "no_worse": true,
+          "within_10_percent": false
+        }
+      },
+      "backend_service": {
+        "read_error_percent": 1.9850292330327424,
+        "write_error_percent": 75.87944449502413,
+        "read_burst_padding_bytes": 38976,
+        "write_burst_padding_bytes": 38976,
+        "scope": "Backend burst-service estimates, not validated physical GPU counters"
+      }
+    },
+    "p064d02": {
+      "full_no_worse": true,
+      "every_phase_no_worse": false,
+      "full_within_10_percent": true,
+      "every_phase_within_10_percent": false,
+      "phases": {
+        "prefill": {
+          "candidate_ms": 15.376217073200204,
+          "hardware_ms": 12.630527973175049,
+          "candidate_error_percent": 21.738514065734236,
+          "baseline_error_percent": -15.031960478670136,
+          "no_worse": false,
+          "within_10_percent": false
+        },
+        "decode_1": {
+          "candidate_ms": 9.977690274248818,
+          "hardware_ms": 11.093503952026367,
+          "candidate_error_percent": -10.058261867511497,
+          "baseline_error_percent": -18.15559773301806,
+          "no_worse": true,
+          "within_10_percent": false
+        },
+        "decode_2": {
+          "candidate_ms": 9.835428332728345,
+          "hardware_ms": 11.086319923400879,
+          "candidate_error_percent": -11.283199468492388,
+          "baseline_error_percent": -18.098015728066652,
+          "no_worse": true,
+          "within_10_percent": false
+        }
+      },
+      "backend_service": {
+        "read_error_percent": 3.566443903006178,
+        "write_error_percent": 64.2232078938278,
+        "read_burst_padding_bytes": 38976,
+        "write_burst_padding_bytes": 30352,
+        "scope": "Backend burst-service estimates, not validated physical GPU counters"
+      }
+    },
+    "p128d02": {
+      "full_no_worse": true,
+      "every_phase_no_worse": false,
+      "full_within_10_percent": false,
+      "every_phase_within_10_percent": false,
+      "phases": {
+        "prefill": {
+          "candidate_ms": 20.24510466747329,
+          "hardware_ms": 13.383968353271484,
+          "candidate_error_percent": 51.263841434029665,
+          "baseline_error_percent": -6.714901959939312,
+          "no_worse": false,
+          "within_10_percent": false
+        },
+        "decode_1": {
+          "candidate_ms": 10.017101502318997,
+          "hardware_ms": 11.125760078430176,
+          "candidate_error_percent": -9.964789536137552,
+          "baseline_error_percent": -18.09591492390199,
+          "no_worse": true,
+          "within_10_percent": true
+        },
+        "decode_2": {
+          "candidate_ms": 9.872493455535375,
+          "hardware_ms": 11.120975971221924,
+          "candidate_error_percent": -11.226375445080395,
+          "baseline_error_percent": -18.056148816597894,
+          "no_worse": true,
+          "within_10_percent": false
+        }
+      },
+      "backend_service": {
+        "read_error_percent": 6.784012539210904,
+        "write_error_percent": 79.5011404135626,
+        "read_burst_padding_bytes": 30016,
+        "write_burst_padding_bytes": 38976,
+        "scope": "Backend burst-service estimates, not validated physical GPU counters"
+      }
+    },
+    "p256d02": {
+      "full_no_worse": true,
+      "every_phase_no_worse": false,
+      "full_within_10_percent": true,
+      "every_phase_within_10_percent": false,
+      "phases": {
+        "prefill": {
+          "candidate_ms": 18.833487759225623,
+          "hardware_ms": 16.013696670532227,
+          "candidate_error_percent": 17.608620587164392,
+          "baseline_error_percent": 3.8458785759384773,
+          "no_worse": false,
+          "within_10_percent": false
+        },
+        "decode_1": {
+          "candidate_ms": 10.086456356120175,
+          "hardware_ms": 11.185904026031494,
+          "candidate_error_percent": -9.828867361571481,
+          "baseline_error_percent": -17.944799288105774,
+          "no_worse": true,
+          "within_10_percent": true
+        },
+        "decode_2": {
+          "candidate_ms": 10.086456356120175,
+          "hardware_ms": 11.115520000457764,
+          "candidate_error_percent": -9.257899264228842,
+          "baseline_error_percent": -17.42068747461224,
+          "no_worse": true,
+          "within_10_percent": true
+        }
+      },
+      "backend_service": {
+        "read_error_percent": 13.016432863539773,
+        "write_error_percent": 58.31474886721526,
+        "read_burst_padding_bytes": 38976,
+        "write_burst_padding_bytes": 38976,
+        "scope": "Backend burst-service estimates, not validated physical GPU counters"
+      }
+    },
+    "p512d02": {
+      "full_no_worse": false,
+      "every_phase_no_worse": false,
+      "full_within_10_percent": false,
+      "every_phase_within_10_percent": false,
+      "phases": {
+        "prefill": {
+          "candidate_ms": 32.054344640048356,
+          "hardware_ms": 23.797871589660645,
+          "candidate_error_percent": 34.69416590168875,
+          "baseline_error_percent": 29.64306443860407,
+          "no_worse": false,
+          "within_10_percent": false
+        },
+        "decode_1": {
+          "candidate_ms": 10.219605361968126,
+          "hardware_ms": 11.487743854522705,
+          "candidate_error_percent": -11.039056133335656,
+          "baseline_error_percent": -18.949864151659845,
+          "no_worse": true,
+          "within_10_percent": false
+        },
+        "decode_2": {
+          "candidate_ms": 10.219605361968126,
+          "hardware_ms": 11.3505277633667,
+          "candidate_error_percent": -9.96361072344647,
+          "baseline_error_percent": -17.965118502664833,
+          "no_worse": true,
+          "within_10_percent": true
+        }
+      },
+      "backend_service": {
+        "read_error_percent": 25.46073571259493,
+        "write_error_percent": 77.28752167419894,
+        "read_burst_padding_bytes": 38976,
+        "write_burst_padding_bytes": 38976,
+        "scope": "Backend burst-service estimates, not validated physical GPU counters"
+      }
+    },
+    "p128d04": {
+      "full_no_worse": true,
+      "every_phase_no_worse": false,
+      "full_within_10_percent": true,
+      "every_phase_within_10_percent": false,
+      "phases": {
+        "prefill": {
+          "candidate_ms": 20.24510466747329,
+          "hardware_ms": 13.292960166931152,
+          "candidate_error_percent": 52.299445821232226,
+          "baseline_error_percent": -6.076240030723135,
+          "no_worse": false,
+          "within_10_percent": false
+        },
+        "decode_1": {
+          "candidate_ms": 10.017101502318997,
+          "hardware_ms": 11.13036823272705,
+          "candidate_error_percent": -10.00206558426947,
+          "baseline_error_percent": -18.12982455327663,
+          "no_worse": true,
+          "within_10_percent": false
+        },
+        "decode_2": {
+          "candidate_ms": 9.872493455535375,
+          "hardware_ms": 11.098623752593994,
+          "candidate_error_percent": -11.047588641538065,
+          "baseline_error_percent": -17.891116924563722,
+          "no_worse": true,
+          "within_10_percent": false
+        },
+        "decode_3": {
+          "candidate_ms": 10.017101502318997,
+          "hardware_ms": 11.073552131652832,
+          "candidate_error_percent": -9.54030483420093,
+          "baseline_error_percent": -17.700662879890828,
+          "no_worse": true,
+          "within_10_percent": true
+        },
+        "decode_4": {
+          "candidate_ms": 10.01709986489209,
+          "hardware_ms": 11.059199810028076,
+          "candidate_error_percent": -9.422923566233498,
+          "baseline_error_percent": -17.589046616774507,
+          "no_worse": true,
+          "within_10_percent": true
+        }
+      },
+      "backend_service": {
+        "read_error_percent": 4.4028514531532,
+        "write_error_percent": 81.809485254283,
+        "read_burst_padding_bytes": 65408,
+        "write_burst_padding_bytes": 74368,
+        "scope": "Backend burst-service estimates, not validated physical GPU counters"
+      }
+    },
+    "p128d08": {
+      "full_no_worse": true,
+      "every_phase_no_worse": false,
+      "full_within_10_percent": true,
+      "every_phase_within_10_percent": false,
+      "phases": {
+        "prefill": {
+          "candidate_ms": 20.24510466747329,
+          "hardware_ms": 13.343136310577393,
+          "candidate_error_percent": 51.72673197848214,
+          "baseline_error_percent": -6.429435258765404,
+          "no_worse": false,
+          "within_10_percent": false
+        },
+        "decode_1": {
+          "candidate_ms": 10.017101502318997,
+          "hardware_ms": 11.123712062835693,
+          "candidate_error_percent": -9.948212919083732,
+          "baseline_error_percent": -18.0808353495171,
+          "no_worse": true,
+          "within_10_percent": true
+        },
+        "decode_2": {
+          "candidate_ms": 9.872493455535375,
+          "hardware_ms": 11.11296033859253,
+          "candidate_error_percent": -11.162344193286856,
+          "baseline_error_percent": -17.997043790816157,
+          "no_worse": true,
+          "within_10_percent": false
+        },
+        "decode_3": {
+          "candidate_ms": 10.017101502318997,
+          "hardware_ms": 11.101712226867676,
+          "candidate_error_percent": -9.769760757478219,
+          "baseline_error_percent": -17.909419612371423,
+          "no_worse": true,
+          "within_10_percent": true
+        },
+        "decode_4": {
+          "candidate_ms": 10.01709986489209,
+          "hardware_ms": 11.117055892944336,
+          "candidate_error_percent": -9.89431049591426,
+          "baseline_error_percent": -18.017934894216204,
+          "no_worse": true,
+          "within_10_percent": true
+        },
+        "decode_5": {
+          "candidate_ms": 10.017111326880402,
+          "hardware_ms": 11.162992000579834,
+          "candidate_error_percent": -10.264995922597752,
+          "baseline_error_percent": -18.350528249715058,
+          "no_worse": true,
+          "within_10_percent": false
+        },
+        "decode_6": {
+          "candidate_ms": 10.017111326880402,
+          "hardware_ms": 11.108864307403564,
+          "candidate_error_percent": -9.827764119825988,
+          "baseline_error_percent": -17.94765200322772,
+          "no_worse": true,
+          "within_10_percent": true
+        },
+        "decode_7": {
+          "candidate_ms": 10.017112964307293,
+          "hardware_ms": 11.105792045593262,
+          "candidate_error_percent": -9.802804489914363,
+          "baseline_error_percent": -17.92041519796841,
+          "no_worse": true,
+          "within_10_percent": true
+        },
+        "decode_8": {
+          "candidate_ms": 10.017085128049985,
+          "hardware_ms": 11.109776020050049,
+          "candidate_error_percent": -9.835399831896352,
+          "baseline_error_percent": -17.945312456812857,
+          "no_worse": true,
+          "within_10_percent": true
+        }
+      },
+      "backend_service": {
+        "read_error_percent": 2.817837674413637,
+        "write_error_percent": 85.90243290261388,
+        "read_burst_padding_bytes": 126336,
+        "write_burst_padding_bytes": 135296,
+        "scope": "Backend burst-service estimates, not validated physical GPU counters"
+      }
+    },
+    "p128d16": {
+      "full_no_worse": true,
+      "every_phase_no_worse": false,
+      "full_within_10_percent": true,
+      "every_phase_within_10_percent": false,
+      "phases": {
+        "prefill": {
+          "candidate_ms": 20.24510466747329,
+          "hardware_ms": 13.296559810638428,
+          "candidate_error_percent": 52.258215326308765,
+          "baseline_error_percent": -6.1016670642078825,
+          "no_worse": false,
+          "within_10_percent": false
+        },
+        "decode_1": {
+          "candidate_ms": 10.017101502318997,
+          "hardware_ms": 11.02948808670044,
+          "candidate_error_percent": -9.178908181624468,
+          "baseline_error_percent": -17.381006911934904,
+          "no_worse": true,
+          "within_10_percent": true
+        },
+        "decode_2": {
+          "candidate_ms": 9.872493455535375,
+          "hardware_ms": 11.00929594039917,
+          "candidate_error_percent": -10.325841825109283,
+          "baseline_error_percent": -17.22489749267666,
+          "no_worse": true,
+          "within_10_percent": false
+        },
+        "decode_3": {
+          "candidate_ms": 10.017101502318997,
+          "hardware_ms": 10.993151664733887,
+          "candidate_error_percent": -8.878710966447102,
+          "baseline_error_percent": -17.098751314092674,
+          "no_worse": true,
+          "within_10_percent": true
+        },
+        "decode_4": {
+          "candidate_ms": 10.01709986489209,
+          "hardware_ms": 11.029472351074219,
+          "candidate_error_percent": -9.178793454099631,
+          "baseline_error_percent": -17.36692645036333,
+          "no_worse": true,
+          "within_10_percent": true
+        },
+        "decode_5": {
+          "candidate_ms": 10.017111326880402,
+          "hardware_ms": 11.006368160247803,
+          "candidate_error_percent": -8.98804055038196,
+          "baseline_error_percent": -17.188632369037617,
+          "no_worse": true,
+          "within_10_percent": true
+        },
+        "decode_6": {
+          "candidate_ms": 10.017111326880402,
+          "hardware_ms": 11.010047912597656,
+          "candidate_error_percent": -9.018458353674742,
+          "baseline_error_percent": -17.21122312673541,
+          "no_worse": true,
+          "within_10_percent": true
+        },
+        "decode_7": {
+          "candidate_ms": 10.017112964307293,
+          "hardware_ms": 10.992544174194336,
+          "candidate_error_percent": -8.873570980746448,
+          "baseline_error_percent": -17.07481129437354,
+          "no_worse": true,
+          "within_10_percent": true
+        },
+        "decode_8": {
+          "candidate_ms": 10.017085128049985,
+          "hardware_ms": 11.011071681976318,
+          "candidate_error_percent": -9.02715541806307,
+          "baseline_error_percent": -17.209766103676827,
+          "no_worse": true,
+          "within_10_percent": true
+        },
+        "decode_9": {
+          "candidate_ms": 10.022369104658189,
+          "hardware_ms": 10.993135929107666,
+          "candidate_error_percent": -8.830663340376589,
+          "baseline_error_percent": -17.06985105259211,
+          "no_worse": true,
+          "within_10_percent": true
+        },
+        "decode_10": {
+          "candidate_ms": 10.022370742085096,
+          "hardware_ms": 10.960303783416748,
+          "candidate_error_percent": -8.557546030346098,
+          "baseline_error_percent": -16.816575706646773,
+          "no_worse": true,
+          "within_10_percent": true
+        },
+        "decode_11": {
+          "candidate_ms": 10.022370742085096,
+          "hardware_ms": 10.976255893707275,
+          "candidate_error_percent": -8.690441994606246,
+          "baseline_error_percent": -16.93287685441822,
+          "no_worse": true,
+          "within_10_percent": true
+        },
+        "decode_12": {
+          "candidate_ms": 10.022372379511987,
+          "hardware_ms": 10.992527961730957,
+          "candidate_error_percent": -8.825591216110062,
+          "baseline_error_percent": -17.051254891107025,
+          "no_worse": true,
+          "within_10_percent": true
+        },
+        "decode_13": {
+          "candidate_ms": 10.022400215769297,
+          "hardware_ms": 11.00544023513794,
+          "candidate_error_percent": -8.932309824644847,
+          "baseline_error_percent": -17.143996013116247,
+          "no_worse": true,
+          "within_10_percent": true
+        },
+        "decode_14": {
+          "candidate_ms": 10.022424777172805,
+          "hardware_ms": 11.011072158813477,
+          "candidate_error_percent": -8.978665904476324,
+          "baseline_error_percent": -17.18179784426499,
+          "no_worse": true,
+          "within_10_percent": true
+        },
+        "decode_15": {
+          "candidate_ms": 10.022450976003222,
+          "hardware_ms": 10.982975959777832,
+          "candidate_error_percent": -8.745580317140567,
+          "baseline_error_percent": -16.965346793088344,
+          "no_worse": true,
+          "within_10_percent": true
+        },
+        "decode_16": {
+          "candidate_ms": 10.022370742085096,
+          "hardware_ms": 10.990064144134521,
+          "candidate_error_percent": -8.805166096923022,
+          "baseline_error_percent": -17.014315108729306,
+          "no_worse": true,
+          "within_10_percent": true
+        }
+      },
+      "backend_service": {
+        "read_error_percent": 1.91367381961709,
+        "write_error_percent": 95.10017682534956,
+        "read_burst_padding_bytes": 213248,
+        "write_burst_padding_bytes": 222208,
+        "scope": "Backend burst-service estimates, not validated physical GPU counters"
+      }
+    }
+  }
+}

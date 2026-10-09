@@ -1,0 +1,314 @@
+{
+  "status": "PASS_DIRECTION_GROUPED_OFFLINE_LAYOUT_AND_UNCHANGED_DATA",
+  "chart_count": 24,
+  "groups": [
+    {
+      "direction": "read",
+      "cases": [
+        "p032d02",
+        "p064d02",
+        "p128d02",
+        "p256d02",
+        "p512d02",
+        "p128d04",
+        "p128d08",
+        "p128d16"
+      ]
+    },
+    {
+      "direction": "write",
+      "cases": [
+        "p032d02",
+        "p064d02",
+        "p128d02",
+        "p256d02",
+        "p512d02",
+        "p128d04",
+        "p128d08",
+        "p128d16"
+      ]
+    },
+    {
+      "direction": "combined",
+      "cases": [
+        "p032d02",
+        "p064d02",
+        "p128d02",
+        "p256d02",
+        "p512d02",
+        "p128d04",
+        "p128d08",
+        "p128d16"
+      ]
+    }
+  ],
+  "checks": [
+    {
+      "viewport": 1440,
+      "document_width": 1440,
+      "legend_overflow": [],
+      "layout": [
+        {
+          "direction": "read",
+          "columns": 4,
+          "rows": 2
+        },
+        {
+          "direction": "write",
+          "columns": 4,
+          "rows": 2
+        },
+        {
+          "direction": "combined",
+          "columns": 4,
+          "rows": 2
+        }
+      ]
+    },
+    {
+      "viewport": 1280,
+      "document_width": 1280,
+      "legend_overflow": [],
+      "layout": [
+        {
+          "direction": "read",
+          "columns": 4,
+          "rows": 2
+        },
+        {
+          "direction": "write",
+          "columns": 4,
+          "rows": 2
+        },
+        {
+          "direction": "combined",
+          "columns": 4,
+          "rows": 2
+        }
+      ]
+    },
+    {
+      "viewport": 1024,
+      "document_width": 1024,
+      "legend_overflow": [],
+      "layout": [
+        {
+          "direction": "read",
+          "columns": 4,
+          "rows": 2
+        },
+        {
+          "direction": "write",
+          "columns": 4,
+          "rows": 2
+        },
+        {
+          "direction": "combined",
+          "columns": 4,
+          "rows": 2
+        }
+      ]
+    },
+    {
+      "viewport": 980,
+      "document_width": 980,
+      "legend_overflow": [],
+      "layout": [
+        {
+          "direction": "read",
+          "columns": 2,
+          "rows": 4
+        },
+        {
+          "direction": "write",
+          "columns": 2,
+          "rows": 4
+        },
+        {
+          "direction": "combined",
+          "columns": 2,
+          "rows": 4
+        }
+      ]
+    },
+    {
+      "viewport": 930,
+      "document_width": 930,
+      "legend_overflow": [],
+      "layout": [
+        {
+          "direction": "read",
+          "columns": 2,
+          "rows": 4
+        },
+        {
+          "direction": "write",
+          "columns": 2,
+          "rows": 4
+        },
+        {
+          "direction": "combined",
+          "columns": 2,
+          "rows": 4
+        }
+      ]
+    },
+    {
+      "viewport": 800,
+      "document_width": 800,
+      "legend_overflow": [],
+      "layout": [
+        {
+          "direction": "read",
+          "columns": 2,
+          "rows": 4
+        },
+        {
+          "direction": "write",
+          "columns": 2,
+          "rows": 4
+        },
+        {
+          "direction": "combined",
+          "columns": 2,
+          "rows": 4
+        }
+      ]
+    },
+    {
+      "viewport": 768,
+      "document_width": 768,
+      "legend_overflow": [],
+      "layout": [
+        {
+          "direction": "read",
+          "columns": 2,
+          "rows": 4
+        },
+        {
+          "direction": "write",
+          "columns": 2,
+          "rows": 4
+        },
+        {
+          "direction": "combined",
+          "columns": 2,
+          "rows": 4
+        }
+      ]
+    },
+    {
+      "viewport": 640,
+      "document_width": 640,
+      "legend_overflow": [],
+      "layout": [
+        {
+          "direction": "read",
+          "columns": 2,
+          "rows": 4
+        },
+        {
+          "direction": "write",
+          "columns": 2,
+          "rows": 4
+        },
+        {
+          "direction": "combined",
+          "columns": 2,
+          "rows": 4
+        }
+      ]
+    },
+    {
+      "viewport": 560,
+      "document_width": 560,
+      "legend_overflow": [],
+      "layout": [
+        {
+          "direction": "read",
+          "columns": 1,
+          "rows": 8
+        },
+        {
+          "direction": "write",
+          "columns": 1,
+          "rows": 8
+        },
+        {
+          "direction": "combined",
+          "columns": 1,
+          "rows": 8
+        }
+      ]
+    },
+    {
+      "viewport": 390,
+      "document_width": 390,
+      "legend_overflow": [],
+      "layout": [
+        {
+          "direction": "read",
+          "columns": 1,
+          "rows": 8
+        },
+        {
+          "direction": "write",
+          "columns": 1,
+          "rows": 8
+        },
+        {
+          "direction": "combined",
+          "columns": 1,
+          "rows": 8
+        }
+      ]
+    },
+    {
+      "viewport": 360,
+      "document_width": 360,
+      "legend_overflow": [],
+      "layout": [
+        {
+          "direction": "read",
+          "columns": 1,
+          "rows": 8
+        },
+        {
+          "direction": "write",
+          "columns": 1,
+          "rows": 8
+        },
+        {
+          "direction": "combined",
+          "columns": 1,
+          "rows": 8
+        }
+      ]
+    },
+    {
+      "viewport": 320,
+      "document_width": 320,
+      "legend_overflow": [],
+      "layout": [
+        {
+          "direction": "read",
+          "columns": 1,
+          "rows": 8
+        },
+        {
+          "direction": "write",
+          "columns": 1,
+          "rows": 8
+        },
+        {
+          "direction": "combined",
+          "columns": 1,
+          "rows": 8
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "external_requests": [],
+  "details_interaction_passed": true
+}

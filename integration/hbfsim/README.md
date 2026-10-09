@@ -1,91 +1,118 @@
-# Qwen2.5-1.5B P32D2 LLMCompass and HBFSim Integration
+# RTX 4000 Ada Analytical Reproduction Checkpoint
 
-This directory contains the curated implementation and acceptance evidence for the Qwen2.5-1.5B P32D2 analytical co-simulation path.
+Current milestone: **accepted for analytical reproduction and accounting; not accepted for physical DRAM or full-inference timing accuracy.** Frozen on 2026-10-09. This is an operator-level reproduction on a different GPU, not a reproduction of every end-to-end accuracy claim in the original paper.
 
-## Scope and contract
+## Definitions and experimental scope
 
-Qwen2.5-1.5B is modeled with 28 Transformer layers, hidden size 1536, gated feed-forward size 8960, 12 query heads, 2 key/value heads, and BF16-sized elements. P32D2 means batch size 1, a 32-token prompt prefill, and two one-token autoregressive decode steps. TP1 means one-device tensor parallelism. The three phase context lengths are 32, 33, and 34.
+LLMCompass is the official analytical accelerator model. Its mapper selects tiling and data movement through main memory, global buffer, and local buffer. These buffers are analytical hierarchy boundaries, not measured native NVIDIA L1/L2 cache counters. DRAM means dynamic random-access memory. HBFSim is an external memory-service simulator; GDDR6 means Graphics Double Data Rate 6. NVIDIA Nsight Compute (NCU) supplies observed aggregate DRAM byte counters.
 
-The adapter builds an operator-boundary analytical closed loop: LLMCompass supplies analytical operator duration, HBFSim executes the operator memory transaction DAG, and the HBFSim completion frontier becomes the next operator submission time. The loop ends at operator boundaries. It is not a CTA, warp, instruction, cache, pipeline, or GPU-cycle simulator, and it is not hardware calibration.
+The workload is **Qwen2.5-1.5B-Instruct**, not Qwen1.5-1.5B: 28 layers, hidden size 1536, feed-forward size 8960, 12 query heads, 2 key/value heads, batch size 1, one device. P128D4 means a 128-token Prefill followed by four one-token Decode steps. The eight cases are P32D2, P64D2, P128D2, P256D2, P512D2, P128D4, P128D8, and P128D16. The model uses two-byte FP16 storage as a size proxy for BF16 hardware storage; this does not establish numerical equivalence.
 
-## Memory and claim boundary
+The full model window is Prefill plus every requested Decode step, with 507 modeled operators per phase: 23,322 operators, 46 phases, and 38 Decode steps across the matrix. CPU wall-clock and profiler replay duration are never GPU-bandwidth denominators.
 
-Weights, activations, and KV cache use deterministic simulated logical addresses. These are not CUDA virtual addresses or physical hardware addresses. The `gddr_abstract_all_hbm` mode applies an uncalibrated GDDR-inspired numeric overlay to the generic HBFSim HBM device. It is not a native RTX 4000 Ada GDDR6 backend.
+## Accepted and excluded claims
 
-The current adapter does not model L1 cache, L2 cache, CTA access, warp access, instruction access, cache replacement, or cache hit/miss behavior. The configured L2 bandwidth is a roofline input only. Therefore L1 and L2 hardware counters remain `NOT_MODELED` on the simulation side.
+| Check | Milestone decision |
+|---|---|
+| Official analytical implementation | Accepted: all 111 unique frozen shapes match unchanged official operator latencies; `software_model`, `hardware_model`, and `ae/figure5` match ISCA_AE commit `62321b1ee28ddbdba8a2eb7475d7caa30f75e8be`. |
+| Full Qwen operator and phase accounting | Accepted: all eight cases close operator counts, integer-nanosecond time, classified Read/Write bytes, and separately disclosed unknown-direction IO. |
+| Semantic traffic accounting | Accepted as MODEL_ESTIMATE: Weights, KV cache, Activation, Other close to mapper/adapter boundary bytes. |
+| Offline visualization | Accepted as model reporting: 24 Read/Write/Total SVG donut charts, unchanged embedded aggregates, no external resources. |
+| RTX 4000 Ada native timing and DRAM accuracy | Not accepted. Only 2/8 full windows meet a numerical 10% timing bound; 0/8 pass the additional every-phase anti-cancellation guard in the archived validation. No physical-counter equivalence is established. |
+| New GDDR6 HBFSim integration | Functional/accounting extension only. 8 cases close, but only 7/8 full cases and 1/8 every-phase cases satisfy its no-regression check against the official baseline. It is not an accuracy upgrade accepted for all cases. |
 
-`traffic.json` reports `logical_bytes`, `physical_bytes`, transactions, phase intervals, and interval-average GB/s. These are HBFSim completion values, not measured hardware link bandwidth. Hardware DRAM rows come from NVIDIA Nsight Compute (NCU) counters and are kept as a separate evidence class.
+The 10% rule means `abs(model_time / hardware_time - 1) * 100 <= 10` per case. The every-phase rule is a stricter project diagnostic, not a claimed original-paper criterion. A full-window pass caused by opposite-sign Prefill/Decode errors is not an accuracy acceptance.
 
-## Phase 1 analytical cache accounting
+## Timing and transfer contracts
 
-The `cache-accounting` command provides a deliberately separate Phase 1 estimate:
+Formal time is the sum of official `compile_and_simulate` operator bodies, including the official Decode shortcut and BatchedMatmul minimum of its two candidates. Projection-bias and Qwen-specific vector operations remain explicitly labeled adapters. The primary ledger uses integer nanoseconds; there is no maintained native GPU cycle clock. The official transformer-level overhead aggregation is not implemented in this Qwen evaluator. No A100 launch constants, Qwen-fitted multiplier, or separately added HBFSim memory time enters this result.
 
-```text
-python3 qwen_hbfsim_cosim.py cache-accounting --output results/analytical-cache-accounting
+Formal traffic comes directly from selected mapper transfer decisions: actual tile extents times element size, with read/write direction and reuse as implemented in the source. It is not reconstructed from rounded IO cycles times bandwidth. Qwen vector-adapter accesses are counted separately. The official K-concatenated BatchedMatmul performance surrogate is retained, not treated as a numerically equivalent executable batch graph. Its unclassifiable extra IO remains unknown-direction; it is neither guessed nor dropped.
+
+The retired roofline-barrier-plus-serial-memory path is rejected for nonzero operator barriers before a result directory is created. It must not generate new formal results. Historical request-deletion/fusion sensitivity experiments are excluded from this snapshot, and no cross-operator QKV residency or new cache replacement policy is assumed.
+
+Formal bandwidth is `(known_read + known_write + unknown_direction_bytes) / official_model_nanoseconds`, numerically decimal GB/s. Hardware effective bandwidth is measured NCU DRAM bytes divided by a matched unprofiled CUDA-event workload duration. These are distinct boundary estimates and effective-window observations, not identical instantaneous controller bandwidth. Hardware cycle counters were not collected.
+
+## Frozen hardware profile and external backend
+
+`RTX4000Ada_xmu_profile_v3.json` is the only current profile: 48 streaming multiprocessors (SMs), 2175 MHz modeled SM clock, 160-bit GDDR6 interface, 17.1 Gb/s per pin, 342 GB/s raw interface rate. Dense tensor architectural throughput is 106.9056 TFLOPS after correcting the existing `mac_per_cycle` field to 0.5. This is architectural peak, not a claim that measured GEMM throughput reaches peak. Profile SHA-256: `d7c2659d32b14c4cf0f5da876be09375a810bcdbfdc7b03c4b820cf2fc4288b1`.
+
+Frozen native hardware is RTX 4000 Ada GPU `GPU-18ace299-5348-e6e4-d48c-1ee5a602859b`. Later paired measurements usually sampled 2325 MHz SM clock at endpoints, while the analytical profile remains frozen at 2175 MHz. Endpoint samples are not continuous clock traces. This difference is disclosed, not fitted away.
+
+The current external backend is `/home/xmu/nvidiagds/stable/bhbfsims/gddr6-ada-lightweight`, branch `feature/gddr6-ada-lightweight-20261008`, commit `117d017737369fa1cfdf130662594c3f411230d5`. Its overlay is `configs/overlays/dram/rtx4000-ada-gddr6.cfg`, preserved byte-for-byte here as `rtx4000ada-gddr6-aggregate.cfg`: 10 x 16-bit channels and 342 GB/s raw rate, with independently calibrated aggregate efficiency 0.961886648136 (328.965 GB/s effective service ceiling). This is GDDR6-aggregate-v1, not native bank/command/refresh modeling. It is pinned externally, not vendored into this repository.
+
+The GDDR extension replaces the modeled main-memory service at dependent stages while retaining on-chip work; it does not add a second whole-operator memory cost. Operator templates are compiled in isolated backend sessions and aggregated analytically, not run as a continuous native GPU inference. It has zero contribution to the official primary time.
+
+## Latest eight-case comparison
+
+Numbers below use the latest paired collection (2026-10-08 r3), not the older hardware collection used by the archived official/GDDR gates. Read uses decimal GB, Write decimal MB, time ms, and bandwidth GB/s. M means official model estimate; H means native SGLang hardware. Unknown-direction IO is included in M bandwidth but not assigned to M Read or Write.
+
+| Case | M / H time | Time delta | M / H Read | M / H Write | M / H effective bandwidth |
+|---|---:|---:|---:|---:|---:|
+| P32D2 | 28.009 / 33.379 | -16.09% | 9.424 / 9.243 | 128.54 / 71.58 | 341.16 / 279.05 |
+| P64D2 | 28.891 / 33.736 | -14.36% | 9.581 / 9.252 | 251.90 / 151.90 | 340.60 / 278.74 |
+| P128D2 | 30.711 / 34.643 | -11.35% | 9.904 / 9.280 | 503.14 / 278.91 | 339.52 / 275.92 |
+| P256D2 | 34.987 / 37.346 | -6.31% | 10.582 / 9.364 | 1023.65 / 644.58 | 333.44 / 268.00 |
+| P512D2 | 49.475 / 45.436 | +8.89% | 12.070 / 9.621 | 2136.09 / 1204.35 | 291.23 / 238.24 |
+| P128D4 | 48.938 / 56.469 | -13.34% | 16.131 / 15.458 | 509.82 / 279.19 | 340.44 / 278.68 |
+| P128D8 | 85.399 / 100.079 | -14.67% | 28.587 / 27.808 | 523.19 / 279.33 | 341.10 / 280.65 |
+| P128D16 | 158.347 / 187.131 | -15.38% | 53.507 / 52.509 | 550.00 / 279.72 | 341.51 / 282.09 |
+
+`checkpoint/paired-collection.json` also contains the explicit-operator hardware reference. Pairing/accounting passed 320 unprofiled workflows, 80 full counter ranges, and 120 warm group counter ranges. Strict elementwise logits match in 5/8 cases and strict cross-implementation KV tolerance in 0/8; this is not an exact numerical reference. Isolated warm groups cannot be extrapolated to full-inference traffic.
+
+Confirmed mismatch sources include materialized attention/MLP activations, mapper partial-output transfers, different native kernels and workflow windows, and the optimistic official one-row Decode shortcut. Fusion alone does not explain all differences, and remaining causal attribution is incomplete. Changing GDDR timing parameters cannot correct source Write bytes: the extension preserves them exactly.
+
+## Semantic categories
+
+- Weights: learned projection, normalization, bias, and tied embedding/output-head accesses; repeated traffic, not unique parameter size; inference writes are zero.
+- KV cache: persistent key/value cache appends and reads. Projected temporary K/V and rotary-transformed tensors belong to Activation.
+- Activation: hidden/residual tensors, Q/K/V temporaries, attention score/probability materialization, MLP intermediates, logits, and mapper partial outputs.
+- Other: unclassified official batch-surrogate IO. Excluded from Read/Write pies and counted exactly once in Total.
+
+Hardware aggregate counters do not provide these object labels. No model proportions are applied to hardware. Open `checkpoint/qwen-semantic-traffic.html` directly; the figures need neither a server nor network access.
+
+## Source organization
+
+- Primary: `evaluate_official_inference.py`, `mapper_matmul.py`, `mapper_softmax.py`, `qwen_hbfsim_cosim.py` (plan/cost definitions), model JSON, and v3 profile.
+- Accounting/reporting: `semantic_traffic_breakdown.py`, `verify_official_inference.py`, `verify_stage_checkpoint.py`, and their tests.
+- Independent GDDR diagnostic: `evaluate_gddr_integration.py`, `mapper_event_coupling.py`, `mapper_tensor_addresses.py`, `mapper_operator_paths.py`, and GDDR tests. Full hardware evidence is external.
+- Hardware diagnosis: `paired_qwen_reference.py`, `verify_paired_qwen_reference.py`, `validate_ae_ada.py`, and `diagnose_inference_timing.py`. These require the XMU SGLang/checkpoint/input package and NCU installation; they are not standalone portable GPU benchmarks.
+- Legacy shell collectors/summarizers remain for provenance only. Their absolute lab paths and old snapshots are not current entrypoints.
+
+## Reproduction and verification
+
+From the repository root, the portable aggregate check uses Python 3.10 or later and the standard library only:
+
+```sh
+python -B integration/hbfsim/verify_stage_checkpoint.py
+cd integration/hbfsim
+python -B -m unittest test_qwen_hbfsim_cosim test_semantic_traffic_breakdown test_verify_official_inference test_paired_qwen_reference test_evaluate_gddr_integration test_verify_stage_checkpoint
 ```
 
-It writes `cache-accounting.json` with estimated L1 and L2 lookup traffic by phase, read/write operation, and abstract memory target. The estimate is derived only from existing LLMCompass operator-level `Access` records. Each access is rounded independently to 32-byte sectors for an accounting estimate; address-level line coalescing is not modeled. L2 lookup traffic is equal to the L1 lookup estimate because L1 filtering is not modeled.
+The model-loading Qwen test needs the official numerical dependencies. Exact frozen environment versions and commands are recorded in `checkpoint/manifest.json`; ScaleSim must be 2.0.2. Keep the tracked geometry lookup tables. The official `environment.yml` remains unchanged. GPU-dependent historical diagnostics need additional PyTorch/SGLang/NCU dependencies, not just the standard-library check.
 
-The report is explicitly marked `MODEL_ESTIMATE`. It does not report cache hits, cache misses, evictions, write policy, MSHR or queue contention, DRAM propagation, bandwidth, or hardware accuracy. No fine-grained cache model is added to the HBFSim execution path.
+Fresh archive validation passes 53 unit tests, including eight checkpoint negative/conservation controls. Four Matmul shapes (including a one-row shortcut and remainder tiles), three BatchedMatmul shapes, and one Softmax shape preserve official mapping/time and direct transfer-byte closure. The complete P32D2 tensor-bound audit passes 1,521 operators and 7,989 matrix views; this is an address-bound check, not continuous full-GPU simulation. Independent external-evidence rechecks also pass the complete frozen official, paired-hardware, and GDDR accounting ledgers. No new hardware measurements or new eight-case timing simulation was performed for this archive.
 
-## Full-inference cosimulation matrix
+Recompile the official full matrix with an existing aggregate hardware collection and a **fresh absolute output directory** (this computes analytical model results, not new GPU measurements):
 
-The matrix under `results/cosim-matrix-20261001-r4/` contains eight unique Qwen2.5-1.5B batch-size-1, tensor-parallel-size-1 full-inference instances. The P128D2 case is shared by the prompt-length and decode-step groups. All runs use the `gddr_abstract_all_hbm` numeric overlay and HBFSim; real hardware collection is `NOT_COLLECTED` for this matrix.
+```sh
+python -B integration/hbfsim/evaluate_official_inference.py \
+  --hardware-root /path/to/collection-r2 \
+  --output-root /path/to/fresh-official-matrix
+python -B integration/hbfsim/verify_official_inference.py /path/to/fresh-official-matrix
+python -B integration/hbfsim/semantic_traffic_breakdown.py analyze \
+  /path/to/fresh-official-matrix /path/to/fresh-semantic-output
+python -B integration/hbfsim/semantic_traffic_breakdown.py html \
+  integration/hbfsim/checkpoint/semantic-breakdown.json integration/hbfsim/checkpoint/paired-collection.json \
+  /path/to/fresh-html-output --report-date 2026-10-09
+```
 
-| Instance | Prefill tokens | Decode steps | Simulated finish (ms) | Physical read (GB) | Physical write (MB) | Physical total (GB) |
-|---|---:|---:|---:|---:|---:|---:|
-| P32D2 | 32 | 2 | 3.673007 | 9.377455 | 99.585536 | 9.477041 |
-| P64D2 | 64 | 2 | 3.745718 | 9.488756 | 195.288576 | 9.684045 |
-| P128D2 | 128 | 2 | 4.096254 | 9.719615 | 394.952192 | 10.114567 |
-| P256D2 | 256 | 2 | 5.290118 | 10.214362 | 827.309568 | 11.041672 |
-| P512D2 | 512 | 2 | 7.770518 | 11.335978 | 1824.144896 | 13.160123 |
-| P128D4 | 128 | 4 | 6.518149 | 15.908894 | 401.632768 | 16.310527 |
-| P128D8 | 128 | 8 | 11.404386 | 28.287814 | 415.010048 | 28.702824 |
-| P128D16 | 128 | 16 | 21.106462 | 53.047094 | 441.829120 | 53.488923 |
+The independent official verifier additionally requires the original referenced hardware timing/counter aggregates. The eight-case GDDR runner currently consumes the historical frozen matrix and selected-operands package at its documented `results/` locations. Those detailed ledgers remain outside Git; do not silently substitute compact checkpoint files for them. The archive contains compact gate results, not every consumed measurement receipt.
 
-These are HBFSim completion-byte and operator-boundary timing results. They are not real hardware measurements, cache accuracy results, or calibrated GPU performance.
+## Preservation and publication
 
-## Main files
+`checkpoint/manifest.json` binds published sources/configuration, upstream-source hashes, compact results, external evidence identities, and the fresh validation receipt. This proves portable aggregate conservation and a frozen code snapshot; independent full-ledger validation remains an explicitly identified external evidence check.
 
-- `qwen_hbfsim_cosim.py`: plan generation, transaction DAG construction, HBFSim session control, and comparison receipts.
-- `cache-accounting.json`: Phase 1 analytical L1/L2 lookup estimate, marked `MODEL_ESTIMATE`.
-- `results/cosim-matrix-20261001-r4/matrix-summary.json`: full-inference cosimulation matrix summary.
-- `test_qwen_hbfsim_cosim.py`: model, address, operator-family, dependency, and claim-boundary tests.
-- `qwen25_1p5b.json`: self-contained Qwen model and P32D2 contract.
-- `RTX4000Ada_xmu_candidate_v0.json`: explicitly uncalibrated RTX 4000 Ada candidate configuration.
-- `summarize_four_roi_ncu.py`, `summarize_solid_bandwidth.py`, and `summarize_solid_cache_counters.py`: read-only evidence summarizers.
-- `CURATED_RESULTS.md`: inventory of retained evidence and explicit exclusions.
+The new branch descends from integration commit `613cbe73f489ad304b28b10d314c373324cb5dc4`, preserving key development history. Superseded reports, profiles, and results are removed from this branch's tracked snapshot only; original worktrees and files remain unchanged. Raw traces, NCU/NSYS binaries, per-operator streams, caches, builds, and runtime logs are not published. Historical objects in parent Git commits remain in history; the source-only archive is made from the accepted current tree.
 
-## Current acceptance checkpoint
-
-The latest model receipt is `results/qwen-p32d2-rtx4000ada-gddr-abstract-aligned-full-r1`. The latest hardware summaries are `results/qwen-p32d2-solid-bandwidth-r1` and `results/qwen-p32d2-solid-cache-counters-r1`. Hardware bandwidth uses five counter repeats and twenty uninstrumented natural CUDA-event timing repeats. Model differences are directional screening values defined as `(model - hardware) / hardware`; they are not hardware accuracy errors.
-
-All bytes below use decimal GB/MB and all bandwidth values use decimal GB/s.
-
-| Phase | Hardware DRAM read | Model HBM proxy read | Read delta | Hardware DRAM write | Model HBM proxy write | Write delta |
-|---|---:|---:|---:|---:|---:|---:|
-| Prefill | 3.095 GB | 3.194 GB | +3.21% | 66.746 MB | 93.168 MB | +39.59% |
-| Decode 1 | 3.060 GB | 3.092 GB | +1.03% | 3.066 MB | 3.207 MB | +4.60% |
-| Decode 2 | 3.088 GB | 3.092 GB | +0.12% | 0.902 MB | 3.209 MB | +255.76% |
-
-Phase bandwidth is listed as read/write/total:
-
-| Phase | Hardware DRAM GB/s | Model HBM proxy GB/s |
-|---|---:|---:|
-| Prefill | 255.265 / 5.505 / 260.770 | 232.815 / 6.791 / 239.606 |
-| Decode 1 | 280.746 / 0.281 / 281.027 | 237.214 / 0.246 / 237.460 |
-| Decode 2 | 283.290 / 0.083 / 283.372 | 237.212 / 0.246 / 237.458 |
-
-The directional screening result is `PASS_DIRECTIONAL_TRAFFIC_SCREENING_NOT_HARDWARE_ACCURACY`. Decode read traffic is within 1.03% and 0.12% for the two steps. Prefill write traffic remains 39.59% higher in the model, while Decode 2 write traffic has a small absolute denominator and therefore a large relative delta. Model Decode read bandwidth is approximately 15--16% below the hardware measurements, so the operator-boundary timing path is not calibrated.
-
-## Validation and preservation rules
-
-The curated branch retains source, configuration, documentation, summaries, traffic receipts, manifests, comparisons, and identity records. It excludes raw CSV/JSONL streams, `*.ncu-rep` captures, `operators.jsonl`, build directories, object files, binaries, CUDA/Triton/torchinductor caches, HTML wear reports, temporary files, and run logs.
-
-The original evidence remains copy-only on the XMU server. Historical failures and raw evidence are not deleted or reclassified by this curated branch.
-
-Validation performed for this snapshot:
-
-- All retained JSON files parse successfully.
-- The Qwen/HBFSim unit test suite passes 12 tests.
-- The curated integration tree contains no trace, capture, runtime-cache, build, or log artifacts; the retained `cache-accounting.json` is the requested Phase 1 analytical result.
+Do not promote this milestone to physical DRAM accuracy, every-case timing within 10%, exact native-kernel execution, strict numerical equivalence, or continuous full-GPU/HBFSim simulation.

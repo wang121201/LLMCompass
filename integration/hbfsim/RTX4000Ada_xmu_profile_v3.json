@@ -1,0 +1,112 @@
+{
+  "name": "NVIDIA RTX 4000 Ada runtime profile revision 4: professional dense BF16 with FP32 accumulation",
+  "device_count": 1,
+  "interconnect": {
+    "link": {
+      "name": "unused-single-device",
+      "bandwidth_per_direction_byte": 0,
+      "bandwidth_both_directions_byte": 0,
+      "latency_second": 0,
+      "flit_size_byte": 16,
+      "header_size_byte": 16,
+      "max_payload_size_byte": 256
+    },
+    "link_count_per_device": 0,
+    "topology": "single"
+  },
+  "device": {
+    "frequency_Hz": 2175000000.0,
+    "compute_chiplet_count": 1,
+    "compute_chiplet": {
+      "physical_core_count": 48,
+      "core_count": 48,
+      "process_node": "Ada",
+      "core": {
+        "sublane_count": 4,
+        "systolic_array": {
+          "array_width": 16,
+          "array_height": 16,
+          "data_type": "fp16",
+          "mac_per_cycle": 0.5,
+          "accumulation_data_type": "fp32",
+          "workload_data_type": "bf16",
+          "storage_proxy": "LLMCompass fp16 represents two-byte BF16 storage; no numerical execution"
+        },
+        "vector_unit": {
+          "vector_width": 32,
+          "flop_per_cycle": 2,
+          "data_type": "fp16",
+          "int32_count": 16,
+          "fp16_count": 0,
+          "fp32_count": 16,
+          "fp64_count": 8
+        },
+        "register_file": {
+          "num_reg_files": 1,
+          "num_registers": 65536,
+          "register_bitwidth": 32,
+          "num_rdwr_ports": 4
+        },
+        "SRAM_KB": 100
+      }
+    },
+    "memory_protocol": "GDDR6",
+    "io": {
+      "process_node": "Ada",
+      "global_buffer_MB": 40,
+      "physical_global_buffer_MB": 40,
+      "global_buffer_bandwidth_per_cycle_byte": 1920,
+      "memory_channel_physical_count": 10,
+      "memory_channel_active_count": 10,
+      "pin_count_per_channel": 16,
+      "bandwidth_per_pin_bit": 17100000000.0
+    },
+    "memory": {
+      "total_capacity_GB": 19.465
+    },
+    "operator_overhead_seconds": {
+      "matmul": 0.0,
+      "softmax": 0.0,
+      "layernorm": 0.0,
+      "gelu": 0.0,
+      "policy": "Disabled because this adapter reports only analytical operator work and does not model host launch, runtime dispatch, or opaque kernel overhead."
+    }
+  },
+  "calibration_status": {
+    "class": "RTX4000_ADA_PROFESSIONAL_TENSOR_RATE_CORRECTED_REVISION_4",
+    "revision": 4,
+    "profile_file_policy": "The existing filename is stable; every experiment keeps an immutable profile snapshot and SHA-256. Frozen revision-3 outputs are not rewritten.",
+    "observed_on_xmu": {
+      "gpu_uuid": "GPU-18ace299-5348-e6e4-d48c-1ee5a602859b",
+      "compute_capability": "8.9",
+      "sm_count": 48,
+      "total_memory_bytes": 20900347904,
+      "max_threads_per_sm": 1536,
+      "shared_memory_per_sm_bytes": 102400,
+      "driver_version": "550.163.01",
+      "max_sm_clock_MHz": 3105,
+      "max_memory_clock_MHz": 9001,
+      "memory_bus_width_bits": 160,
+      "l2_cache_bytes": 41943040,
+      "power_limit_W": 130
+    },
+    "assumptions_not_hardware_verified": {
+      "frequency_Hz": "2.175 GHz is the median SM clock across 183 active samples during the XMU P128D16 native Qwen workflow; the receipt is /home/xmu/nvidiagds/simulators/wgslogs/qwen-ncu/qwen1.5-series/calibration-r1/clock-samples.csv.",
+      "l2_capacity_MB": "40 MiB observed through cudaDevAttrL2CacheSize on GPU-18ace299-5348-e6e4-d48c-1ee5a602859b.",
+      "l2_bandwidth_per_cycle_byte": "1920 B/cycle, scaled from the LLMCompass GA100 template by 48/128 SMs",
+      "tensor_and_vector_throughput": "Professional Ada dense BF16/FP32 accumulation is represented as 1024 FLOPs/SM/cycle: 48 SMs at 2.175 GHz = 106.9056 TFLOPS. Existing 4x16x16 analytical arrays use mac_per_cycle=0.5. This is an architecture-rate inference supported by professional Ada specifications and independent target-GPU FP32-compute GEMM, not a Qwen-fitted or measured-efficiency parameter. Vector is unchanged: 4x32 lanes, 2 FLOPs/lane/cycle = 26.7264 TFLOPS. ScaleSim topology is an analytical abstraction, not a native tensor instruction model.",
+      "gddr6_topology": "160-bit bus observed through CUDA device attributes. The P128D16 native workflow had a median 8550 MHz memory clock across 183 active samples, so ten logical 16-bit channels use 17.1 Gbps/pin and a 342.0 GB/s runtime physical-link rate. The receipt is /home/xmu/nvidiagds/simulators/wgslogs/qwen-ncu/qwen1.5-series/calibration-r1/clock-samples.csv."
+    },
+    "precision_evidence": {
+      "source": "https://www.nvidia.com/content/dam/en-zz/Solutions/design-visualization/quadro-product-literature/NVIDIA-RTX-Blackwell-PRO-GPU-Architecture-v1.0.pdf",
+      "location": "Appendix A, Table 4, RTX 6000 Ada column, PDF pages 45-46; professional Ada, not GeForce",
+      "derivation": "Professional RTX 6000 Ada has 364 dense BF16/FP32 TFLOPS at 142 SMs and 2.505 GHz, approximately 1024 FLOPs/SM/cycle; BF16/FP32 equals FP16/FP16 in that table. Applying this architecture rate to target RTX 4000 Ada's measured 48 SMs and the fixed 2.175 GHz clock yields 106.9056 TFLOPS. Four 16x16 arrays use 0.5 MAC/cycle to express the rate. This per-SM transfer is explicit inference, independently checked on the target; it is not a direct RTX 4000 BF16 datasheet number.",
+      "target_source": "https://www.nvidia.com/en-us/products/workstations/rtx-4000/",
+      "target_cross_check": "The current product page reports 26.7 FP32 TFLOPS and 427.6 Tensor TFLOPS. The older target datasheet reports 327.6 effective sparse FP8 TFLOPS; this discrepancy is recorded, not silently used as BF16/FP32 throughput. Neither advertised FP8 rate is substituted directly for dense BF16.",
+      "independent_evidence": "integration/hbfsim/results/official-explicit-fp32-20261007-r1: dense cuBLAS BF16 inputs, FP32 output, explicit CUBLAS_COMPUTE_32F; and official-tensor-diagnostic-20261007-r2. These validate the rejected 512-FLOPs ceiling but do not fit the 1024-FLOPs architecture parameter to Qwen.",
+      "rejected_assumption": "Revision 3 transferred GeForce RTX 4090's BF16/FP32 half-rate to a professional RTX 4000 Ada and is contradicted by independent target-GPU throughput.",
+      "unchanged": "48 SM, 2.175 GHz, 342 GB/s, 40 MiB global buffer, 1920 B/cycle global bandwidth, vector throughput, zero overhead; no Qwen-based fitted parameter"
+    },
+    "prohibited_claim": "This component profile is not a validated Ada microarchitecture, kernel-efficiency, cache-behavior, or native GDDR6 timing model."
+  }
+}

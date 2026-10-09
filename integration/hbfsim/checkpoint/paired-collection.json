@@ -1,0 +1,1010 @@
+{
+  "cases": [
+    {
+      "case": "p032d02",
+      "hardware": {
+        "explicit": {
+          "effective_GBps": 176.3940018649914,
+          "full_ms": 53.206064224243164,
+          "model_known_read_error_pct": 1.6648529930103129,
+          "model_known_write_error_pct": 11.010193016219727,
+          "model_time_error_pct": -47.357583372540056,
+          "read_bytes": 9269436800,
+          "timing_spread_pct": 9.9400397221023,
+          "write_bytes": 115793792
+        },
+        "native": {
+          "effective_GBps": 279.054479456709,
+          "full_ms": 33.37876796722412,
+          "model_known_read_error_pct": 1.9565698925810837,
+          "model_known_write_error_pct": 79.58057276718257,
+          "model_time_error_pct": -16.087502008752818,
+          "read_bytes": 9242915200,
+          "timing_spread_pct": 11.195524022379889,
+          "write_bytes": 71579520
+        }
+      },
+      "model": {
+        "bandwidth_error_pct": 26.4706812185165,
+        "case": "p032d02",
+        "hardware_GBps": 269.7519623369716,
+        "hardware_ms": 34.52609586715698,
+        "hardware_read_bytes": 9240374144,
+        "hardware_sha256": "18a625ba05fa120d298a4a01138a7b2c8b96b10da21872bbaf26c5749d453729",
+        "hardware_source": "/home/xmu/nvidiagds/simulators/wgslogs/qwen-ncu/qwen1.5-series/collection-r2/cases/p032d02/summary.json",
+        "hardware_write_bytes": 73107968,
+        "known_read_bytes": 9423759296,
+        "known_read_error_pct": 1.9846074319304075,
+        "known_write_bytes": 128542912,
+        "known_write_error_pct": 75.8261315647564,
+        "model_GBps": 341.15714436788403,
+        "model_ms": 28.008958,
+        "operator_count": 1521,
+        "paths": {
+          "OFFICIAL_BATCHED_MATMUL": 168,
+          "OFFICIAL_MATMUL": 591,
+          "OFFICIAL_SOFTMAX": 84,
+          "QWEN_VECTOR_ADAPTER": 678
+        },
+        "phase_totals": {
+          "decode_1": {
+            "known_read_bytes": 3096413504,
+            "known_write_bytes": 3207232,
+            "model_ns": 9062864,
+            "operators": 507,
+            "unclassified_io_bytes": 0
+          },
+          "decode_2": {
+            "known_read_bytes": 3096586880,
+            "known_write_bytes": 3208576,
+            "model_ns": 9063368,
+            "operators": 507,
+            "unclassified_io_bytes": 0
+          },
+          "prefill": {
+            "known_read_bytes": 3230758912,
+            "known_write_bytes": 122127104,
+            "model_ns": 9882726,
+            "operators": 507,
+            "unclassified_io_bytes": 3153920
+          }
+        },
+        "read_error_range_pct": [
+          1.9846074319304075,
+          2.018739383200452
+        ],
+        "status": "PASS_FULL_OPERATOR_ACCOUNTING_NOT_HARDWARE_ACCEPTANCE",
+        "time_error_pct": -18.875976861769715,
+        "total_boundary_bytes": 9555456128,
+        "unclassified_io_bytes": 3153920,
+        "write_error_range_pct": [
+          75.8261315647564,
+          80.14018937032965
+        ]
+      },
+      "paired_delta": {
+        "full_ms": 19.827296257019043,
+        "read_bytes": 26521600,
+        "write_bytes": 44214272
+      },
+      "time_decomposition_ms": {
+        "explicit_minus_native": 19.827296257019043,
+        "model_minus_explicit": -25.197106224243164,
+        "model_minus_native": -5.369809967224121
+      }
+    },
+    {
+      "case": "p064d02",
+      "hardware": {
+        "explicit": {
+          "effective_GBps": 176.53571378083313,
+          "full_ms": 53.82497692108154,
+          "model_known_read_error_pct": 3.3332895708872767,
+          "model_known_write_error_pct": 9.44946662521502,
+          "model_time_error_pct": -46.32372988777964,
+          "read_bytes": 9271876608,
+          "timing_spread_pct": 7.158969063181708,
+          "write_bytes": 230154112
+        },
+        "native": {
+          "effective_GBps": 278.74274477704955,
+          "full_ms": 33.735679626464844,
+          "model_known_read_error_pct": 3.5589083880038785,
+          "model_known_write_error_pct": 65.83492034734539,
+          "model_time_error_pct": -14.359988238281984,
+          "read_bytes": 9251676416,
+          "timing_spread_pct": 2.5954231791873132,
+          "write_bytes": 151899520
+        }
+      },
+      "model": {
+        "bandwidth_error_pct": 26.075959737425023,
+        "case": "p064d02",
+        "hardware_GBps": 270.15710201028224,
+        "hardware_ms": 34.81103992462158,
+        "hardware_read_bytes": 9251040896,
+        "hardware_sha256": "40387728d95619faf66e3b7bb859bd43a03a0bdf4269f129037b72fe541d1be5",
+        "hardware_source": "/home/xmu/nvidiagds/simulators/wgslogs/qwen-ncu/qwen1.5-series/collection-r2/cases/p064d02/summary.json",
+        "hardware_write_bytes": 153408768,
+        "known_read_bytes": 9580935104,
+        "known_read_error_pct": 3.5660225882542695,
+        "known_write_bytes": 251902448,
+        "known_write_error_pct": 64.20342284477508,
+        "model_GBps": 340.6031591582777,
+        "model_ms": 28.89124,
+        "operator_count": 1521,
+        "paths": {
+          "OFFICIAL_BATCHED_MATMUL": 168,
+          "OFFICIAL_MATMUL": 591,
+          "OFFICIAL_SOFTMAX": 84,
+          "QWEN_VECTOR_ADAPTER": 678
+        },
+        "phase_totals": {
+          "decode_1": {
+            "known_read_bytes": 3101961536,
+            "known_write_bytes": 3250240,
+            "model_ns": 9079412,
+            "operators": 507,
+            "unclassified_io_bytes": 0
+          },
+          "decode_2": {
+            "known_read_bytes": 3102134912,
+            "known_write_bytes": 3210928,
+            "model_ns": 9079916,
+            "operators": 507,
+            "unclassified_io_bytes": 40656
+          },
+          "prefill": {
+            "known_read_bytes": 3376838656,
+            "known_write_bytes": 245441280,
+            "model_ns": 10731912,
+            "operators": 507,
+            "unclassified_io_bytes": 7569408
+          }
+        },
+        "read_error_range_pct": [
+          3.5660225882542695,
+          3.648284293564541
+        ],
+        "status": "PASS_FULL_OPERATOR_ACCOUNTING_NOT_HARDWARE_ACCEPTANCE",
+        "time_error_pct": -17.005524504410317,
+        "total_boundary_bytes": 9840447616,
+        "unclassified_io_bytes": 7610064,
+        "write_error_range_pct": [
+          64.20342284477508,
+          69.1640675974922
+        ]
+      },
+      "paired_delta": {
+        "full_ms": 20.0892972946167,
+        "read_bytes": 20200192,
+        "write_bytes": 78254592
+      },
+      "time_decomposition_ms": {
+        "explicit_minus_native": 20.0892972946167,
+        "model_minus_explicit": -24.933736921081543,
+        "model_minus_native": -4.844439626464844
+      }
+    },
+    {
+      "case": "p128d02",
+      "hardware": {
+        "explicit": {
+          "effective_GBps": 187.88469139816047,
+          "full_ms": 51.760128021240234,
+          "model_known_read_error_pct": 6.721233255736925,
+          "model_known_write_error_pct": 13.03662223433848,
+          "model_time_error_pct": -40.66734922410237,
+          "read_bytes": 9279825536,
+          "timing_spread_pct": 10.706062162460745,
+          "write_bytes": 445110144
+        },
+        "native": {
+          "effective_GBps": 275.92174603891124,
+          "full_ms": 34.643295764923096,
+          "model_known_read_error_pct": 6.720042384875602,
+          "model_known_write_error_pct": 80.39448255859045,
+          "model_time_error_pct": -11.351806108773744,
+          "read_bytes": 9279929088,
+          "timing_spread_pct": 1.6802120820554824,
+          "write_bytes": 278909568
+        }
+      },
+      "model": {
+        "bandwidth_error_pct": 26.594008252799185,
+        "case": "p128d02",
+        "hardware_GBps": 268.19758703478226,
+        "hardware_ms": 35.625664710998535,
+        "hardware_read_bytes": 9274397952,
+        "hardware_sha256": "1b80f2b9d411abf09eb200ae04e2953b111c73cabe15af128cbea89add934b6b",
+        "hardware_source": "/home/xmu/nvidiagds/simulators/wgslogs/qwen-ncu/qwen1.5-series/collection-r2/cases/p128d02/summary.json",
+        "hardware_write_bytes": 280319360,
+        "known_read_bytes": 9903544256,
+        "known_read_error_pct": 6.783688895561424,
+        "known_write_bytes": 503137472,
+        "known_write_error_pct": 79.48723627222893,
+        "model_GBps": 339.5220754646205,
+        "model_ms": 30.710656,
+        "operator_count": 1521,
+        "paths": {
+          "OFFICIAL_BATCHED_MATMUL": 168,
+          "OFFICIAL_MATMUL": 591,
+          "OFFICIAL_SOFTMAX": 84,
+          "QWEN_VECTOR_ADAPTER": 678
+        },
+        "phase_totals": {
+          "decode_1": {
+            "known_read_bytes": 3113057600,
+            "known_write_bytes": 3336256,
+            "model_ns": 9112452,
+            "operators": 507,
+            "unclassified_io_bytes": 0
+          },
+          "decode_2": {
+            "known_read_bytes": 3113230976,
+            "known_write_bytes": 3258752,
+            "model_ns": 9112956,
+            "operators": 507,
+            "unclassified_io_bytes": 78848
+          },
+          "prefill": {
+            "known_read_bytes": 3677255680,
+            "known_write_bytes": 496542464,
+            "model_ns": 12485248,
+            "operators": 507,
+            "unclassified_io_bytes": 20185088
+          }
+        },
+        "read_error_range_pct": [
+          6.783688895561424,
+          7.00218217248223
+        ],
+        "status": "PASS_FULL_OPERATOR_ACCOUNTING_NOT_HARDWARE_ACCEPTANCE",
+        "time_error_pct": -13.796258261761352,
+        "total_boundary_bytes": 10426945664,
+        "unclassified_io_bytes": 20263936,
+        "write_error_range_pct": [
+          79.48723627222893,
+          86.71611122399823
+        ]
+      },
+      "paired_delta": {
+        "full_ms": 17.11683225631714,
+        "read_bytes": -103552,
+        "write_bytes": 166200576
+      },
+      "time_decomposition_ms": {
+        "explicit_minus_native": 17.11683225631714,
+        "model_minus_explicit": -21.049472021240234,
+        "model_minus_native": -3.9326397649230955
+      }
+    },
+    {
+      "case": "p256d02",
+      "hardware": {
+        "explicit": {
+          "effective_GBps": 186.32070412166726,
+          "full_ms": 56.94551944732666,
+          "model_known_read_error_pct": 12.587380754541222,
+          "model_known_write_error_pct": -15.497666102141206,
+          "model_time_error_pct": -38.560047674404885,
+          "read_bytes": 9398737792,
+          "timing_spread_pct": 17.625324883957006,
+          "write_bytes": 1211391488
+        },
+        "native": {
+          "effective_GBps": 267.9973117729093,
+          "full_ms": 37.34558391571045,
+          "model_known_read_error_pct": 13.00578338491778,
+          "model_known_write_error_pct": 58.81020295256445,
+          "model_time_error_pct": -6.3147597880197415,
+          "read_bytes": 9363939072,
+          "timing_spread_pct": 3.2224877816298974,
+          "write_bytes": 644577024
+        }
+      },
+      "model": {
+        "bandwidth_error_pct": 27.79498844460333,
+        "case": "p256d02",
+        "hardware_GBps": 260.9142484218734,
+        "hardware_ms": 38.36398410797119,
+        "hardware_read_bytes": 9363091200,
+        "hardware_sha256": "9c21737f350c67f33fd954143f9ea9c00a75c9772eb996ea1cf8f46ec5189587",
+        "hardware_source": "/home/xmu/nvidiagds/simulators/wgslogs/qwen-ncu/qwen1.5-series/collection-r2/cases/p256d02/summary.json",
+        "hardware_write_bytes": 646618880,
+        "known_read_bytes": 10581792704,
+        "known_read_error_pct": 13.016016590760104,
+        "known_write_bytes": 1023654080,
+        "known_write_error_pct": 58.308721205294844,
+        "model_GBps": 333.43533362105677,
+        "model_ms": 34.9873,
+        "operator_count": 1521,
+        "paths": {
+          "OFFICIAL_BATCHED_MATMUL": 168,
+          "OFFICIAL_MATMUL": 591,
+          "OFFICIAL_SOFTMAX": 84,
+          "QWEN_VECTOR_ADAPTER": 678
+        },
+        "phase_totals": {
+          "decode_1": {
+            "known_read_bytes": 3135249728,
+            "known_write_bytes": 3508288,
+            "model_ns": 9178616,
+            "operators": 507,
+            "unclassified_io_bytes": 0
+          },
+          "decode_2": {
+            "known_read_bytes": 3135423104,
+            "known_write_bytes": 3509632,
+            "model_ns": 9179120,
+            "operators": 507,
+            "unclassified_io_bytes": 0
+          },
+          "prefill": {
+            "known_read_bytes": 4311119872,
+            "known_write_bytes": 1016636160,
+            "model_ns": 16629564,
+            "operators": 507,
+            "unclassified_io_bytes": 60555264
+          }
+        },
+        "read_error_range_pct": [
+          13.016016590760104,
+          13.662760948008291
+        ],
+        "status": "PASS_FULL_OPERATOR_ACCOUNTING_NOT_HARDWARE_ACCEPTANCE",
+        "time_error_pct": -8.801703437442498,
+        "total_boundary_bytes": 11666002048,
+        "unclassified_io_bytes": 60555264,
+        "write_error_range_pct": [
+          58.308721205294844,
+          67.67362932551552
+        ]
+      },
+      "paired_delta": {
+        "full_ms": 19.59993553161621,
+        "read_bytes": 34798720,
+        "write_bytes": 566814464
+      },
+      "time_decomposition_ms": {
+        "explicit_minus_native": 19.59993553161621,
+        "model_minus_explicit": -21.958219447326663,
+        "model_minus_native": -2.3582839157104516
+      }
+    },
+    {
+      "case": "p512d02",
+      "hardware": {
+        "explicit": {
+          "effective_GBps": 195.29527960645459,
+          "full_ms": 69.9222412109375,
+          "model_known_read_error_pct": 19.565818334587505,
+          "model_known_write_error_pct": -40.00209062077056,
+          "model_time_error_pct": -29.243523744114476,
+          "read_bytes": 10095201408,
+          "timing_spread_pct": 5.519095897717016,
+          "write_bytes": 3560282240
+        },
+        "native": {
+          "effective_GBps": 238.24222979427972,
+          "full_ms": 45.4364800453186,
+          "model_known_read_error_pct": 25.46502614786066,
+          "model_known_write_error_pct": 77.3648741644825,
+          "model_time_error_pct": 8.887206822918149,
+          "read_bytes": 9620537728,
+          "timing_spread_pct": 2.2113714008087446,
+          "write_bytes": 1204350592
+        }
+      },
+      "model": {
+        "bandwidth_error_pct": 25.489209571565176,
+        "case": "p512d02",
+        "hardware_GBps": 232.07401133096386,
+        "hardware_ms": 46.64803171157837,
+        "hardware_read_bytes": 9620897792,
+        "hardware_sha256": "627e7ce372d7b0d78e5b8a38f41873bc17d601e377228a09fefd4fa3c3371018",
+        "hardware_source": "/home/xmu/nvidiagds/simulators/wgslogs/qwen-ncu/qwen1.5-series/collection-r2/cases/p512d02/summary.json",
+        "hardware_write_bytes": 1204898048,
+        "known_read_bytes": 12070410176,
+        "known_read_error_pct": 25.460330594477654,
+        "known_write_bytes": 2136094912,
+        "known_write_error_pct": 77.28428687768942,
+        "model_GBps": 291.22784244025115,
+        "model_ms": 49.474514,
+        "operator_count": 1521,
+        "paths": {
+          "OFFICIAL_BATCHED_MATMUL": 168,
+          "OFFICIAL_MATMUL": 591,
+          "OFFICIAL_SOFTMAX": 84,
+          "QWEN_VECTOR_ADAPTER": 678
+        },
+        "phase_totals": {
+          "decode_1": {
+            "known_read_bytes": 3179633984,
+            "known_write_bytes": 3852352,
+            "model_ns": 9310832,
+            "operators": 507,
+            "unclassified_io_bytes": 0
+          },
+          "decode_2": {
+            "known_read_bytes": 3179807360,
+            "known_write_bytes": 3853696,
+            "model_ns": 9311392,
+            "operators": 507,
+            "unclassified_io_bytes": 0
+          },
+          "prefill": {
+            "known_read_bytes": 5710968832,
+            "known_write_bytes": 2128388864,
+            "model_ns": 30852290,
+            "operators": 507,
+            "unclassified_io_bytes": 201850880
+          }
+        },
+        "read_error_range_pct": [
+          25.460330594477654,
+          27.558376788959027
+        ],
+        "status": "PASS_FULL_OPERATOR_ACCOUNTING_NOT_HARDWARE_ACCEPTANCE",
+        "time_error_pct": 6.059167310418534,
+        "total_boundary_bytes": 14408355968,
+        "unclassified_io_bytes": 201850880,
+        "write_error_range_pct": [
+          77.28428687768942,
+          94.03681464010472
+        ]
+      },
+      "paired_delta": {
+        "full_ms": 24.485761165618896,
+        "read_bytes": 474663680,
+        "write_bytes": 2355931648
+      },
+      "time_decomposition_ms": {
+        "explicit_minus_native": 24.485761165618896,
+        "model_minus_explicit": -20.4477272109375,
+        "model_minus_native": 4.038033954681396
+      }
+    },
+    {
+      "case": "p128d04",
+      "hardware": {
+        "explicit": {
+          "effective_GBps": 178.79387662681455,
+          "full_ms": 88.98326396942139,
+          "model_known_read_error_pct": 4.314579025064069,
+          "model_known_write_error_pct": 14.228064771652459,
+          "model_time_error_pct": -45.00301987481903,
+          "read_bytes": 15463347968,
+          "timing_spread_pct": 13.546887240508259,
+          "write_bytes": 446314752
+        },
+        "native": {
+          "effective_GBps": 278.68299524628435,
+          "full_ms": 56.46879959106445,
+          "model_known_read_error_pct": 4.352686151561458,
+          "model_known_write_error_pct": 82.60362663419518,
+          "model_time_error_pct": -13.336022096450051,
+          "read_bytes": 15457701120,
+          "timing_spread_pct": 2.0632972182517317,
+          "write_bytes": 279193088
+        }
+      },
+      "model": {
+        "bandwidth_error_pct": 25.159196751370928,
+        "case": "p128d04",
+        "hardware_GBps": 272.0074989237681,
+        "hardware_ms": 57.832191944122314,
+        "hardware_read_bytes": 15450336384,
+        "hardware_sha256": "e3fdb7aab5448fe8a63a03ea64fd73efdd4a565193b1d3af1030fe9ec86f150e",
+        "hardware_source": "/home/xmu/nvidiagds/simulators/wgslogs/qwen-ncu/qwen1.5-series/collection-r2/cases/p128d04/summary.json",
+        "hardware_write_bytes": 280453504,
+        "known_read_bytes": 16130526336,
+        "known_read_error_pct": 4.402428109619594,
+        "known_write_bytes": 509816704,
+        "known_write_error_pct": 81.78296820281483,
+        "model_GBps": 340.4424007564821,
+        "model_ms": 48.938108,
+        "operator_count": 2535,
+        "paths": {
+          "OFFICIAL_BATCHED_MATMUL": 280,
+          "OFFICIAL_MATMUL": 985,
+          "OFFICIAL_SOFTMAX": 140,
+          "QWEN_VECTOR_ADAPTER": 1130
+        },
+        "phase_totals": {
+          "decode_1": {
+            "known_read_bytes": 3113057600,
+            "known_write_bytes": 3336256,
+            "model_ns": 9112452,
+            "operators": 507,
+            "unclassified_io_bytes": 0
+          },
+          "decode_2": {
+            "known_read_bytes": 3113230976,
+            "known_write_bytes": 3258752,
+            "model_ns": 9112956,
+            "operators": 507,
+            "unclassified_io_bytes": 78848
+          },
+          "decode_3": {
+            "known_read_bytes": 3113404352,
+            "known_write_bytes": 3338944,
+            "model_ns": 9113460,
+            "operators": 507,
+            "unclassified_io_bytes": 0
+          },
+          "decode_4": {
+            "known_read_bytes": 3113577728,
+            "known_write_bytes": 3340288,
+            "model_ns": 9113992,
+            "operators": 507,
+            "unclassified_io_bytes": 0
+          },
+          "prefill": {
+            "known_read_bytes": 3677255680,
+            "known_write_bytes": 496542464,
+            "model_ns": 12485248,
+            "operators": 507,
+            "unclassified_io_bytes": 20185088
+          }
+        },
+        "read_error_range_pct": [
+          4.402428109619594,
+          4.533583415862541
+        ],
+        "status": "PASS_FULL_OPERATOR_ACCOUNTING_NOT_HARDWARE_ACCEPTANCE",
+        "time_error_pct": -15.37912301978077,
+        "total_boundary_bytes": 16660606976,
+        "unclassified_io_bytes": 20263936,
+        "write_error_range_pct": [
+          81.78296820281483,
+          89.00838550407273
+        ]
+      },
+      "paired_delta": {
+        "full_ms": 32.514464378356934,
+        "read_bytes": 5646848,
+        "write_bytes": 167121664
+      },
+      "time_decomposition_ms": {
+        "explicit_minus_native": 32.514464378356934,
+        "model_minus_explicit": -40.04515596942139,
+        "model_minus_native": -7.530691591064453
+      }
+    },
+    {
+      "case": "p128d08",
+      "hardware": {
+        "explicit": {
+          "effective_GBps": 177.28678952045732,
+          "full_ms": 159.4547357559204,
+          "model_known_read_error_pct": 2.7491650939128975,
+          "model_known_write_error_pct": 16.911171201989816,
+          "model_time_error_pct": -46.44286004103256,
+          "read_bytes": 27821706368,
+          "timing_spread_pct": 13.227257117534922,
+          "write_bytes": 447511808
+        },
+        "native": {
+          "effective_GBps": 280.6475516642315,
+          "full_ms": 100.07923173904419,
+          "model_known_read_error_pct": 2.801073806532628,
+          "model_known_write_error_pct": 87.29995802578208,
+          "model_time_error_pct": -14.668213858117685,
+          "read_bytes": 27807657984,
+          "timing_spread_pct": 223.1491466266983,
+          "write_bytes": 279333376
+        }
+      },
+      "model": {
+        "bandwidth_error_pct": 24.3472039938641,
+        "case": "p128d08",
+        "hardware_GBps": 274.31531338718503,
+        "hardware_ms": 102.3812804222107,
+        "hardware_read_bytes": 27803246976,
+        "hardware_sha256": "e342d48ce6122c5ea21b002937fd82bc6927ac4a4baedce73c46a98444ad5514",
+        "hardware_source": "/home/xmu/nvidiagds/simulators/wgslogs/qwen-ncu/qwen1.5-series/collection-r2/cases/p128d08/summary.json",
+        "hardware_write_bytes": 281506048,
+        "known_read_bytes": 28586571008,
+        "known_read_error_pct": 2.8173832814425204,
+        "known_write_bytes": 523191296,
+        "known_write_error_pct": 85.8543714130078,
+        "model_GBps": 341.10342232397056,
+        "model_ms": 85.399396,
+        "operator_count": 4563,
+        "paths": {
+          "OFFICIAL_BATCHED_MATMUL": 504,
+          "OFFICIAL_MATMUL": 1773,
+          "OFFICIAL_SOFTMAX": 252,
+          "QWEN_VECTOR_ADAPTER": 2034
+        },
+        "phase_totals": {
+          "decode_1": {
+            "known_read_bytes": 3113057600,
+            "known_write_bytes": 3336256,
+            "model_ns": 9112452,
+            "operators": 507,
+            "unclassified_io_bytes": 0
+          },
+          "decode_2": {
+            "known_read_bytes": 3113230976,
+            "known_write_bytes": 3258752,
+            "model_ns": 9112956,
+            "operators": 507,
+            "unclassified_io_bytes": 78848
+          },
+          "decode_3": {
+            "known_read_bytes": 3113404352,
+            "known_write_bytes": 3338944,
+            "model_ns": 9113460,
+            "operators": 507,
+            "unclassified_io_bytes": 0
+          },
+          "decode_4": {
+            "known_read_bytes": 3113577728,
+            "known_write_bytes": 3340288,
+            "model_ns": 9113992,
+            "operators": 507,
+            "unclassified_io_bytes": 0
+          },
+          "decode_5": {
+            "known_read_bytes": 3113751104,
+            "known_write_bytes": 3341632,
+            "model_ns": 9114524,
+            "operators": 507,
+            "unclassified_io_bytes": 0
+          },
+          "decode_6": {
+            "known_read_bytes": 3113924480,
+            "known_write_bytes": 3342976,
+            "model_ns": 9115084,
+            "operators": 507,
+            "unclassified_io_bytes": 0
+          },
+          "decode_7": {
+            "known_read_bytes": 3114097856,
+            "known_write_bytes": 3344320,
+            "model_ns": 9115588,
+            "operators": 507,
+            "unclassified_io_bytes": 0
+          },
+          "decode_8": {
+            "known_read_bytes": 3114271232,
+            "known_write_bytes": 3345664,
+            "model_ns": 9116092,
+            "operators": 507,
+            "unclassified_io_bytes": 0
+          },
+          "prefill": {
+            "known_read_bytes": 3677255680,
+            "known_write_bytes": 496542464,
+            "model_ns": 12485248,
+            "operators": 507,
+            "unclassified_io_bytes": 20185088
+          }
+        },
+        "read_error_range_pct": [
+          2.8173832814425204,
+          2.89026662495091
+        ],
+        "status": "PASS_FULL_OPERATOR_ACCOUNTING_NOT_HARDWARE_ACCEPTANCE",
+        "time_error_pct": -16.586903731013148,
+        "total_boundary_bytes": 29130026240,
+        "unclassified_io_bytes": 20263936,
+        "write_error_range_pct": [
+          85.8543714130078,
+          93.05277306155782
+        ]
+      },
+      "paired_delta": {
+        "full_ms": 59.37550401687622,
+        "read_bytes": 14048384,
+        "write_bytes": 168178432
+      },
+      "time_decomposition_ms": {
+        "explicit_minus_native": 59.37550401687622,
+        "model_minus_explicit": -74.05533975592041,
+        "model_minus_native": -14.679835739044194
+      }
+    },
+    {
+      "case": "p128d16",
+      "hardware": {
+        "explicit": {
+          "effective_GBps": 176.06924123695703,
+          "full_ms": 301.0072145462036,
+          "model_known_read_error_pct": 1.8220331957425007,
+          "model_known_write_error_pct": 22.605030987137198,
+          "model_time_error_pct": -47.39438513501333,
+          "read_bytes": 52549512832,
+          "timing_spread_pct": 13.74927212393999,
+          "write_bytes": 448599040
+        },
+        "native": {
+          "effective_GBps": 282.0931625367466,
+          "full_ms": 187.1307520866394,
+          "model_known_read_error_pct": 1.901401716309592,
+          "model_known_write_error_pct": 96.62531671403553,
+          "model_time_error_pct": -15.381788276740693,
+          "read_bytes": 52508583296,
+          "timing_spread_pct": 0.8727157695458666,
+          "write_bytes": 279722368
+        }
+      },
+      "model": {
+        "bandwidth_error_pct": 22.357069475969805,
+        "case": "p128d16",
+        "hardware_GBps": 279.1107322324628,
+        "hardware_ms": 189.11667108535767,
+        "hardware_read_bytes": 52502469632,
+        "hardware_sha256": "63c22a144c0d1984212ad4ea58f1f48fa06fea9d9d3eca8bd77ca4e76e8e3712",
+        "hardware_source": "/home/xmu/nvidiagds/simulators/wgslogs/qwen-ncu/qwen1.5-series/collection-r2/cases/p128d16/summary.json",
+        "hardware_write_bytes": 282022912,
+        "known_read_bytes": 53506982400,
+        "known_read_error_pct": 1.9132676520567937,
+        "known_write_bytes": 550004992,
+        "known_write_error_pct": 95.02138606383868,
+        "model_GBps": 341.5117125525625,
+        "model_ms": 158.346696,
+        "operator_count": 8619,
+        "paths": {
+          "OFFICIAL_BATCHED_MATMUL": 952,
+          "OFFICIAL_MATMUL": 3349,
+          "OFFICIAL_SOFTMAX": 476,
+          "QWEN_VECTOR_ADAPTER": 3842
+        },
+        "phase_totals": {
+          "decode_1": {
+            "known_read_bytes": 3113057600,
+            "known_write_bytes": 3336256,
+            "model_ns": 9112452,
+            "operators": 507,
+            "unclassified_io_bytes": 0
+          },
+          "decode_10": {
+            "known_read_bytes": 3114617984,
+            "known_write_bytes": 3348352,
+            "model_ns": 9117156,
+            "operators": 507,
+            "unclassified_io_bytes": 0
+          },
+          "decode_11": {
+            "known_read_bytes": 3114791360,
+            "known_write_bytes": 3349696,
+            "model_ns": 9117660,
+            "operators": 507,
+            "unclassified_io_bytes": 0
+          },
+          "decode_12": {
+            "known_read_bytes": 3114964736,
+            "known_write_bytes": 3351040,
+            "model_ns": 9118164,
+            "operators": 507,
+            "unclassified_io_bytes": 0
+          },
+          "decode_13": {
+            "known_read_bytes": 3115138112,
+            "known_write_bytes": 3352384,
+            "model_ns": 9118668,
+            "operators": 507,
+            "unclassified_io_bytes": 0
+          },
+          "decode_14": {
+            "known_read_bytes": 3115311488,
+            "known_write_bytes": 3353728,
+            "model_ns": 9119172,
+            "operators": 507,
+            "unclassified_io_bytes": 0
+          },
+          "decode_15": {
+            "known_read_bytes": 3115484864,
+            "known_write_bytes": 3355072,
+            "model_ns": 9119676,
+            "operators": 507,
+            "unclassified_io_bytes": 0
+          },
+          "decode_16": {
+            "known_read_bytes": 3115658240,
+            "known_write_bytes": 3356416,
+            "model_ns": 9120180,
+            "operators": 507,
+            "unclassified_io_bytes": 0
+          },
+          "decode_2": {
+            "known_read_bytes": 3113230976,
+            "known_write_bytes": 3258752,
+            "model_ns": 9112956,
+            "operators": 507,
+            "unclassified_io_bytes": 78848
+          },
+          "decode_3": {
+            "known_read_bytes": 3113404352,
+            "known_write_bytes": 3338944,
+            "model_ns": 9113460,
+            "operators": 507,
+            "unclassified_io_bytes": 0
+          },
+          "decode_4": {
+            "known_read_bytes": 3113577728,
+            "known_write_bytes": 3340288,
+            "model_ns": 9113992,
+            "operators": 507,
+            "unclassified_io_bytes": 0
+          },
+          "decode_5": {
+            "known_read_bytes": 3113751104,
+            "known_write_bytes": 3341632,
+            "model_ns": 9114524,
+            "operators": 507,
+            "unclassified_io_bytes": 0
+          },
+          "decode_6": {
+            "known_read_bytes": 3113924480,
+            "known_write_bytes": 3342976,
+            "model_ns": 9115084,
+            "operators": 507,
+            "unclassified_io_bytes": 0
+          },
+          "decode_7": {
+            "known_read_bytes": 3114097856,
+            "known_write_bytes": 3344320,
+            "model_ns": 9115588,
+            "operators": 507,
+            "unclassified_io_bytes": 0
+          },
+          "decode_8": {
+            "known_read_bytes": 3114271232,
+            "known_write_bytes": 3345664,
+            "model_ns": 9116092,
+            "operators": 507,
+            "unclassified_io_bytes": 0
+          },
+          "decode_9": {
+            "known_read_bytes": 3114444608,
+            "known_write_bytes": 3347008,
+            "model_ns": 9116624,
+            "operators": 507,
+            "unclassified_io_bytes": 0
+          },
+          "prefill": {
+            "known_read_bytes": 3677255680,
+            "known_write_bytes": 496542464,
+            "model_ns": 12485248,
+            "operators": 507,
+            "unclassified_io_bytes": 20185088
+          }
+        },
+        "read_error_range_pct": [
+          1.9132676520567937,
+          1.9518638098033447
+        ],
+        "status": "PASS_FULL_OPERATOR_ACCOUNTING_NOT_HARDWARE_ACCEPTANCE",
+        "time_error_pct": -16.270366281706416,
+        "total_boundary_bytes": 54077251328,
+        "unclassified_io_bytes": 20263936,
+        "write_error_range_pct": [
+          95.02138606383868,
+          102.20659518613861
+        ]
+      },
+      "paired_delta": {
+        "full_ms": 113.87646245956421,
+        "read_bytes": 40929536,
+        "write_bytes": 168876672
+      },
+      "time_decomposition_ms": {
+        "explicit_minus_native": 113.87646245956421,
+        "model_minus_explicit": -142.6605185462036,
+        "model_minus_native": -28.784056086639396
+      }
+    }
+  ],
+  "decomposition_is_paired_boundary_difference_not_pure_fusion_causal_attribution": true,
+  "driver_sha256": "0c51f178cd8621f993044a4068f8aeead5d46b0f87e810531ecbcb95fe6a2ac4",
+  "files_sha256": {
+    "collector-source.py": "0c51f178cd8621f993044a4068f8aeead5d46b0f87e810531ecbcb95fe6a2ac4",
+    "gate-p032d02.json": "77acac0307d2c2b025aaadfed597be1ba828fb30cddb8403adf22512b4a93352",
+    "gate-p064d02.json": "ab9b7a1f0419d7a0599f63a34b901622f0ff200c9a264f884fde6dff7bace218",
+    "gate-p128d02.json": "d154a0c7bb4dd8175c6ce6515ece8de613dd13c90434cb52a0e61548c55c00b4",
+    "gate-p128d04.json": "03baab52d4d6e03d50c1bf8ffc2a2e40b3f2ca8265ee7f50199cace97e956054",
+    "gate-p128d08.json": "d655f19bc14cbf497c4455cf5fe85095cd69beea2b08f63a150eb234cf26596a",
+    "gate-p128d16.json": "906d8fd00fb4736fc90219b71778bc2a1d41ffd6366047b965122d8bd57b5f15",
+    "gate-p256d02.json": "0b420ac491b2ef3c8da1dd5939af4cc88d9ca32701d716665fdba3ac71a9688e",
+    "gate-p512d02.json": "17b36509b9fce244d7868bc83aac21819ad4784c6af81a109a134c58748344b2",
+    "gate.json": "2305826e9f28fb1ee6f477b7851677264e264d5a62b1f7a7d37e3e800834bab1",
+    "groups-capture.json": "4688261b06644cb3504396b457a85d39179e08485a833db8783142a9a06c59c1",
+    "groups-capture.log": "51fc729f0b04514c9009b26422689c2d52fe51f26306e370b033a409d6f6fac4",
+    "groups-counters.csv": "baa0b0a1a9fce3d9158b5cecd64daea19006b750139f9b5d3afea434a8c693a0",
+    "groups-counters.json": "011ad72dcc08757af48dfbd7b2fa86a9e91a94ee1b5ad7aea3367fb0d81f8dd2",
+    "groups-timing.json": "d9488a29fa56db7f5609c6d8bf96a1763a7841fc11a83b52aafd947d8a5818dd",
+    "groups.log": "e97699775ca961c147ec9ffec179f3a3ea4a227d18e98697b07ad6558e318e1e",
+    "p032d02/explicit-capture.json": "64fed260842aed2a2fe5ac109d3b07b5b92a98da3aad1d669b66f2c9354def23",
+    "p032d02/explicit-capture.log": "9fc14935f7382c37f3810129ae10995885c667443225a9f83fb531494da08570",
+    "p032d02/explicit-counters.csv": "1954b85e9b13a015765165f92ecadca52b9f3d59c8a59a3ce2d0d3d5cae28028",
+    "p032d02/explicit-counters.json": "ca8b4d2d77fbfdd5e956b50d65b40b29c3d0842db07eb7bef61f777b8e931ce5",
+    "p032d02/native-capture.json": "7084f876b90064b96c294116719630080360d3633445bb562b15898509e24f2b",
+    "p032d02/native-capture.log": "9fc14935f7382c37f3810129ae10995885c667443225a9f83fb531494da08570",
+    "p032d02/native-counters.csv": "a1c118a78bdfaf279770b88d92a7d5fb872cfb62a6359440baa2a8de1ec9ae9d",
+    "p032d02/native-counters.json": "2065c0ffd6b8861919e64ce35c1b70d27f7b54eb85f628cf9d3a5f6477c7ebd4",
+    "p032d02/timing.json": "a9f8ed14175ba6dece9a36800f49c0c4db0b47fd2e9e5adfbe574c89f3a3a948",
+    "p032d02/timing.log": "3875a27d1c5ab7fe4f56707b0f7a1c56f2be5749793c3c8eabd3e3aea9c4dff6",
+    "p064d02/explicit-capture.json": "19441ce122ff790b2ff4e7c24dc8b37cb3d976d8638165f3d1cfdb3282fd09f4",
+    "p064d02/explicit-capture.log": "56747594076852ed103a387f982c3b5cbdc62174829acdef3d53b9b198a9f049",
+    "p064d02/explicit-counters.csv": "c30287d66cef680831e8477734f01f6ffe8ea9c9fd71944b4448c73a97dce4f2",
+    "p064d02/explicit-counters.json": "612c0e0679cac0f00c4207157fdff090c40d78e315de77f559ec600c03c4c9df",
+    "p064d02/native-capture.json": "5c71ac080331ae795457c9f589b2c0247757b995919296406895417b5062b69e",
+    "p064d02/native-capture.log": "c11ebc7ebfa1767b1b54c4ec7a8aa67c3fd307ac1353a3d8e443be4b7dceab6a",
+    "p064d02/native-counters.csv": "6a05dcfbe6581c3f511974d540d80d68f72c01eeb9617e6aa930ee96e5191602",
+    "p064d02/native-counters.json": "4f1e0ccd6fc9c75e1f99cd371a12f89ba8bdbfdd3690b4bcd0dc9e65ca96ac61",
+    "p064d02/timing.json": "0df2986c636b8a34501d41095aa90bf8a3e8759ffe3c8ca1d4a00df558898b2d",
+    "p064d02/timing.log": "fcfe7f909c1801d91d27a2a25af624f5a891db056038f788cc21d339247592e4",
+    "p128d02/explicit-capture.json": "e903b9a39d98aa4b350bd8daccf642df18f36feffafdad092e978c2a243013cb",
+    "p128d02/explicit-capture.log": "45b9725fb70ebc27de520c8073d2d94ac6563dd42fc2633d87181c2c25be08e6",
+    "p128d02/explicit-counters.csv": "73e31adc808a85a7d226f30c3823e589405c13949171ed222f5a5f5ea94845af",
+    "p128d02/explicit-counters.json": "e9eb16d9f3518ea624c96aca6179a7822f3d22222af5af6d1913a4220f3f8860",
+    "p128d02/native-capture.json": "56763cc2d6790b9106b0162516c35a2734e8f87757742bffdf707e9a5579759c",
+    "p128d02/native-capture.log": "45b9725fb70ebc27de520c8073d2d94ac6563dd42fc2633d87181c2c25be08e6",
+    "p128d02/native-counters.csv": "59f2ae75a5093ff6df484ac608f1d7e8a165536cc0b0da402162804d3cdf04ca",
+    "p128d02/native-counters.json": "b2e3c30f52054f4e87da25b1e0f9c8b2177dfbf5934ceb24777ad43ff209d2c3",
+    "p128d02/timing.json": "110e88ecf8f6bbf50ecda86dea6199e80493cdd7c654f878a2ed029fb749125e",
+    "p128d02/timing.log": "54f9b9357f2ab7add406af23f85abccb5b8b6c605827b556bcdafacd26253b7d",
+    "p128d04/explicit-capture.json": "30bc2fd46d72db43f6cff268d072d31a1c66a065d5fe35e9c3e3c0f741fb956c",
+    "p128d04/explicit-capture.log": "c93ad51b54441c218cf67bef6d5d0e7faf47f392913c1c3bf63f6d5e7123d941",
+    "p128d04/explicit-counters.csv": "3927cee02e7177eb8b71bd441e9aedc955d3f0d2901fa7b05264a19e0691799c",
+    "p128d04/explicit-counters.json": "dac3fddcec9a130257afe3f2f5a7099ec0c55ec8121de9b22838343e90118086",
+    "p128d04/native-capture.json": "9d1930063ce7226001566046019fb89cde43141f828e0b3a360531b3a28bc923",
+    "p128d04/native-capture.log": "ae23b24ee7209d2e566c6b2381401da0f14e1a08167839a6398b1bb06bd3a1ae",
+    "p128d04/native-counters.csv": "ff519f3c0f47278648149ec1af8152a4722c160c4117681c3e1169b3a091a669",
+    "p128d04/native-counters.json": "030971e4f8cd30f56bfbd88ecd662b21e27bff529be247a122e073385b626ef8",
+    "p128d04/timing.json": "7a410e59111536f667daf9edd201f64c313d8d519a46fec270ad134734d76c87",
+    "p128d04/timing.log": "43f87542739119c7c0be9b6da75858d73e1490919f0fc7864965fb10aaead461",
+    "p128d08/explicit-capture.json": "b5248b822df8b946b69df99f6056ae3f7f59ca01cbac1735d26080f04cace88c",
+    "p128d08/explicit-capture.log": "3e52aca32a3f8da8e46585ee5fa80df6b4258525a11a89c0567a4ae87d5282fa",
+    "p128d08/explicit-counters.csv": "ed10e34f094dde0887200877dc85547fa57a90c1ded184d60303566351be186f",
+    "p128d08/explicit-counters.json": "be231e85d1d135285e7d68a523fb96ebcb9acbfaf60aad7499b40f9834e0efba",
+    "p128d08/native-capture.json": "bdbb9258118db6637ce8c7d59f247c2b6c43641230f11cc836486fc09b82dceb",
+    "p128d08/native-capture.log": "0d20bfa9bbfa1916c03fa09f19100a8fbd21afe44b9dd01e0d0d7f141ead57e3",
+    "p128d08/native-counters.csv": "c0813452bf2aff74502034520b83c26dd688a3c26a2b7185eedbd7651b77cfda",
+    "p128d08/native-counters.json": "dd66fd70f5ea50af837acb6bb867c8b1206aae91a1bf02ad0692dbff42e64e53",
+    "p128d08/timing.json": "4e5ab80475c3f69c08be68606334ec2d640bf281b1edb0f923764a45ee48111a",
+    "p128d08/timing.log": "43f87542739119c7c0be9b6da75858d73e1490919f0fc7864965fb10aaead461",
+    "p128d16/explicit-capture.json": "d426f168fc2f3ac610ff712d7930e1e8a191cf3d0d9058246b04f5e87b3358c5",
+    "p128d16/explicit-capture.log": "56747594076852ed103a387f982c3b5cbdc62174829acdef3d53b9b198a9f049",
+    "p128d16/explicit-counters.csv": "8542ecb3ea077640c73c07e085df04ef9436e0c572f9ffc3ae1fa48ed4a61d1b",
+    "p128d16/explicit-counters.json": "a0da03d24c7c78daa744b71c6bc5e00b1ebcd2c347d1a41a3c0878eef2dd01ea",
+    "p128d16/native-capture.json": "dd0fa505a913c73bf6db0f90907cb5717f8ab8eeae9f3dc0e147ab6bcb085ca6",
+    "p128d16/native-capture.log": "f9bb1c3b14b1d844fca87113d3ce09dcea58f60086fa2c773cba32da17905c52",
+    "p128d16/native-counters.csv": "c47425c8a75a9c1e5ab80341e2e75eba300d07b19beeaf16a29ba2921b844e14",
+    "p128d16/native-counters.json": "0754fc27d3edec153c0f0627f1e3542c0fafd0522ce76b057d06418ad69830bc",
+    "p128d16/timing.json": "4fadab465ce0f9e8f0e44e50c8c1e819e5b092b789e2c92e7a4894b8285e6cb3",
+    "p128d16/timing.log": "2646eaa953d5e178dd6234d3d1377bdfe25d3ffe0abbae2d99d02d0a0d650721",
+    "p256d02/explicit-capture.json": "1e2133cacaf1604ff5b5f3630eb9cd7f957db307b1b927c6bef3a43957331626",
+    "p256d02/explicit-capture.log": "4c515fddefc4a384460b560d0b7d85e6c480e49331c23c45e19ae93d5415c2c1",
+    "p256d02/explicit-counters.csv": "89afdc7940438bf741d1c87f8987980d15fa0a23fef7b5b8c6782d49791cabad",
+    "p256d02/explicit-counters.json": "cb6f92bcf31bb5900dd02a44ca9f4b297be661e31cec446f080b7018b016e33c",
+    "p256d02/native-capture.json": "c9941e3e06b9b6296ea794e164c260ad019e5c149e4939462613989095f637ef",
+    "p256d02/native-capture.log": "e4fe70620806958fc846de3519804742b54eaf0a206ee3424a9cea0c8ee9e143",
+    "p256d02/native-counters.csv": "7970768b76993845f9c98b876b2987aa0a8ed2202d9dac07d8b5b18e58ca5dc0",
+    "p256d02/native-counters.json": "13998bd05c60069d0d6cd4da4068c8372430c59c98926e176dd7e571b1cb1ede",
+    "p256d02/timing.json": "eff794880a0e3be414405b6cd12d99fcc464eda0b2bbf63cce5320b6aff9285f",
+    "p256d02/timing.log": "86a2a39bcda615e430a85afc77bd453c0bd523d9009063a763c38f4a1283a46f",
+    "p512d02/explicit-capture.json": "df3351baaba887901266874d5926b31d324be9dbbce90773aa92f2e2bc8c18ae",
+    "p512d02/explicit-capture.log": "e1778ede3c2a320c8cf6912100c84160d7f3fb57e43a7eed5b3ceaa5c7c302b6",
+    "p512d02/explicit-counters.csv": "e0b87c3788762821d68db771fd4f1752759ba535bf7c0c8005fc5b661e4eddc0",
+    "p512d02/explicit-counters.json": "c7261b787ea12d8d7e667ae3feeec22ce378902bc5622bc11da1021f26a3c718",
+    "p512d02/native-capture.json": "b2eca88320363005ed3bb0f0bfb83ea15c55d33477031b4eac396f229b727df1",
+    "p512d02/native-capture.log": "f9bb1c3b14b1d844fca87113d3ce09dcea58f60086fa2c773cba32da17905c52",
+    "p512d02/native-counters.csv": "72a8acd3ea971950bb43516bffea8cc5c12e19aca9860e2182ff6796c9444640",
+    "p512d02/native-counters.json": "f28dd406f7e5f82aa5ac9cedc96a12c44638c4f9a4cf3c3bd4a207a425a3d4e5",
+    "p512d02/timing.json": "9866818b929569cc55b75a5a205732794f5e3081bcd5374e58efd59bdf92f87e",
+    "p512d02/timing.log": "ca83bc273370b0fa7ae4e15fa36b2981a56c1bcb064ceb76240354637c07edb2",
+    "paired_qwen_reference.py": "826a394e2f526bc8722bcc62f435125fa67081496b427cc4b423e6a9781a6871",
+    "reuse-manifest.json": "04e8e3b9053828274a6ee569a8503041122eac1529cc7ede93e2e02521e9a52d"
+  },
+  "gate_sha256": "2305826e9f28fb1ee6f477b7851677264e264d5a62b1f7a7d37e3e800834bab1",
+  "model_sha256": "a8d14378ac0a87b173cd439fc17b414636185411e25ccde6d9ab8c731130ab06",
+  "no_cache_model_or_mapper_changes": true,
+  "no_instruction_trace_or_binary_NCU_report": true,
+  "physical_counter_equivalence_of_mapper_bytes": false,
+  "status": "PASS_EIGHT_CASE_PAIRED_MEASUREMENTS_NOT_ACCURACY_ACCEPTANCE"
+}

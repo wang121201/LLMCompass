@@ -2,6 +2,17 @@
 
 # LLMCompass
 
+## RTX 4000 Ada reproduction milestone
+
+The [current analytical checkpoint](integration/hbfsim/README.md) preserves the
+official mapper implementation and eight-case Qwen2.5-1.5B accounting results.
+It is accepted for source fidelity, traffic conservation, and reproducible
+reporting, **not** physical DRAM or every-case hardware timing accuracy.
+Compact evidence, frozen identities, and offline semantic charts are under
+`integration/hbfsim/checkpoint/`. HBFSim GDDR6 is an independent diagnostic.
+
+## Original project
+
 This repository provides the implementation of **LLMCompass** from the following papers:
 
 [**LLMCompass: Enabling Efficient Hardware Design for Large Language Model Inference**](https://parallel.princeton.edu/papers/isca24_llmcompass.pdf)

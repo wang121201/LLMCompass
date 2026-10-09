@@ -3,3 +3,21 @@ results/
 __pycache__/
 *.pyc
 *.pyo
+*.jsonl
+*.log
+*.ncu-rep
+*.nsys-rep
+*.sqlite
+CURATED_RESULTS.md
+LLMCOMPASS_REPRODUCTION_AND_SEMANTIC_AUDIT_20261006.md
+RTX4000Ada_xmu_candidate_v0.json
+RTX4000Ada_xmu_profile_v1.json
+RTX4000Ada_xmu_profile_v2.json
+rtx4000ada-runtime-gddr.cfg
+# Historical experiments are preserved in the original worktree, not published.
+accuracy_breakdown.py
+fusion_sensitivity.py
+mapper_boundary_smoke.py
+verify_accuracy_breakdown.py
+validate_operator_path_execution.py
+validate_tile_coupling.py
