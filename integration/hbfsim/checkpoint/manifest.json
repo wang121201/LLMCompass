@@ -2,14 +2,15 @@
   "schema": "LLMCOMPASS_ADA_STAGE_ARCHIVE_V1",
   "date": "2026-10-09",
   "status": "PASS_ANALYTICAL_REPRODUCTION_AND_ACCOUNTING_NOT_HARDWARE_ACCURACY",
-  "branch": "codex/llmcompass-ada-stage-acceptance-20261009",
+  "branch": "codex/integration-key-acceptance-20261001",
   "parent_integration_commit": "613cbe73f489ad304b28b10d314c373324cb5dc4",
   "official_reference_commit": "62321b1ee28ddbdba8a2eb7475d7caa30f75e8be",
   "accepted_scope": [
     "unchanged official operator source",
     "eight-case analytical operator/phase accounting",
     "direct mapper boundary and semantic byte conservation",
-    "offline semantic reporting"
+    "offline semantic reporting",
+    "static batch plan support and B1 regression; not full batch timing acceptance"
   ],
   "excluded_claims": [
     "physical DRAM accuracy",
@@ -23,9 +24,10 @@
   "hardware_accuracy": "NOT_ACCEPTED",
   "files_sha256": {
     ".gitignore": "d2887fac14eb69848e4ac0ab4188d36dba3363fe4be6b39a626e762b5f4db464",
-    "README.md": "27c857e29b79e0e303e53eb0397dfae52cc1bf28ebbcd12329c577c8374edb6f",
+    "README.md": "e39f477760cc137da6813a5b5ff0a761b50362af9eed2b265c97e8cb26e9b8b0",
     "RTX4000Ada_xmu_profile_v3.json": "d7c2659d32b14c4cf0f5da876be09375a810bcdbfdc7b03c4b820cf2fc4288b1",
     "archive_solid_bandwidth.sh": "0ec182189fdc4daeb2e79f831b143cbddcb5cd71befc009492a2ec5f89506417",
+    "checkpoint/batch-support-validation.json": "8c8099e99d57ce4030326349ca2d4d8e54ecb33e1741ec74db9f5b5274b9a781",
     "checkpoint/fresh-gddr-validation.json": "e5a7b7f43503faf88a3de6521ef440c3982e2cab3219bfb4e766a2b79473afe6",
     "checkpoint/fresh-official-validation.json": "954a7194539b1dabf0e77128d97194d5276512300a839979484c2213ff3c1e34",
     "checkpoint/fresh-paired-validation.json": "4531f3954a8632aaabe3ba7926b2e023c3d20aec71691218a59d32c5039571a6",
@@ -33,6 +35,7 @@
     "checkpoint/gddr-comparison.json": "39f2c7c86668b1e9403f39ebd9c7feee1f4e04bf78773c19f5a49e4e22fcfb1a",
     "checkpoint/gddr-validation.json": "06ab661421a138955f1bbd18e94c4060d4fceab6b52409552855bfaef5014c97",
     "checkpoint/html-browser-validation.json": "203eed3feb6969f835f8de70908c1295afbeded74da3d8c08b5142f282be0403",
+    "checkpoint/llama-semantic-summary.json": "dec7554f05bad97720f7a52083bea720d3102aca5ecd40c344d443b70bb75a32",
     "checkpoint/official-comparison.json": "a8d14378ac0a87b173cd439fc17b414636185411e25ccde6d9ab8c731130ab06",
     "checkpoint/official-validation.json": "d350d5803b58d3c7d91d0b9cfff483f3ce3b6d3019e0174be855935f023e15f8",
     "checkpoint/paired-collection.json": "3f19c68eba3ae7c42e2a952e20150bc8bf746394901d3fcb8f09e29223b991a5",
@@ -41,6 +44,7 @@
     "collect_raw_kernel_census.sh": "d91db56deac30b7876f54ad49e25431c8fe2265691185b0145a04759fde0d918",
     "collect_solid_cache_counters.sh": "9f659086794aad23da1ee8994bff63641f914457dcf2b3acd88e31903287e267",
     "diagnose_inference_timing.py": "9854552f1cbeab3e62b0fb949f9564dcfcb56f6f76049e8c3f1fcd60518d3acd",
+    "evaluate_batch_inference.py": "a8ba84836842cc123dd7931a514aa43002aba75455abf2a100f04765a71d0c2a",
     "evaluate_gddr_integration.py": "5d28c462babdae89e4fa8055ec6be984ed16edff6a07d9de0715d85292245c2e",
     "evaluate_official_inference.py": "39c79e12bd9623e34ed43126abf05fbaa3eb0656f1329ca56e0e9066b468eac7",
     "launch_solid_cache_background.sh": "54cdd497a2d82b5a21f269e11343d6ef5a14ef005307fcc56886152d947c8b7b",
@@ -51,18 +55,21 @@
     "mapper_tensor_addresses.py": "cda1e5c94f859492ad576ebc6be099ee77898295a99a59b42c1a9b7cd3d5efbd",
     "merge_bandwidth_into_cache_archive.sh": "abd074903b7c6c87a12d068107fd61fac731e76079248114dd126790cda05ec4",
     "paired_qwen_reference.py": "0c51f178cd8621f993044a4068f8aeead5d46b0f87e810531ecbcb95fe6a2ac4",
-    "prepare_llmcompass_checkpoint.py": "195ca09c26b72f637e99ca6e376819c8dc25c0e54dad8845fd2b6b94948795c0",
+    "prepare_llmcompass_checkpoint.py": "c938a0840909b39b784ef55a166e5cb4784ce54cc42b0daee9a3224413b2ab79",
     "qwen25_1p5b.json": "16a77dd5ea8e0de5ed2fafdf93561ca61d454bd8db91b24347d387cea2effd57",
-    "qwen_hbfsim_cosim.py": "484a8808b9619082d4ab98b184013993d4ec4392ce684d236b56075e679893b4",
+    "qwen_hbfsim_cosim.py": "76bb3256d332b9c8244840b33cca2471978c19e213d87772cc65c08b45dafc09",
     "rtx4000ada-gddr6-aggregate.cfg": "8cb34f81c7e44cc9be89c0e4e7f2039bf7badba6c66078f4821b1be203010d85",
-    "semantic_traffic_breakdown.py": "3b8a1260cafab282beb7f52a6274200b0b882e0fae4d501bee48280ca1141d0f",
+    "semantic_traffic_breakdown.py": "50d0c80645a4f9ae61427adcd2c3f4a0a4f12308c5a381ff5a237774f180dfde",
     "summarize_four_roi_ncu.py": "654f2dfe920cad7c181966e5ba40bc47d3505c3b10a1a75f69b84c133dc6d290",
+    "summarize_historical_semantics.py": "be0a7172c6a8401bf71679715c39d14d7fbea3a691ed0b37f6cd76e40002af79",
     "summarize_solid_bandwidth.py": "f8f3e4fbb8c793df81c7b324b32e484e6aeff2620d24441db8e671cc9f1a6fcd",
     "summarize_solid_cache_counters.py": "1fbbe2988ecac6e1267f25096b523c9d0dbfa2ef8dc2a6cca3a2b9fbee6664fb",
+    "test_batch_inference.py": "9526e3075924c593aa813e97a48926b2de014e0287fce425af5d396035b2a942",
     "test_evaluate_gddr_integration.py": "189ff230c6b09e3898018b701203d63945accff85340e8a98fbdffbc01e49d38",
     "test_paired_qwen_reference.py": "fdb56990980d9492596cb6e369f44ce690fb2b998e16104a5f380666192730b8",
     "test_qwen_hbfsim_cosim.py": "f06d50b7c0ab2bd86eeb86b5f112f84f6928f4cdd90a51dec25141d8f7995586",
     "test_semantic_traffic_breakdown.py": "3c647d96376d927c1116e29a9712f998e2af4553db5375e1f336f7eb7adf618e",
+    "test_verify_batch_inference.py": "508b319a58a16df29294c31d189ee49354f4cafc2f1a63b0c598adb809648388",
     "test_verify_official_inference.py": "2b8a84a04bc2d2822e3d2302ad594a5949b4cbbdc025c17a63dde9623dd76877",
     "test_verify_stage_checkpoint.py": "619ec3f4d2897ec974ee2e6ebc8c9863364ffa918f87c60bc00d691af2adbb85",
     "validate_ae_ada.py": "d5cb49afd2ca00d44dd4a5fd35161f949811a41d5c8be5eccae789df8a2c2052",
@@ -70,9 +77,10 @@
     "validate_full_tensor_views.py": "3b47919b136b33a41c0e0f7342a2c57ae5cad68b692d37e65993bc197efd64fc",
     "validate_mapper_accounting.py": "7794cd2311dad63110d3d6ea17ea2757bc719620ef8ff378454959abb6d97038",
     "validate_mapper_extended.py": "b533b68de8132388e7c903c326da27809a510e072ba28220bef1036768f4a62f",
+    "verify_batch_inference.py": "bbb4cca8ae465f741f87f26e7ad74f0f71954b06f0566cdaf9a91143048b84db",
     "verify_official_inference.py": "bdf760e721926dc1d895dd9cb721403ee02cd5be126e1361d5425c42a3b0c5b1",
     "verify_paired_qwen_reference.py": "5aeafbad74decbad6ba7bc3251849a8e77f0374b57f84c0f0cdc2be2f861097e",
-    "verify_stage_checkpoint.py": "55114c93447dcc2c700be2d28fc679f9ee6e3edabe8c09791e70be64d57d118a"
+    "verify_stage_checkpoint.py": "b6c9dcad1385aa9e0f3411b27f63cfc8b1147b23d42b08d1b4de720c1fd9ee70"
   },
   "official_source_sha256": {
     "ae/figure5/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
@@ -141,11 +149,11 @@
     "/home/xmu/nvidiagds/stable/bhbfsims/gddr6-ada-lightweight/build/hbfsim": "21ad75b60bd0c56839bd7bb63b879618a7b5e6523dacc3ff265ca21ea5a65ef6",
     "/home/xmu/nvidiagds/stable/bhbfsims/gddr6-ada-lightweight/configs/overlays/dram/rtx4000-ada-gddr6.cfg": "8cb34f81c7e44cc9be89c0e4e7f2039bf7badba6c66078f4821b1be203010d85"
   },
-  "published_files": 51,
-  "published_bytes": 1259303,
-  "python": "3.10.12 (main, Aug 31 2026, 10:18:17) [GCC 11.4.0]",
+  "published_files": 58,
+  "published_bytes": 1322875,
+  "python": "3.10.20 | packaged by conda-forge | (main, Mar  5 2026, 16:42:22) [GCC 14.3.0]",
   "dependency_versions": {
-    "torch": "2.7.1+cu126",
+    "torch": "2.5.1",
     "numpy": "2.2.6",
     "pandas": "2.3.3",
     "scalesim": "2.0.2"
@@ -153,7 +161,7 @@
   "analytical_dependency_policy": "ScaleSim 2.0.2; frozen geometry LUTs; no operator-latency seed",
   "validation_commands": [
     "python -B integration/hbfsim/verify_stage_checkpoint.py",
-    "python -B -m unittest test_qwen_hbfsim_cosim test_semantic_traffic_breakdown test_verify_official_inference test_paired_qwen_reference test_evaluate_gddr_integration test_verify_stage_checkpoint",
+    "python -B -m unittest test_qwen_hbfsim_cosim test_semantic_traffic_breakdown test_verify_official_inference test_paired_qwen_reference test_evaluate_gddr_integration test_verify_stage_checkpoint test_batch_inference test_verify_batch_inference",
     "python -B integration/hbfsim/validate_mapper_accounting.py",
     "python -B integration/hbfsim/validate_mapper_extended.py",
     "python -B integration/hbfsim/validate_full_tensor_views.py"
@@ -164,5 +172,7 @@
     "started": 0,
     "completed": 0,
     "active": 0
-  }
+  },
+  "historical_semantic_checkpoint": "llama-semantic-summary.json",
+  "batch_support_checkpoint": "batch-support-validation.json"
 }

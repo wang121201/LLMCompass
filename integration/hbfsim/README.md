@@ -2,6 +2,8 @@
 
 Current milestone: **accepted for analytical reproduction and accounting; not accepted for physical DRAM or full-inference timing accuracy.** Frozen on 2026-10-09. This is an operator-level reproduction on a different GPU, not a reproduction of every end-to-end accuracy claim in the original paper.
 
+Current extension: **static batched Qwen plan support passes regression; completed larger-batch timing results are not part of this support checkpoint.** The eight-case batch-one checkpoint below remains the previous frozen milestone.
+
 ## Definitions and experimental scope
 
 LLMCompass is the official analytical accelerator model. Its mapper selects tiling and data movement through main memory, global buffer, and local buffer. These buffers are analytical hierarchy boundaries, not measured native NVIDIA L1/L2 cache counters. DRAM means dynamic random-access memory. HBFSim is an external memory-service simulator; GDDR6 means Graphics Double Data Rate 6. NVIDIA Nsight Compute (NCU) supplies observed aggregate DRAM byte counters.
@@ -79,6 +81,44 @@ Hardware aggregate counters do not provide these object labels. No model proport
 - Hardware diagnosis: `paired_qwen_reference.py`, `verify_paired_qwen_reference.py`, `validate_ae_ada.py`, and `diagnose_inference_timing.py`. These require the XMU SGLang/checkpoint/input package and NCU installation; they are not standalone portable GPU benchmarks.
 - Legacy shell collectors/summarizers remain for provenance only. Their absolute lab paths and old snapshots are not current entrypoints.
 
+## Static batched Qwen P128D8 stage
+
+Batch size B is the integer number of simultaneous, synchronized requests. This stage uses Qwen2.5-1.5B-Instruct on the same frozen RTX 4000 Ada profile, with B in {2, 4, 8, 16, 32}; B=1 is a fresh regression baseline. P128D8 means 128 Prefill tokens per request followed by eight explicit one-token Decode calls per request. It does not mean seven Decode calls after Prefill emits a first output token.
+
+All requests share one learned-weight allocation. Each request has distinct persistent key and value cache regions across all 28 layers. Linear layers use B times the token count as their row dimension; attention uses B times the query-head count as its batch dimension. The output head consumes each request's own last token. These changes enlarge the existing graph shapes and addresses; they do not introduce continuous batching, arrival queues, a scheduler, a new cache, numerical GPU execution, or latency fitting.
+
+`evaluate_batch_inference.py` reuses official Matmul, BatchedMatmul two-candidate selection, Softmax and Decode rules, with the same labeled Qwen vector/bias adapters. Main-memory bytes come from existing mapper transfer decisions; batch-surrogate extra IO remains unknown-direction. Weight traffic is determined by selected mappings, not a blanket batch-one multiplier. HBFSim is not a prerequisite and adds zero time to this stage.
+
+Each complete batch case has 4,563 modeled operators in nine phases, with 507 operators per phase. The baseline plus five target cases require 27,378 operators and 54 phases. Unique resident key/value payload is `2 * 28 * B * 136 * 256 * 2` bytes; repeated mapper reads are not unique capacity. Scratch arena offsets are plan allocations, not measured native peak memory usage.
+
+Time uses integer nanoseconds summed across the whole batch. Every synchronized request's full completion latency is the complete batch interval. Interval divided by B is explicitly the amortized per-request throughput cost, not latency. Prefill throughput is `B * 128 / Prefill seconds`; Decode throughput is `B * 8 / sum of Decode seconds`; request throughput is `B / full-window seconds`. Effective model bandwidth is `(known Read + known Write + unknown-direction IO) / full-window nanoseconds`, in decimal GB/s. None uses CPU mapping/compilation wall-clock.
+
+Validation completed for support: 65 unit tests; exact old/new plans across the original eight cases (23,322 operators, including access bytes and addresses); all six batch plans' request/KV isolation and last-token input checks; and negative controls for corrupt totals, wrong denominators, missing cases, KV aliasing and incomplete matrix acceptance. Fresh B1 P128D8 also matches frozen time and every phase's Read/Write/unknown IO exactly. This is support/regression validation, not completed larger-batch timing or hardware acceptance.
+
+The fresh aggregate-only run is `/home/xmu/nvidiagds/simulators/wgslogs/llmcompass/qwen-static-batch-p128d8-20261009-r2`. Consult its `manifest.json` for live status; the support checkpoint does not assert completed larger-batch timing. An earlier empty preflight directory r1 is preserved; it is not an experiment result. The compiler writes only `manifest.json`, `comparison.json`, `shapes.json` and optional compact validation receipts, without raw transfer traces or per-operator streams. The independent verifier requires terminal PASS, all six cases, source/result hashes, official shape parity, semantic/phase/family closure and exact B1 regression before the matrix can be published as complete. `checkpoint/batch-support-validation.json` records the bounded support tests, separately from this full-matrix gate.
+
+The verified runtime uses Python 3.10 with ScaleSim 2.0.2, PyTorch 2.5.1, NumPy 2.2.6 and pandas 2.3.3. The previous archival runtime receipt records PyTorch 2.7.1+cu126; this is a disclosed environment difference, not an identical-runtime claim. No CUDA kernel is executed by this analytical matrix, and fresh B1 arithmetic is unchanged. Existing ScaleSim/analytical dependencies are external, not copied into Git.
+
+```sh
+env PYTHONPATH=/tmp/llmcompass-scalesim202-20261007:/tmp/llmcompass-ae-deps-20261006 \
+  PYTHONNOUSERSITE=1 /home/xmu/miniconda3/envs/deepspeed/bin/python3.10 -B \
+  integration/hbfsim/evaluate_batch_inference.py --output-root /absolute/fresh-result-root
+python -B integration/hbfsim/verify_batch_inference.py /absolute/fresh-result-root \
+  --output /absolute/fresh-result-root/validation.json
+cd integration/hbfsim
+python -B -m unittest test_qwen_hbfsim_cosim test_semantic_traffic_breakdown \
+  test_verify_official_inference test_paired_qwen_reference test_evaluate_gddr_integration \
+  test_verify_stage_checkpoint test_batch_inference test_verify_batch_inference
+```
+
+The temporary dependency paths above describe the existing XMU environment, not portable installation instructions. Retain official geometry lookup tables. Use a new absolute result directory for each full run; the evaluator refuses existing result roots. No larger-batch hardware collection is included, and previous B1 hardware must not be reused as a B>1 accuracy denominator.
+
+## Historical Llama semantic key totals
+
+`checkpoint/llama-semantic-summary.json` publishes only eight-case Read/Write totals and their four semantic categories. Its model is Llama-3.1-8B with eight-bit matrix weights (W8) and two-byte brain floating-point activation/key-value storage (BF16). It uses the historical GA100/generic high-bandwidth-memory configuration and legacy adapter, not the current official Qwen/Ada path. The model section retains original default P32D2 conditions; each case row overrides Prefill/Decode length.
+
+Five target cases reconcile to archived simulation totals; P64D2, P256D2 and P128D4 are plans only, explicitly labeled `PLAN_ONLY_NOT_SIMULATED`. All nine actual historical runs close 50,373 operator signatures and 87 phase windows with zero Read/Write residual. The current reconstruction adapter differs from the archived source hash, and three P512 address layouts differ. The summary preserves these provenance limitations and does not establish exact-address, official-mapper or physical-DRAM equivalence. Legacy timing is excluded from this publication. No raw operator/phase stream or hardware semantic attribution is published.
+
 ## Reproduction and verification
 
 From the repository root, the portable aggregate check uses Python 3.10 or later and the standard library only:
@@ -113,6 +153,6 @@ The independent official verifier additionally requires the original referenced 
 
 `checkpoint/manifest.json` binds published sources/configuration, upstream-source hashes, compact results, external evidence identities, and the fresh validation receipt. This proves portable aggregate conservation and a frozen code snapshot; independent full-ledger validation remains an explicitly identified external evidence check.
 
-The new branch descends from integration commit `613cbe73f489ad304b28b10d314c373324cb5dc4`, preserving key development history. Superseded reports, profiles, and results are removed from this branch's tracked snapshot only; original worktrees and files remain unchanged. Raw traces, NCU/NSYS binaries, per-operator streams, caches, builds, and runtime logs are not published. Historical objects in parent Git commits remain in history; the source-only archive is made from the accepted current tree.
+Publication continues the authorized historical branch `codex/integration-key-acceptance-20261001`, through checkpoint `25e75accc49ee4985a5d1906a8292ec456bef7f1`, descending from integration commit `613cbe73f489ad304b28b10d314c373324cb5dc4`. No new branch is created. Original dirty worktrees and historical evidence remain unchanged. Raw traces, NCU/NSYS binaries, per-operator streams, caches, builds, runtime logs and incomplete batch timing results are not published. Historical objects in parent Git commits remain in history; the earlier source-only archive is immutable evidence for its own checkpoint, not a snapshot of these later support changes.
 
 Do not promote this milestone to physical DRAM accuracy, every-case timing within 10%, exact native-kernel execution, strict numerical equivalence, or continuous full-GPU/HBFSim simulation.

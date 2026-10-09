@@ -111,9 +111,47 @@ def verify(adapter):
             path = (root / name).resolve()
             require(path.is_relative_to(root), 'Unsafe manifest path')
             require(hashlib.sha256(path.read_bytes()).hexdigest() == digest, 'Changed file: ' + name)
-    return validate_payloads(*(load(checkpoint / name) for name in
+    result = validate_payloads(*(load(checkpoint / name) for name in
         ('official-comparison.json', 'semantic-breakdown.json', 'paired-collection.json',
          'official-validation.json', 'gddr-comparison.json', 'gddr-validation.json')))
+    if 'batch_support_checkpoint' in manifest:
+        support = load(checkpoint / manifest['batch_support_checkpoint'])
+        require(support['status'] == 'PASS_STATIC_BATCH_SUPPORT_NOT_FULL_MATRIX_ACCEPTANCE',
+                'Batch support scope')
+        require(support['unit_tests']['count'] == 65 and support['unit_tests']['status'] == 'PASS',
+                'Batch support test denominator')
+        require(support['b1_plan_parity']['operators'] == 23322
+                and support['b1_plan_parity']['exact_access_bytes_addresses_and_shapes'] is True,
+                'B1 plan regression')
+        require([r['request_count'] for r in support['request_regions']] == [1, 2, 4, 8, 16, 32],
+                'Static batch support scope')
+        require(support['batch_timing_results_published'] is False and support['hardware_collected'] is False,
+                'Support receipt must not claim matrix/hardware acceptance')
+        for name, digest in support['source_sha256'].items():
+            require(hashlib.sha256((adapter / name).read_bytes()).hexdigest() == digest,
+                    'Batch support source changed: ' + name)
+        result['static_batch_support'] = support['status']
+    if 'static_batch_checkpoint' in manifest:
+        from verify_batch_inference import verify as verify_batch
+        batch_root = (checkpoint / manifest['static_batch_checkpoint']).resolve()
+        require(batch_root.is_relative_to(checkpoint), 'Unsafe batch checkpoint path')
+        result['static_batch'] = verify_batch(batch_root, checkpoint / 'official-comparison.json', adapter)
+    if 'historical_semantic_checkpoint' in manifest:
+        legacy = load(checkpoint / manifest['historical_semantic_checkpoint'])
+        require(legacy['claim'] == 'MODEL_ESTIMATE_LEGACY_ADAPTER_NOT_OFFICIAL_MAPPER_OR_PHYSICAL_DRAM',
+                'Legacy evidence must not be promoted')
+        require(len(legacy['cases']) == 8 and legacy['native_ada_profile'] is False
+                and legacy['hardware_comparison'] is None, 'Legacy comparison scope')
+        require(sum(r['evidence'] == 'ARCHIVE_TOTALS_RECONCILED' for r in legacy['cases']) == 5,
+                'Legacy archived case count')
+        for row in legacy['cases']:
+            for direction in ('read', 'write'):
+                require(sum(row['semantic_bytes'][direction].values()) == row['known_' + direction + '_bytes'],
+                        'Legacy semantic closure')
+        require(legacy['checks']['read_write_delta_bytes_all_archived_windows'] == 0,
+                'Legacy archive reconciliation')
+        result['historical_semantic_cases'] = 8
+    return result
 
 
 def main():

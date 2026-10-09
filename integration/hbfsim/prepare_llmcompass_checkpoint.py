@@ -59,7 +59,7 @@ def main():
             versions[package] = 'not installed in manifest-generating interpreter'
     manifest = dict(schema='LLMCOMPASS_ADA_STAGE_ARCHIVE_V1', date='2026-10-09',
         status='PASS_ANALYTICAL_REPRODUCTION_AND_ACCOUNTING_NOT_HARDWARE_ACCURACY',
-        branch='codex/llmcompass-ada-stage-acceptance-20261009',
+        branch='codex/integration-key-acceptance-20261001',
         parent_integration_commit='613cbe73f489ad304b28b10d314c373324cb5dc4',
         official_reference_commit='62321b1ee28ddbdba8a2eb7475d7caa30f75e8be',
         accepted_scope=['unchanged official operator source', 'eight-case analytical operator/phase accounting',
@@ -85,6 +85,20 @@ def main():
         evidence_policy='Published aggregate receipts do not replace external full-ledger measurement evidence.',
         preservation_policy='Copy-only; no original worktree or historical evidence deleted; no force push.',
         subagents=dict(started=0, completed=0, active=0))
+    batch_checkpoint = checkpoint / 'static-batch-p128d8'
+    if batch_checkpoint.exists():
+        from verify_batch_inference import verify
+        verify(batch_checkpoint, checkpoint / 'official-comparison.json', adapter)
+        manifest['static_batch_checkpoint'] = 'static-batch-p128d8'
+        manifest['accepted_scope'].append('static Qwen P128D8 batch 1/2/4/8/16/32 analytical accounting')
+        manifest['validation_commands'].append(
+            'python -B integration/hbfsim/verify_batch_inference.py integration/hbfsim/checkpoint/static-batch-p128d8')
+    if (checkpoint / 'llama-semantic-summary.json').exists():
+        manifest['historical_semantic_checkpoint'] = 'llama-semantic-summary.json'
+    if (checkpoint / 'batch-support-validation.json').exists():
+        manifest['batch_support_checkpoint'] = 'batch-support-validation.json'
+        manifest['accepted_scope'].append('static batch plan support and B1 regression; not full batch timing acceptance')
+    manifest['validation_commands'][1] += ' test_batch_inference test_verify_batch_inference'
     (checkpoint / 'manifest.json').write_text(json.dumps(manifest, indent=2) + '\n', encoding='utf-8')
     print(json.dumps({'published_files': len(files), 'published_bytes': manifest['published_bytes'],
                       'manifest_sha256': sha(checkpoint / 'manifest.json')}))

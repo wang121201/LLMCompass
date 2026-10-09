@@ -131,8 +131,17 @@ def allocate_operator(op, ledger, recovered):
             add(op.writes[0], 'read_bytes', counts['read']['C'])
             # Bias is an explicit frozen adapter addition, not a mapper operand.
             for access in op.reads[2:]:
-                check(access.target == 'HBF_STATIC' and access.label.endswith('.bias'), 'Unknown extra projection input')
-                add(access, 'read_bytes', access.bytes)
+                if access.target == 'HBF_STATIC' and access.label.endswith('.bias'):
+                    add(access, 'read_bytes', access.bytes)
+                elif op.name in ('attention_score', 'attention_value'):
+                    check(access.target == 'HBM' and access.label == op.reads[1].label
+                          and access.label in ('key_cache', 'value_cache'), 'Unknown batch attention input')
+                    # B already accounts for every request/head in the mapper.
+                elif op.name == 'lm_head':
+                    check(access.target == 'HBM' and access.label == 'last_hidden', 'Unknown batch lm_head input')
+                    # A already accounts for all gathered last-token rows.
+                else:
+                    raise ValueError('Unknown extra projection input')
         add(op.writes[0], 'write_bytes', counts['write']['C'])
     extra = ledger['unclassified_io_bytes']
     categories['other']['unknown_direction_bytes'] += extra

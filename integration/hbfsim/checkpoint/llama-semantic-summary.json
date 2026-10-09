@@ -1,0 +1,286 @@
+{
+  "schema": "LLAMA31_8B_LEGACY_SEMANTIC_KEY_TOTALS_V1",
+  "status": "PASS_TYPED_ACCOUNTING_AND_ARCHIVE_RECONCILIATION",
+  "claim": "MODEL_ESTIMATE_LEGACY_ADAPTER_NOT_OFFICIAL_MAPPER_OR_PHYSICAL_DRAM",
+  "model": {
+    "model_id": "meta-llama/Llama-3.1-8B",
+    "hidden_size": 4096,
+    "intermediate_size": 14336,
+    "layers": 32,
+    "attention_heads": 32,
+    "kv_heads": 8,
+    "head_dim": 128,
+    "vocab_size": 128256,
+    "matrix_weight_bytes": 1,
+    "non_matrix_weight_bytes": 2,
+    "embedding_weight_bytes": 2,
+    "scale_bytes": 2,
+    "quant_block_elements": 16384,
+    "activation_bytes": 2,
+    "kv_bytes": 2,
+    "tie_word_embeddings": false,
+    "attention_bias": false,
+    "batch_size": 1,
+    "prefill_tokens": 32,
+    "decode_steps": 2
+  },
+  "source_aggregate_sha256": "9a2d23a5ef75c6bd9f49130d15b57e86f6cde01716d42333adc016fa8766ec91",
+  "source_aggregate_filename": "llama8b-semantic-traffic.json",
+  "definitions": {
+    "Weights": "Learned parameter accesses including embedded quantization-scale and allocation-padding bytes counted by the existing weight objects.",
+    "KV cache": "Persistent key_cache and value_cache object accesses only; temporary projected k/v tensors remain Activation.",
+    "Activation": "Explicitly typed temporary tensor accesses including attention score/probability materialization, feed-forward intermediates, hidden states and logits.",
+    "Other": "Any remaining unclassified access label; unknown labels are never silently assigned to Activation."
+  },
+  "source_identity": {
+    "current_adapter_sha256": "957e51f5fe9b2ea7c42813911a2d09486ce1de6710d2baab889852ab2879ae60",
+    "archived_adapter_sha256": [
+      "96c1552ac6c0237f4d1fb28f289284de534831d357d94bb2ec760dd3ff4765fb"
+    ],
+    "exact_adapter_source_parity": false,
+    "limitation": "Current adapter bytes differ from the archived adapter hash. All archived operator signatures, model/profile identities and phase/full Read/Write totals match. Three P512 scratch/KV address layouts differ because the current slot allocator includes attention-score capacity; old slots used the FFN-sized bound. This is semantic-byte reconstruction, not exact-address reproduction, and the archive did not preserve typed per-access receipts.",
+    "address_layout_differences": {
+      "p512-d2": {
+        "hbm_arena_bytes": {
+          "archived": 8809357312,
+          "current": 8826757120
+        },
+        "kv_base": {
+          "archived": 185008128,
+          "current": 202407936
+        }
+      },
+      "p512-d8": {
+        "hbm_arena_bytes": {
+          "archived": 8811520000,
+          "current": 8830689280
+        },
+        "kv_base": {
+          "archived": 186384384,
+          "current": 205553664
+        }
+      },
+      "p512-d16": {
+        "hbm_arena_bytes": {
+          "archived": 8814403584,
+          "current": 8836030464
+        },
+        "kv_base": {
+          "archived": 188219392,
+          "current": 209846272
+        }
+      }
+    }
+  },
+  "checks": {
+    "historical_cases_reconciled": 9,
+    "operator_signatures_matched": 50373,
+    "phase_windows_reconciled": 87,
+    "target_archived_case_count": 5,
+    "target_plan_only_case_count": 3,
+    "read_write_delta_bytes_all_archived_windows": 0,
+    "unknown_bytes_all_cases": 0,
+    "exact_address_layout_parity": false
+  },
+  "historical_case_ids": [
+    "p32-d2",
+    "p32-d8",
+    "p32-d16",
+    "p128-d2",
+    "p128-d8",
+    "p128-d16",
+    "p512-d2",
+    "p512-d8",
+    "p512-d16"
+  ],
+  "cases": [
+    {
+      "case": "p32-d2",
+      "prefill_tokens": 32,
+      "decode_steps": 2,
+      "evidence": "ARCHIVE_TOTALS_RECONCILED",
+      "semantic_bytes": {
+        "read": {
+          "Weights": 22519193600,
+          "KV cache": 12976128,
+          "Activation": 261017600,
+          "Other": 0
+        },
+        "write": {
+          "Weights": 0,
+          "KV cache": 4456448,
+          "Activation": 217476608,
+          "Other": 0
+        }
+      },
+      "known_read_bytes": 22793187328,
+      "known_write_bytes": 221933056,
+      "operator_count": 1737
+    },
+    {
+      "case": "p64-d2",
+      "prefill_tokens": 64,
+      "decode_steps": 2,
+      "evidence": "PLAN_ONLY_NOT_SIMULATED",
+      "semantic_bytes": {
+        "read": {
+          "Weights": 22519455744,
+          "KV cache": 25559040,
+          "Activation": 515297280,
+          "Other": 0
+        },
+        "write": {
+          "Weights": 0,
+          "KV cache": 8650752,
+          "Activation": 430075392,
+          "Other": 0
+        }
+      },
+      "known_read_bytes": 23060312064,
+      "known_write_bytes": 438726144,
+      "operator_count": 1737
+    },
+    {
+      "case": "p128-d2",
+      "prefill_tokens": 128,
+      "decode_steps": 2,
+      "evidence": "ARCHIVE_TOTALS_RECONCILED",
+      "semantic_bytes": {
+        "read": {
+          "Weights": 22519980032,
+          "KV cache": 50724864,
+          "Activation": 1049022464,
+          "Other": 0
+        },
+        "write": {
+          "Weights": 0,
+          "KV cache": 17039360,
+          "Activation": 880438784,
+          "Other": 0
+        }
+      },
+      "known_read_bytes": 23619727360,
+      "known_write_bytes": 897478144,
+      "operator_count": 1737
+    },
+    {
+      "case": "p256-d2",
+      "prefill_tokens": 256,
+      "decode_steps": 2,
+      "evidence": "PLAN_ONLY_NOT_SIMULATED",
+      "semantic_bytes": {
+        "read": {
+          "Weights": 22521028608,
+          "KV cache": 101056512,
+          "Activation": 2217136128,
+          "Other": 0
+        },
+        "write": {
+          "Weights": 0,
+          "KV cache": 33816576,
+          "Activation": 1881828864,
+          "Other": 0
+        }
+      },
+      "known_read_bytes": 24839221248,
+      "known_write_bytes": 1915645440,
+      "operator_count": 1737
+    },
+    {
+      "case": "p512-d2",
+      "prefill_tokens": 512,
+      "decode_steps": 2,
+      "evidence": "ARCHIVE_TOTALS_RECONCILED",
+      "semantic_bytes": {
+        "read": {
+          "Weights": 22523125760,
+          "KV cache": 201719808,
+          "Activation": 4956016640,
+          "Other": 0
+        },
+        "write": {
+          "Weights": 0,
+          "KV cache": 67371008,
+          "Activation": 4287262208,
+          "Other": 0
+        }
+      },
+      "known_read_bytes": 27680862208,
+      "known_write_bytes": 4354633216,
+      "operator_count": 1737
+    },
+    {
+      "case": "p128-d4",
+      "prefill_tokens": 128,
+      "decode_steps": 4,
+      "evidence": "PLAN_ONLY_NOT_SIMULATED",
+      "semantic_bytes": {
+        "read": {
+          "Weights": 37532606464,
+          "KV cache": 85196800,
+          "Activation": 1065205760,
+          "Other": 0
+        },
+        "write": {
+          "Weights": 0,
+          "KV cache": 17301504,
+          "Activation": 894513664,
+          "Other": 0
+        }
+      },
+      "known_read_bytes": 38683009024,
+      "known_write_bytes": 911815168,
+      "operator_count": 2895
+    },
+    {
+      "case": "p128-d8",
+      "prefill_tokens": 128,
+      "decode_steps": 8,
+      "evidence": "ARCHIVE_TOTALS_RECONCILED",
+      "semantic_bytes": {
+        "read": {
+          "Weights": 67557859328,
+          "KV cache": 155713536,
+          "Activation": 1097621504,
+          "Other": 0
+        },
+        "write": {
+          "Weights": 0,
+          "KV cache": 17825792,
+          "Activation": 922712576,
+          "Other": 0
+        }
+      },
+      "known_read_bytes": 68811194368,
+      "known_write_bytes": 940538368,
+      "operator_count": 5211
+    },
+    {
+      "case": "p128-d16",
+      "prefill_tokens": 128,
+      "decode_steps": 16,
+      "evidence": "ARCHIVE_TOTALS_RECONCILED",
+      "semantic_bytes": {
+        "read": {
+          "Weights": 127608365056,
+          "KV cache": 303038464,
+          "Activation": 1162649600,
+          "Other": 0
+        },
+        "write": {
+          "Weights": 0,
+          "KV cache": 18874368,
+          "Activation": 979307008,
+          "Other": 0
+        }
+      },
+      "known_read_bytes": 129074053120,
+      "known_write_bytes": 998181376,
+      "operator_count": 9843
+    }
+  ],
+  "hardware_comparison": null,
+  "native_ada_profile": false,
+  "timing_excluded": "Legacy GA100/HBM and retired serial timing are not current Ada timing evidence.",
+  "raw_operator_or_phase_stream_published": false
+}

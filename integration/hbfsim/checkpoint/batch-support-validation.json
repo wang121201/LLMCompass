@@ -1,0 +1,158 @@
+{
+  "schema": "LLMCOMPASS_STATIC_BATCH_SUPPORT_V1",
+  "status": "PASS_STATIC_BATCH_SUPPORT_NOT_FULL_MATRIX_ACCEPTANCE",
+  "recorded_at_utc": "2026-10-09T12:30:32.185533+00:00",
+  "model": "Qwen/Qwen2.5-1.5B-Instruct",
+  "target_batches": [
+    2,
+    4,
+    8,
+    16,
+    32
+  ],
+  "prefill_tokens": 128,
+  "decode_steps": 8,
+  "unit_tests": {
+    "status": "PASS",
+    "count": 65,
+    "command": [
+      "/home/xmu/sgl/bin/python",
+      "-B",
+      "-m",
+      "unittest",
+      "test_qwen_hbfsim_cosim",
+      "test_semantic_traffic_breakdown",
+      "test_verify_official_inference",
+      "test_paired_qwen_reference",
+      "test_evaluate_gddr_integration",
+      "test_verify_stage_checkpoint",
+      "test_batch_inference",
+      "test_verify_batch_inference"
+    ]
+  },
+  "b1_plan_parity": {
+    "status": "PASS_BATCH_ONE_PLAN_PARITY",
+    "baseline_commit": "25e75accc49ee4985a5d1906a8292ec456bef7f1",
+    "baseline_source_sha256": "484a8808b9619082d4ab98b184013993d4ec4392ce684d236b56075e679893b4",
+    "current_source_sha256": "76bb3256d332b9c8244840b33cca2471978c19e213d87772cc65c08b45dafc09",
+    "cases": [
+      {
+        "prefill_tokens": 32,
+        "decode_steps": 2,
+        "operators": 1521
+      },
+      {
+        "prefill_tokens": 64,
+        "decode_steps": 2,
+        "operators": 1521
+      },
+      {
+        "prefill_tokens": 128,
+        "decode_steps": 2,
+        "operators": 1521
+      },
+      {
+        "prefill_tokens": 256,
+        "decode_steps": 2,
+        "operators": 1521
+      },
+      {
+        "prefill_tokens": 512,
+        "decode_steps": 2,
+        "operators": 1521
+      },
+      {
+        "prefill_tokens": 128,
+        "decode_steps": 4,
+        "operators": 2535
+      },
+      {
+        "prefill_tokens": 128,
+        "decode_steps": 8,
+        "operators": 4563
+      },
+      {
+        "prefill_tokens": 128,
+        "decode_steps": 16,
+        "operators": 8619
+      }
+    ],
+    "operators": 23322,
+    "exact_access_bytes_addresses_and_shapes": true,
+    "cost_source": "Deterministic fake timing isolates graph/address parity; fresh B1 mapper timing is checked separately.",
+    "raw_operator_stream_saved": false
+  },
+  "b1_mapper_regression": {
+    "time_bytes_bandwidth_and_all_nine_phases_exact": true,
+    "model_ms": 85.399396,
+    "known_read_bytes": 28586571008,
+    "known_write_bytes": 523191296,
+    "unclassified_io_bytes": 20263936
+  },
+  "request_regions": [
+    {
+      "request_count": 1,
+      "kv_regions": 56,
+      "independent_kv": true,
+      "kv_payload_bytes": 3899392,
+      "append_bytes": 3899392,
+      "last_token_rows_checked": true
+    },
+    {
+      "request_count": 2,
+      "kv_regions": 112,
+      "independent_kv": true,
+      "kv_payload_bytes": 7798784,
+      "append_bytes": 7798784,
+      "last_token_rows_checked": true
+    },
+    {
+      "request_count": 4,
+      "kv_regions": 224,
+      "independent_kv": true,
+      "kv_payload_bytes": 15597568,
+      "append_bytes": 15597568,
+      "last_token_rows_checked": true
+    },
+    {
+      "request_count": 8,
+      "kv_regions": 448,
+      "independent_kv": true,
+      "kv_payload_bytes": 31195136,
+      "append_bytes": 31195136,
+      "last_token_rows_checked": true
+    },
+    {
+      "request_count": 16,
+      "kv_regions": 896,
+      "independent_kv": true,
+      "kv_payload_bytes": 62390272,
+      "append_bytes": 62390272,
+      "last_token_rows_checked": true
+    },
+    {
+      "request_count": 32,
+      "kv_regions": 1792,
+      "independent_kv": true,
+      "kv_payload_bytes": 124780544,
+      "append_bytes": 124780544,
+      "last_token_rows_checked": true
+    }
+  ],
+  "source_sha256": {
+    "qwen_hbfsim_cosim.py": "76bb3256d332b9c8244840b33cca2471978c19e213d87772cc65c08b45dafc09",
+    "mapper_matmul.py": "43ba130f0eb6462b89c6f6815e10d3f38acc7781408348815d68ca45cf07d040",
+    "mapper_softmax.py": "3777e9edd5cc549ba5daf98fb959b12e2ab501341f532bab7fe776179a90944a",
+    "semantic_traffic_breakdown.py": "50d0c80645a4f9ae61427adcd2c3f4a0a4f12308c5a381ff5a237774f180dfde",
+    "evaluate_batch_inference.py": "a8ba84836842cc123dd7931a514aa43002aba75455abf2a100f04765a71d0c2a",
+    "verify_batch_inference.py": "bbb4cca8ae465f741f87f26e7ad74f0f71954b06f0566cdaf9a91143048b84db",
+    "test_batch_inference.py": "9526e3075924c593aa813e97a48926b2de014e0287fce425af5d396035b2a942",
+    "test_verify_batch_inference.py": "508b319a58a16df29294c31d189ee49354f4cafc2f1a63b0c598adb809648388",
+    "RTX4000Ada_xmu_profile_v3.json": "d7c2659d32b14c4cf0f5da876be09375a810bcdbfdc7b03c4b820cf2fc4288b1"
+  },
+  "batch_timing_results_published": false,
+  "hardware_collected": false,
+  "hbfsim_in_model_time": false,
+  "full_matrix_evidence_root": "/home/xmu/nvidiagds/simulators/wgslogs/llmcompass/qwen-static-batch-p128d8-20261009-r2",
+  "full_matrix_gate": "NOT_EVALUATED_AT_SUPPORT_CHECKPOINT"
+}

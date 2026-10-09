@@ -92,6 +92,7 @@ class ModelSpec:
     bytes_per_element: int
     prefill_tokens: int = 32
     decode_steps: int = 2
+    batch_size: int = 1
 
     @property
     def kv_hidden_size(self) -> int:
@@ -115,15 +116,16 @@ class ModelSpec:
             bytes_per_element=precision["bytes_per_element"],
             prefill_tokens=workload["prefill_tokens"],
             decode_steps=workload["decode_steps"],
+            batch_size=workload["batch_size"],
         )
         if spec.hidden_size != spec.attention_heads * spec.head_dim:
             raise ValueError("hidden size must equal attention_heads * head_dim")
         if arch["tie_word_embeddings"] is not True:
             raise ValueError("this adapter requires tied input/output embeddings")
-        if workload["batch_size"] != 1 or workload["tensor_parallelism"] != 1:
-            raise ValueError("this adapter is restricted to batch size 1 and TP1")
-        if spec.prefill_tokens <= 0 or spec.decode_steps <= 0:
-            raise ValueError("prefill_tokens and decode_steps must be positive")
+        if workload["tensor_parallelism"] != 1:
+            raise ValueError("this adapter is restricted to TP1")
+        if spec.prefill_tokens <= 0 or spec.decode_steps <= 0 or spec.batch_size <= 0:
+            raise ValueError("prefill_tokens, decode_steps and batch_size must be positive")
         return spec
 
 
@@ -334,72 +336,92 @@ def build_plan(model: ModelSpec, costs: LLMCompassCostModel, *, layer_limit: int
     )
     if phase_limit is not None:
         phases = phases[:phase_limit]
+    if not isinstance(model.batch_size, int) or isinstance(model.batch_size, bool) or model.batch_size <= 0:
+        raise ValueError("batch_size must be a positive integer")
+    batch = model.batch_size
     bpe, h, kv = model.bytes_per_element, model.hidden_size, model.kv_hidden_size
     max_tokens = model.prefill_tokens + model.decode_steps
     scratch_width = max(model.hidden_size, model.intermediate_size)
-    scratch_end = _slot(8, max_tokens, scratch_width, bpe)
+    slot_bytes = _align_up(batch * max_tokens * scratch_width * bpe)
+    if batch > 1:
+        slot_bytes = _align_up(max(slot_bytes, batch * model.attention_heads * max_tokens**2 * bpe,
+                                  batch * model.vocab_size * bpe))
+    scratch_end = 8 * slot_bytes
     kv_base = _align_up(max(KV_BASE, scratch_end + ALIGNMENT))
-    kv_layer_stride = _align_up(2 * max_tokens * kv * bpe)
+    kv_request_stride = 2 * max_tokens * kv * bpe
+    kv_layer_stride = _align_up(batch * kv_request_stride)
     ops: list[OperatorPlan] = []
+
+    def slot_addr(slot: int) -> int:
+        return slot * slot_bytes
 
     def add(phase: str, layer: int | None, name: str, timing: Timing, reads: Iterable[Access], writes: Iterable[Access]) -> None:
         ops.append(OperatorPlan(len(ops), phase, layer, name, timing, tuple(reads), tuple(writes)))
 
     for phase, tokens, context, append_start, append_count in phases:
-        active = tokens * h * bpe
-        add(phase, None, "token_embedding", costs.vector(tokens*h, 1, "embedding_lookup", 2*active),
-            [_weight_read(weights, "model.embed_tokens", active)], [_hbm("write", _slot(0,max_tokens,scratch_width,bpe), active, "hidden")])
+        items = batch * tokens
+        active = items * h * bpe
+        add(phase, None, "token_embedding", costs.vector(items*h, 1, "embedding_lookup", 2*active),
+            [_weight_read(weights, "model.embed_tokens", active)], [_hbm("write", slot_addr(0), active, "hidden")])
         for layer in range(layers):
             p = f"model.layers.{layer}"
-            s0, s1 = _slot(0,max_tokens,scratch_width,bpe), _slot(1,max_tokens,scratch_width,bpe)
-            q_addr, k_addr, v_addr = _slot(2,max_tokens,scratch_width,bpe), _slot(3,max_tokens,scratch_width,bpe), _slot(4,max_tokens,scratch_width,bpe)
-            score_addr, gate_addr, up_addr = _slot(5,max_tokens,scratch_width,bpe), _slot(6,max_tokens,scratch_width,bpe), _slot(7,max_tokens,scratch_width,bpe)
-            q_bytes, kv_bytes = tokens*h*bpe, tokens*kv*bpe
-            score_bytes = model.attention_heads*tokens*context*bpe
+            s0, s1 = slot_addr(0), slot_addr(1)
+            q_addr, k_addr, v_addr = slot_addr(2), slot_addr(3), slot_addr(4)
+            score_addr, gate_addr, up_addr = slot_addr(5), slot_addr(6), slot_addr(7)
+            q_bytes, kv_bytes = items*h*bpe, items*kv*bpe
+            score_bytes = batch*model.attention_heads*tokens*context*bpe
             layer_kv = kv_base + layer*kv_layer_stride
-            key_cache, value_cache = layer_kv, layer_kv + max_tokens*kv*bpe
-            add(phase, layer, "input_rmsnorm", costs.vector(tokens*h, 6, "rmsnorm", 2*active),
+            caches = [(layer_kv + request*kv_request_stride,
+                       layer_kv + request*kv_request_stride + max_tokens*kv*bpe)
+                      for request in range(batch)]
+            add(phase, layer, "input_rmsnorm", costs.vector(items*h, 6, "rmsnorm", 2*active),
                 [_hbm("read",s0,active,"hidden"), _weight_read(weights,f"{p}.input_layernorm.weight")], [_hbm("write",s1,active,"norm_hidden")])
-            add(phase, layer, "q_proj", costs.matmul(tokens,h,h,True,"q_projection"),
+            add(phase, layer, "q_proj", costs.matmul(items,h,h,True,"q_projection"),
                 [_hbm("read",s1,active,"norm_hidden"), _weight_read(weights,f"{p}.self_attn.q_proj.weight"), _weight_read(weights,f"{p}.self_attn.q_proj.bias")], [_hbm("write",q_addr,q_bytes,"q")])
-            add(phase, layer, "k_proj", costs.matmul(tokens,h,kv,True,"k_projection"),
+            add(phase, layer, "k_proj", costs.matmul(items,h,kv,True,"k_projection"),
                 [_hbm("read",s1,active,"norm_hidden"), _weight_read(weights,f"{p}.self_attn.k_proj.weight"), _weight_read(weights,f"{p}.self_attn.k_proj.bias")], [_hbm("write",k_addr,kv_bytes,"k")])
-            add(phase, layer, "v_proj", costs.matmul(tokens,h,kv,True,"v_projection"),
+            add(phase, layer, "v_proj", costs.matmul(items,h,kv,True,"v_projection"),
                 [_hbm("read",s1,active,"norm_hidden"), _weight_read(weights,f"{p}.self_attn.v_proj.weight"), _weight_read(weights,f"{p}.self_attn.v_proj.bias")], [_hbm("write",v_addr,kv_bytes,"v")])
-            add(phase, layer, "rope", costs.vector(tokens*(h+kv),8,"rotary_position_embedding",2*(q_bytes+kv_bytes)),
+            add(phase, layer, "rope", costs.vector(items*(h+kv),8,"rotary_position_embedding",2*(q_bytes+kv_bytes)),
                 [_hbm("read",q_addr,q_bytes,"q"), _hbm("read",k_addr,kv_bytes,"k")], [_hbm("write",q_addr,q_bytes,"q_rope"), _hbm("write",k_addr,kv_bytes,"k_rope")])
-            add(phase, layer, "kv_append", costs.vector(append_count*kv*2,1,"kv_cache_append",4*kv_bytes),
+            add(phase, layer, "kv_append", costs.vector(batch*append_count*kv*2,1,"kv_cache_append",4*kv_bytes),
                 [_hbm("read",k_addr,kv_bytes,"k_rope"), _hbm("read",v_addr,kv_bytes,"v")],
-                [_hbm("write",key_cache+append_start*kv*bpe,append_count*kv*bpe,"key_cache"), _hbm("write",value_cache+append_start*kv*bpe,append_count*kv*bpe,"value_cache")])
-            add(phase, layer, "attention_score", costs.batched_matmul(model.attention_heads,tokens,model.head_dim,context,"grouped_query_attention_score"),
-                [_hbm("read",q_addr,q_bytes,"q_rope"), _hbm("read",key_cache,context*kv*bpe,"key_cache")], [_hbm("write",score_addr,score_bytes,"attention_scores")])
-            add(phase, layer, "attention_softmax", costs.softmax(model.attention_heads,tokens,context),
+                [_hbm("write",key_cache+append_start*kv*bpe,append_count*kv*bpe,"key_cache") for key_cache,_ in caches]
+                + [_hbm("write",value_cache+append_start*kv*bpe,append_count*kv*bpe,"value_cache") for _,value_cache in caches])
+            add(phase, layer, "attention_score", costs.batched_matmul(batch*model.attention_heads,tokens,model.head_dim,context,"grouped_query_attention_score"),
+                [_hbm("read",q_addr,q_bytes,"q_rope")]
+                + [_hbm("read",key_cache,context*kv*bpe,"key_cache") for key_cache,_ in caches], [_hbm("write",score_addr,score_bytes,"attention_scores")])
+            add(phase, layer, "attention_softmax", costs.softmax(batch*model.attention_heads,tokens,context),
                 [_hbm("read",score_addr,score_bytes,"attention_scores")], [_hbm("write",score_addr,score_bytes,"attention_probabilities")])
-            add(phase, layer, "attention_value", costs.batched_matmul(model.attention_heads,tokens,context,model.head_dim,"grouped_query_attention_value"),
-                [_hbm("read",score_addr,score_bytes,"attention_probabilities"), _hbm("read",value_cache,context*kv*bpe,"value_cache")], [_hbm("write",q_addr,q_bytes,"attention_output")])
-            add(phase, layer, "o_proj", costs.matmul(tokens,h,h,False,"o_projection"),
+            add(phase, layer, "attention_value", costs.batched_matmul(batch*model.attention_heads,tokens,context,model.head_dim,"grouped_query_attention_value"),
+                [_hbm("read",score_addr,score_bytes,"attention_probabilities")]
+                + [_hbm("read",value_cache,context*kv*bpe,"value_cache") for _,value_cache in caches], [_hbm("write",q_addr,q_bytes,"attention_output")])
+            add(phase, layer, "o_proj", costs.matmul(items,h,h,False,"o_projection"),
                 [_hbm("read",q_addr,q_bytes,"attention_output"), _weight_read(weights,f"{p}.self_attn.o_proj.weight")], [_hbm("write",s1,active,"attention_projected")])
-            add(phase, layer, "attention_residual", costs.vector(tokens*h,1,"residual_add",3*active),
+            add(phase, layer, "attention_residual", costs.vector(items*h,1,"residual_add",3*active),
                 [_hbm("read",s0,active,"hidden"), _hbm("read",s1,active,"attention_projected")], [_hbm("write",s0,active,"hidden")])
-            add(phase, layer, "post_attention_rmsnorm", costs.vector(tokens*h,6,"rmsnorm",2*active),
+            add(phase, layer, "post_attention_rmsnorm", costs.vector(items*h,6,"rmsnorm",2*active),
                 [_hbm("read",s0,active,"hidden"), _weight_read(weights,f"{p}.post_attention_layernorm.weight")], [_hbm("write",s1,active,"norm_hidden")])
-            ffn_bytes = tokens*model.intermediate_size*bpe
-            add(phase, layer, "gate_proj", costs.matmul(tokens,h,model.intermediate_size,False,"gate_projection"),
+            ffn_bytes = items*model.intermediate_size*bpe
+            add(phase, layer, "gate_proj", costs.matmul(items,h,model.intermediate_size,False,"gate_projection"),
                 [_hbm("read",s1,active,"norm_hidden"), _weight_read(weights,f"{p}.mlp.gate_proj.weight")], [_hbm("write",gate_addr,ffn_bytes,"gate")])
-            add(phase, layer, "up_proj", costs.matmul(tokens,h,model.intermediate_size,False,"up_projection"),
+            add(phase, layer, "up_proj", costs.matmul(items,h,model.intermediate_size,False,"up_projection"),
                 [_hbm("read",s1,active,"norm_hidden"), _weight_read(weights,f"{p}.mlp.up_proj.weight")], [_hbm("write",up_addr,ffn_bytes,"up")])
-            add(phase, layer, "silu", costs.vector(tokens*model.intermediate_size,8,"silu",2*ffn_bytes),
+            add(phase, layer, "silu", costs.vector(items*model.intermediate_size,8,"silu",2*ffn_bytes),
                 [_hbm("read",gate_addr,ffn_bytes,"gate")], [_hbm("write",gate_addr,ffn_bytes,"gate_silu")])
-            add(phase, layer, "gated_multiply", costs.vector(tokens*model.intermediate_size,1,"elementwise_multiply",3*ffn_bytes),
+            add(phase, layer, "gated_multiply", costs.vector(items*model.intermediate_size,1,"elementwise_multiply",3*ffn_bytes),
                 [_hbm("read",gate_addr,ffn_bytes,"gate_silu"), _hbm("read",up_addr,ffn_bytes,"up")], [_hbm("write",gate_addr,ffn_bytes,"gated_up")])
-            add(phase, layer, "down_proj", costs.matmul(tokens,model.intermediate_size,h,False,"down_projection"),
+            add(phase, layer, "down_proj", costs.matmul(items,model.intermediate_size,h,False,"down_projection"),
                 [_hbm("read",gate_addr,ffn_bytes,"gated_up"), _weight_read(weights,f"{p}.mlp.down_proj.weight")], [_hbm("write",s1,active,"mlp_output")])
-            add(phase, layer, "mlp_residual", costs.vector(tokens*h,1,"residual_add",3*active),
+            add(phase, layer, "mlp_residual", costs.vector(items*h,1,"residual_add",3*active),
                 [_hbm("read",s0,active,"hidden"), _hbm("read",s1,active,"mlp_output")], [_hbm("write",s0,active,"hidden")])
-        add(phase,None,"final_rmsnorm",costs.vector(tokens*h,6,"rmsnorm",2*active),
-            [_hbm("read",_slot(0,max_tokens,scratch_width,bpe),active,"hidden"),_weight_read(weights,"model.norm.weight")], [_hbm("write",_slot(1,max_tokens,scratch_width,bpe),active,"final_hidden")])
-        add(phase,None,"lm_head",costs.matmul(1,h,model.vocab_size,False,"tied_lm_head"),
-            [_hbm("read",_slot(1,max_tokens,scratch_width,bpe)+(tokens-1)*h*bpe,h*bpe,"last_hidden"),_weight_read(weights,"model.embed_tokens")], [_hbm("write",_slot(2,max_tokens,scratch_width,bpe),model.vocab_size*bpe,"logits")])
+        add(phase,None,"final_rmsnorm",costs.vector(items*h,6,"rmsnorm",2*active),
+            [_hbm("read",slot_addr(0),active,"hidden"),_weight_read(weights,"model.norm.weight")], [_hbm("write",slot_addr(1),active,"final_hidden")])
+        last_hidden = [_hbm("read",slot_addr(1)+(request*tokens+tokens-1)*h*bpe,h*bpe,"last_hidden")
+                       for request in range(batch)]
+        add(phase,None,"lm_head",costs.matmul(batch,h,model.vocab_size,False,"tied_lm_head"),
+            [last_hidden[0],_weight_read(weights,"model.embed_tokens"),*last_hidden[1:]],
+            [_hbm("write",slot_addr(2),batch*model.vocab_size*bpe,"logits")])
 
     hbm_limit = kv_base + model.layers*kv_layer_stride
     for op in ops:
@@ -1222,7 +1244,7 @@ def run_cosimulation(
             "workload": {
                 "prefill_tokens": plan.model.prefill_tokens,
                 "decode_steps": plan.model.decode_steps,
-                "batch_size": 1,
+                "batch_size": plan.model.batch_size,
                 "tensor_parallelism": 1,
             },
             "claim_boundary": (
@@ -1269,6 +1291,7 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--memory-layout", choices=MEMORY_LAYOUTS, default=MEMORY_LAYOUT_HBF_HBM)
     parser.add_argument("--prefill-tokens", type=int, help="override the model workload prefill length")
     parser.add_argument("--decode-steps", type=int, help="override the model workload decode step count")
+    parser.add_argument("--batch-size", type=int, help="fixed synchronized request count; no continuous batching")
     parser.add_argument("--output", type=Path)
     parser.add_argument("--hardware-finish", type=Path, help="passing SGLang finish.json for fixed P32D2 timing comparison or an explicitly labeled cross-receipt bandwidth-rate proxy")
     parser.add_argument("--simulation-summary", type=Path, help="passing Qwen P32D2 co-simulation summary.json")
@@ -1297,14 +1320,15 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps(report, indent=2, sort_keys=True))
         return 0
     model = ModelSpec.from_json(args.model)
-    if args.prefill_tokens is not None or args.decode_steps is not None:
+    if args.prefill_tokens is not None or args.decode_steps is not None or args.batch_size is not None:
         model = dataclasses.replace(
             model,
             prefill_tokens=model.prefill_tokens if args.prefill_tokens is None else args.prefill_tokens,
             decode_steps=model.decode_steps if args.decode_steps is None else args.decode_steps,
+            batch_size=model.batch_size if args.batch_size is None else args.batch_size,
         )
-        if model.prefill_tokens <= 0 or model.decode_steps <= 0:
-            raise CosimError("--prefill-tokens and --decode-steps must be positive")
+        if model.prefill_tokens <= 0 or model.decode_steps <= 0 or model.batch_size <= 0:
+            raise CosimError("--prefill-tokens, --decode-steps and --batch-size must be positive")
     costs = LLMCompassCostModel(adapter.parents[1], args.architecture)
     plan = build_plan(model, costs, layer_limit=1, phase_limit=1) if args.command == "smoke" else build_plan(model, costs)
     if args.memory_layout == MEMORY_LAYOUT_GDDR_ABSTRACT_ALL_HBM:
